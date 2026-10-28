@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generative AI — Exam Prep</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <header class="site-header">
+    <h1>Generative AI</h1>
+    <p>Exam Prep · 12 Important Questions · Units I, II &amp; III</p>
+  </header>
+
+  <!-- Section nav -->
+  <div class="section-nav">
+    <button class="section-btn active" onclick="showSection('s1')">Unit I — Q1–5</button>
+    <button class="section-btn" onclick="showSection('s2')">Unit II — Q6–10</button>
+    <button class="section-btn" onclick="showSection('s3')">Unit III — Q11–12</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT I — Q1 to Q5
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel active" id="s1">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s1',0)">Q1 · Transformers</button>
+      <button class="tab-btn" onclick="showTab('s1',1)">Q2 · Tokenization</button>
+      <button class="tab-btn" onclick="showTab('s1',2)">Q3 · Embeddings</button>
+      <button class="tab-btn" onclick="showTab('s1',3)">Q4 · LLM Applications</button>
+      <button class="tab-btn" onclick="showTab('s1',4)">Q5 · Industry Trends</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="tab-content active" id="s1-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q1. Explain the Transformer architecture in detail with a neat diagram. Describe the roles of the encoder and decoder stacks, and explain how they interact in encoder-decoder based models. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Why Transformers?</h3>
+          <p>Before Transformers, sequence models like RNNs and LSTMs processed tokens one at a time, which made training slow and made it hard to capture long-range dependencies. The Transformer, introduced in <strong>"Attention Is All You Need" (Vaswani et al., 2017)</strong>, removes recurrence entirely and relies purely on the <strong>self-attention mechanism</strong>, allowing every token to attend to every other token in parallel.</p>
+
+          <h3>Overall Architecture</h3>
+          <p>The Transformer follows an <strong>encoder–decoder</strong> structure. The encoder maps an input sequence into a set of continuous representations; the decoder uses those representations, along with what it has generated so far, to produce the output sequence one token at a time.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 480" xmlns="http://www.w3.org/2000/svg">
+              <!-- Encoder stack -->
+              <text x="180" y="28" fill="var(--accent-hover)" font-size="15" font-weight="700" text-anchor="middle">ENCODER STACK (×N)</text>
+              <rect x="60" y="40" width="240" height="330" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+
+              <rect x="80" y="290" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="180" y="311" fill="var(--text)" font-size="12" text-anchor="middle">Feed Forward</text>
+
+              <rect x="80" y="240" width="200" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="180" y="257" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="80" y="190" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="180" y="211" fill="var(--text)" font-size="12" text-anchor="middle">Multi-Head Self-Attention</text>
+
+              <rect x="80" y="140" width="200" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="180" y="157" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <text x="180" y="120" fill="var(--text-dim)" font-size="18" text-anchor="middle">↑ ×N</text>
+
+              <rect x="80" y="90" width="200" height="30" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="180" y="110" fill="var(--text)" font-size="11" text-anchor="middle">Input Embedding + Positional Encoding</text>
+
+              <text x="180" y="370" fill="var(--text-muted)" font-size="11" text-anchor="middle">Input Tokens</text>
+
+              <!-- arrows inside encoder -->
+              <line x1="180" y1="120" x2="180" y2="140" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="166" x2="180" y2="190" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="224" x2="180" y2="240" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="266" x2="180" y2="290" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- Decoder stack -->
+              <text x="600" y="28" fill="var(--accent-hover)" font-size="15" font-weight="700" text-anchor="middle">DECODER STACK (×N)</text>
+              <rect x="480" y="40" width="240" height="380" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+
+              <rect x="500" y="340" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="600" y="361" fill="var(--text)" font-size="12" text-anchor="middle">Feed Forward</text>
+
+              <rect x="500" y="300" width="200" height="24" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="600" y="316" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="500" y="250" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent-hover)"/>
+              <text x="600" y="271" fill="var(--text)" font-size="11.5" text-anchor="middle">Encoder-Decoder Cross-Attn</text>
+
+              <rect x="500" y="210" width="200" height="24" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="600" y="226" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="500" y="160" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="600" y="181" fill="var(--text)" font-size="11.5" text-anchor="middle">Masked Multi-Head Self-Attn</text>
+
+              <rect x="500" y="90" width="200" height="30" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="600" y="110" fill="var(--text)" font-size="11" text-anchor="middle">Output Embedding + Positional Encoding</text>
+
+              <text x="600" y="420" fill="var(--text-muted)" font-size="11" text-anchor="middle">Outputs (shifted right)</text>
+
+              <line x1="600" y1="120" x2="600" y2="160" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="194" x2="600" y2="210" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="234" x2="600" y2="250" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="284" x2="600" y2="300" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="324" x2="600" y2="340" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- Linear + softmax -->
+              <rect x="520" y="440" width="160" height="28" rx="6" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="600" y="459" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">Linear + Softmax</text>
+              <line x1="600" y1="374" x2="600" y2="440" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- cross connection encoder->decoder -->
+              <line x1="300" y1="215" x2="500" y2="267" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#arrow2)"/>
+              <text x="400" y="205" fill="var(--accent-hover)" font-size="10.5" text-anchor="middle">Keys &amp; Values from Encoder</text>
+
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/>
+                </marker>
+                <marker id="arrow2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-hover)"/>
+                </marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 1.1 — Transformer encoder–decoder architecture (Vaswani et al., 2017)</p>
+          </div>
+
+          <h3>Role of the Encoder Stack</h3>
+          <p>The encoder is a stack of <strong>N identical layers</strong> (N = 6 in the original paper). Each layer has two sub-layers:</p>
+          <ul>
+            <li><strong>Multi-Head Self-Attention:</strong> lets every input token look at every other input token and weigh how relevant each one is, producing a context-aware representation for each position.</li>
+            <li><strong>Position-wise Feed-Forward Network:</strong> a two-layer fully connected network applied identically to each position, adding non-linearity and representational power.</li>
+          </ul>
+          <p>Each sub-layer is wrapped with a <strong>residual connection</strong> followed by <strong>layer normalization</strong> — <code>LayerNorm(x + Sublayer(x))</code> — which stabilizes training and lets gradients flow through deep stacks. Since attention has no notion of order, <strong>positional encodings</strong> (sinusoidal functions of position) are added to the input embeddings so the model knows token order.</p>
+          <p>The output of the encoder is a sequence of contextualized vectors, one per input token, that summarize the entire input in relation to every other token.</p>
+
+          <h3>Role of the Decoder Stack</h3>
+          <p>The decoder is also a stack of N identical layers, but each layer has <strong>three</strong> sub-layers:</p>
+          <ul>
+            <li><strong>Masked Multi-Head Self-Attention:</strong> attends only to earlier positions in the output sequence (future tokens are masked out), preserving the autoregressive property needed for generation.</li>
+            <li><strong>Encoder-Decoder Cross-Attention:</strong> the queries come from the decoder, while the keys and values come from the encoder's output. This is exactly where the decoder "looks back" at the input sequence while generating each output token.</li>
+            <li><strong>Feed-Forward Network:</strong> same role as in the encoder.</li>
+          </ul>
+          <p>The final decoder output passes through a <strong>linear layer</strong> and a <strong>softmax</strong> to produce a probability distribution over the vocabulary for the next token.</p>
+
+          <h3>How Encoder and Decoder Interact</h3>
+          <ol>
+            <li>The encoder processes the full input sequence in parallel and produces a set of key-value pairs representing the input.</li>
+            <li>The decoder generates output tokens one at a time (autoregressively). At each step, it first attends to the tokens it has already generated (masked self-attention).</li>
+            <li>It then performs <strong>cross-attention</strong> against the encoder's output — this is the bridge that lets the decoder condition its generation on the full input sequence, not just what it has produced so far.</li>
+            <li>This repeats layer by layer, and the final representation is converted into a probability distribution to pick the next token.</li>
+          </ol>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> The encoder builds a rich, bidirectional understanding of the input; the decoder generates output autoregressively while continuously consulting the encoder's representation through cross-attention. This division of labor is what makes encoder-decoder Transformers (like the original machine translation model, T5, and BART) effective at sequence-to-sequence tasks.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="tab-content" id="s1-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q2. Explain various tokenization techniques used in Large Language Models such as Byte Pair Encoding (BPE), WordPiece, and SentencePiece. Illustrate the tokenization process with a suitable example. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Why Tokenization Matters</h3>
+          <p>LLMs cannot process raw text directly — text must be broken into discrete units called <strong>tokens</strong>, each mapped to an integer ID. The choice of tokenization strategy affects vocabulary size, how well the model handles rare/unseen words, and overall model efficiency. Modern LLMs use <strong>subword tokenization</strong> — a middle ground between word-level (huge vocabulary, can't handle unseen words) and character-level (small vocabulary, very long sequences).</p>
+
+          <h3>1. Byte Pair Encoding (BPE)</h3>
+          <p>BPE starts with a vocabulary of individual characters and <strong>iteratively merges the most frequent adjacent pair of symbols</strong> into a new symbol, repeating this a fixed number of times to build up a subword vocabulary. It is used in GPT-2/GPT-3.</p>
+          <p><strong>Example:</strong> Given the word <code>"lower"</code> appearing frequently alongside <code>"lowest"</code> and <code>"newer"</code>:</p>
+          <table>
+            <tr><th>Step</th><th>Action</th><th>Result</th></tr>
+            <tr><td>0</td><td>Start with characters</td><td>l · o · w · e · r</td></tr>
+            <tr><td>1</td><td>Most frequent pair: (l, o)</td><td>lo · w · e · r</td></tr>
+            <tr><td>2</td><td>Most frequent pair: (lo, w)</td><td>low · e · r</td></tr>
+            <tr><td>3</td><td>Most frequent pair: (e, r)</td><td>low · er</td></tr>
+          </table>
+          <p>After enough merges, <code>"low"</code> and <code>"er"</code> become subword units reused across <code>"lower"</code>, <code>"lowest"</code>, and <code>"newer"</code>, letting the model generalize to unseen combinations like <code>"lowering"</code> → <code>low + er + ing</code>.</p>
+
+          <h3>2. WordPiece</h3>
+          <p>WordPiece (used in BERT) is similar to BPE in that it also builds a vocabulary via merges, but instead of merging the <strong>most frequent</strong> pair, it merges the pair that <strong>maximizes the likelihood of the training data</strong> when added to the vocabulary — i.e. it picks merges that most improve the language model's probability of the corpus, not just raw frequency.</p>
+          <p><strong>Example:</strong> The word <code>"unhappiness"</code> might be split as:</p>
+          <div class="callout">
+            <code>un</code> + <code>##happi</code> + <code>##ness</code>
+          </div>
+          <p>The <code>##</code> prefix indicates the subword is a continuation of the previous token, not a new word — this lets WordPiece distinguish <code>"happiness"</code> from a token that happens to start with the same letters at the beginning of a word.</p>
+
+          <h3>3. SentencePiece</h3>
+          <p>SentencePiece is a tokenization <strong>framework</strong> (used by T5, LLaMA, ALBERT) rather than a single algorithm — it can implement BPE or a unigram language model internally. Its key innovation is that it treats the input as a raw stream of Unicode characters, <strong>including whitespace as a regular symbol</strong> (often represented as <code>▁</code>), rather than assuming text is pre-split on spaces.</p>
+          <p><strong>Example:</strong> The sentence <code>"Hello world"</code> tokenizes as:</p>
+          <div class="callout">
+            <code>▁Hello</code> + <code>▁world</code>
+          </div>
+          <p>Because whitespace is encoded explicitly, SentencePiece is <strong>language-agnostic</strong> and works well for languages like Japanese, Telugu, or Chinese that don't use spaces to separate words — this is the main reason multilingual LLMs favor it over BPE/WordPiece.</p>
+
+          <h3>Comparison</h3>
+          <table>
+            <tr><th>Technique</th><th>Merge Criterion</th><th>Used In</th><th>Whitespace Handling</th></tr>
+            <tr><td>BPE</td><td>Most frequent pair</td><td>GPT-2, GPT-3, RoBERTa</td><td>Pre-tokenized on spaces</td></tr>
+            <tr><td>WordPiece</td><td>Maximizes corpus likelihood</td><td>BERT, DistilBERT</td><td>Pre-tokenized on spaces</td></tr>
+            <tr><td>SentencePiece</td><td>BPE or Unigram LM (configurable)</td><td>T5, LLaMA, ALBERT, mT5</td><td>Treats space as a symbol (▁)</td></tr>
+          </table>
+
+          <div class="callout warn">
+            <strong>Common goal:</strong> All three balance vocabulary size against sequence length, and all handle out-of-vocabulary words gracefully by falling back to smaller subword units rather than an <code>&lt;UNK&gt;</code> token.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="tab-content" id="s1-tab-2">
+      <div class="question-block">
+        <h2 class="q-title">Q3. Explain the concept of embeddings and vector representations in NLP. Differentiate between static word embeddings and contextual embeddings, and discuss their role in semantic similarity tasks. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>What are Embeddings?</h3>
+          <p>An <strong>embedding</strong> is a dense, low-dimensional vector representation of a discrete object (a word, subword, or token) such that objects with similar meaning end up close together in vector space. Instead of representing a word as a sparse one-hot vector of vocabulary size, embeddings compress meaning into a continuous space (typically 100–4000 dimensions), where geometric relationships (distance, direction) capture semantic relationships.</p>
+
+          <h3>Static Word Embeddings</h3>
+          <p>Static embeddings assign <strong>one fixed vector per word</strong>, regardless of context. Models like <strong>Word2Vec</strong> (CBOW / Skip-gram) and <strong>GloVe</strong> learn these vectors from co-occurrence statistics across a large corpus.</p>
+          <ul>
+            <li>The word <code>"bank"</code> gets the exact same vector whether it means a riverbank or a financial institution.</li>
+            <li>Famous property: vector arithmetic captures analogies, e.g. <code>vector("King") − vector("Man") + vector("Woman") ≈ vector("Queen")</code>.</li>
+            <li>Fast to use (a simple lookup table), but cannot disambiguate polysemous words.</li>
+          </ul>
+
+          <h3>Contextual Embeddings</h3>
+          <p>Contextual embeddings, produced by models like <strong>ELMo, BERT, and GPT</strong>, generate a <strong>different vector for the same word depending on its surrounding context</strong>. The embedding is the output of running the full sentence through a deep neural network (typically a Transformer), so it reflects the word's role in that specific sentence.</p>
+          <ul>
+            <li><code>"bank"</code> in <em>"I sat by the river bank"</em> gets a different vector than <code>"bank"</code> in <em>"I deposited money in the bank."</em></li>
+            <li>Captures syntax, polysemy, and long-range dependencies far better than static embeddings.</li>
+            <li>More computationally expensive — requires a forward pass through the model for every new context.</li>
+          </ul>
+
+          <h3>Comparison</h3>
+          <table>
+            <tr><th>Aspect</th><th>Static Embeddings</th><th>Contextual Embeddings</th></tr>
+            <tr><td>Vector per word</td><td>One, fixed</td><td>Many, depends on context</td></tr>
+            <tr><td>Handles polysemy</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Examples</td><td>Word2Vec, GloVe, FastText</td><td>ELMo, BERT, GPT embeddings</td></tr>
+            <tr><td>Computation</td><td>Lookup table — cheap</td><td>Full model forward pass — expensive</td></tr>
+            <tr><td>Captures context/syntax</td><td>Limited</td><td>Rich, bidirectional (BERT) or left-to-right (GPT)</td></tr>
+          </table>
+
+          <h3>Role in Semantic Similarity Tasks</h3>
+          <p>Once text is represented as vectors, semantic similarity between two pieces of text is typically measured using <strong>cosine similarity</strong>:</p>
+          <div class="formula-block">
+            \[ \text{sim}(\vec{u}, \vec{v}) = \frac{\vec{u} \cdot \vec{v}}{\lVert \vec{u} \rVert \, \lVert \vec{v} \rVert} \]
+          </div>
+          <p>A value close to 1 means the vectors point in nearly the same direction (highly similar meaning); close to 0 means unrelated; negative means opposite. This underlies applications such as:</p>
+          <ul>
+            <li><strong>Semantic search:</strong> retrieving documents whose embeddings are closest to a query embedding</li>
+            <li><strong>Duplicate/paraphrase detection:</strong> flagging sentence pairs with very high cosine similarity</li>
+            <li><strong>Clustering &amp; recommendation:</strong> grouping similar items in embedding space</li>
+            <li><strong>Retrieval-Augmented Generation (RAG):</strong> embedding a knowledge base and retrieving relevant chunks for an LLM's context</li>
+          </ul>
+
+          <div class="callout good">
+            <strong>Key insight:</strong> Contextual embeddings from Transformer-based models are now the default for serious semantic-similarity work because a single static vector simply cannot represent a word that means different things in different sentences.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="tab-content" id="s1-tab-3">
+      <div class="question-block">
+        <h2 class="q-title">Q4. Discuss the applications of Large Language Models in text generation, summarization, translation, question answering, and conversational AI, with suitable examples for each. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>1. Text Generation</h3>
+          <p>LLMs generate coherent, contextually relevant text by predicting the next token repeatedly, conditioned on everything generated so far.</p>
+          <p><em>Example: Given the prompt "Write a short poem about the monsoon," an LLM produces a fluent, stylistically appropriate poem — used in creative writing tools, marketing copy generation, and code generation (e.g. GitHub Copilot).</em></p>
+
+          <h3>2. Summarization</h3>
+          <p>LLMs condense long documents into shorter versions while preserving key information. This can be <strong>extractive</strong> (selecting important sentences) or <strong>abstractive</strong> (generating new sentences that paraphrase the content).</p>
+          <p><em>Example: Summarizing a 20-page research paper into a 200-word abstract, or condensing a news article into 3 bullet points — used in tools like news aggregators and legal document review.</em></p>
+
+          <h3>3. Machine Translation</h3>
+          <p>LLMs trained on multilingual data translate text between languages while preserving meaning, tone, and grammar, often outperforming older statistical machine translation systems because they capture context across the whole sentence rather than translating word by word.</p>
+          <p><em>Example: Translating "How are you?" into Telugu ("మీరు ఎలా ఉన్నారు?") while correctly handling grammatical gender and formality — used in tools like Google Translate (which now uses Transformer-based NMT) and real-time multilingual customer support.</em></p>
+
+          <h3>4. Question Answering (QA)</h3>
+          <p>LLMs answer natural-language questions either from their own trained knowledge (closed-book QA) or by reading a provided passage/document (open-book / reading-comprehension QA, often combined with retrieval).</p>
+          <p><em>Example: A student asks "What is the time complexity of merge sort?" and the model answers "O(n log n)" directly, or — given a textbook PDF — answers "According to Chapter 4, what causes thrashing in an OS?" by extracting the relevant explanation from the document.</em></p>
+
+          <h3>5. Conversational AI</h3>
+          <p>LLMs power multi-turn dialogue systems that maintain context across a conversation, adapt tone, and can call external tools — going beyond single-turn Q&amp;A to sustained, coherent interaction.</p>
+          <p><em>Example: A chatbot that remembers earlier turns in a conversation ("earlier you said you're a second-year student — here's advice tailored to that"), used in customer support bots, virtual assistants (Siri, Alexa-style agents), and tutoring systems.</em></p>
+
+          <h3>Summary Table</h3>
+          <table>
+            <tr><th>Application</th><th>Core Capability Used</th><th>Example Tool/Use Case</th></tr>
+            <tr><td>Text Generation</td><td>Autoregressive next-token prediction</td><td>Copy writing, code completion</td></tr>
+            <tr><td>Summarization</td><td>Compression while preserving meaning</td><td>News digest, legal review</td></tr>
+            <tr><td>Translation</td><td>Cross-lingual sequence mapping</td><td>Google Translate, multilingual support</td></tr>
+            <tr><td>Question Answering</td><td>Knowledge recall / reading comprehension</td><td>Search assistants, RAG systems</td></tr>
+            <tr><td>Conversational AI</td><td>Multi-turn context tracking</td><td>Chatbots, virtual assistants</td></tr>
+          </table>
+
+          <div class="callout good">
+            <strong>Common thread:</strong> All five applications rely on the same underlying pretrained Transformer — the difference is in prompting, fine-tuning, and the surrounding system (retrieval, memory, tool-use) built around the base model.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="tab-content" id="s1-tab-4">
+      <div class="question-block">
+        <h2 class="q-title">Q5. Analyze the current industry use cases and emerging trends in Generative AI and LLMs across domains such as healthcare, education, software development, and customer service. Justify their impact with examples. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>1. Healthcare</h3>
+          <ul>
+            <li><strong>Clinical documentation:</strong> LLMs auto-generate doctor's notes from patient-doctor conversations, cutting administrative burden.</li>
+            <li><strong>Diagnostic assistance:</strong> Generative models assist radiologists by drafting preliminary findings from medical images, later reviewed by a human.</li>
+            <li><strong>Drug discovery:</strong> Generative models propose novel molecular structures with desired properties, accelerating early-stage research.</li>
+          </ul>
+          <p><em>Impact: Reduces physician burnout from paperwork and speeds up early research timelines — but requires strict human-in-the-loop review given the high stakes of medical errors.</em></p>
+
+          <h3>2. Education</h3>
+          <ul>
+            <li><strong>Personalized tutoring:</strong> LLM-based tutors adapt explanations to a student's level and answer follow-up questions in real time.</li>
+            <li><strong>Automated content generation:</strong> Generating practice questions, quizzes, and study notes tailored to a syllabus.</li>
+            <li><strong>Accessibility:</strong> Real-time summarization and translation of lecture content for students with different needs.</li>
+          </ul>
+          <p><em>Impact: Democratizes access to one-on-one style tutoring at scale, though it raises concerns about academic integrity and over-reliance on AI-generated answers.</em></p>
+
+          <h3>3. Software Development</h3>
+          <ul>
+            <li><strong>Code generation and completion:</strong> Tools like GitHub Copilot suggest entire functions based on natural-language comments or partial code.</li>
+            <li><strong>Automated testing:</strong> LLMs generate unit tests and identify edge cases from a function's signature and docstring.</li>
+            <li><strong>Debugging and code review:</strong> Models explain stack traces, suggest fixes, and flag code smells during review.</li>
+          </ul>
+          <p><em>Impact: Measurable productivity gains — studies report developers completing tasks noticeably faster with AI pair-programming, though code quality still needs human review.</em></p>
+
+          <h3>4. Customer Service</h3>
+          <ul>
+            <li><strong>AI chatbots and virtual agents:</strong> Handle routine queries (order status, refunds, FAQs) without human intervention.</li>
+            <li><strong>Sentiment-aware routing:</strong> Detecting frustrated customers from message tone and escalating to human agents automatically.</li>
+            <li><strong>Agent assist:</strong> Real-time suggested responses for human support agents, drafted by an LLM and edited before sending.</li>
+          </ul>
+          <p><em>Impact: Reduces response time and operating cost significantly for high-volume support, while human agents are freed up for complex, high-empathy cases.</em></p>
+
+          <h3>Emerging Cross-Domain Trends</h3>
+          <table>
+            <tr><th>Trend</th><th>Description</th></tr>
+            <tr><td>Retrieval-Augmented Generation (RAG)</td><td>Grounding LLM outputs in real, up-to-date documents to reduce hallucination</td></tr>
+            <tr><td>Multimodal models</td><td>Single models handling text, image, audio, and video jointly (e.g. GPT-4V-style systems)</td></tr>
+            <tr><td>AI agents / tool use</td><td>LLMs that call external APIs, browse, or execute code autonomously to complete multi-step tasks</td></tr>
+            <tr><td>Smaller, efficient models</td><td>Distilled/quantized LLMs deployed on-device for privacy and latency-sensitive use cases</td></tr>
+            <tr><td>Domain-specific fine-tuning</td><td>Base LLMs fine-tuned on legal, medical, or financial corpora for higher accuracy in specialized domains</td></tr>
+          </table>
+
+          <div class="callout warn">
+            <strong>Common risk across all domains:</strong> hallucination, bias in training data, and over-trust in AI outputs without human verification remain the biggest open challenges as adoption scales.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end Unit I -->
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT II — Q6 to Q10
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel" id="s2">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s2',0)">Q6 · VAEs</button>
+      <button class="tab-btn" onclick="showTab('s2',1)">Q7 · GANs</button>
+      <button class="tab-btn" onclick="showTab('s2',2)">Q8 · Diffusion Models</button>
+      <button class="tab-btn" onclick="showTab('s2',3)">Q9 · Data Augmentation</button>
+      <button class="tab-btn" onclick="showTab('s2',4)">Q10 · Privacy-Preserving Data</button>
+    </div>
+
+    <!-- Q6 -->
+    <div class="tab-content active" id="s2-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q6. Describe the architecture of Autoencoders and Variational Autoencoders (VAEs). Explain the role of the latent space and derive the Evidence Lower Bound (ELBO) loss function used in VAE training. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Autoencoders — Basic Idea</h3>
+          <p>An <strong>autoencoder</strong> is a neural network trained to reconstruct its own input. It consists of an <strong>encoder</strong> that compresses the input \(x\) into a low-dimensional <strong>latent representation</strong> \(z\), and a <strong>decoder</strong> that reconstructs \(x\) from \(z\). Training minimizes reconstruction error (e.g. mean squared error) between input and output.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+              <text x="80" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Input x</text>
+              <polygon points="30,60 130,90 130,150 30,180" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="80" y="118" fill="var(--accent-hover)" font-size="11" text-anchor="middle">Encoder</text>
+              <text x="80" y="132" fill="var(--accent-hover)" font-size="11" text-anchor="middle">qφ(z|x)</text>
+
+              <ellipse cx="280" cy="115" rx="55" ry="45" fill="var(--surface2)" stroke="var(--warning)" stroke-width="1.5"/>
+              <text x="280" y="110" fill="var(--warning)" font-size="11" text-anchor="middle">Latent Space</text>
+              <text x="280" y="126" fill="var(--warning)" font-size="11" text-anchor="middle">z ~ N(μ, σ²)</text>
+
+              <polygon points="430,90 430,150 530,180 530,60" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="480" y="118" fill="var(--accent-hover)" font-size="11" text-anchor="middle">Decoder</text>
+              <text x="480" y="132" fill="var(--accent-hover)" font-size="11" text-anchor="middle">pθ(x|z)</text>
+
+              <text x="620" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Output x̂</text>
+
+              <line x1="130" y1="115" x2="225" y2="115" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="335" y1="115" x2="430" y2="115" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="80" y1="45" x2="80" y2="60" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="530" y1="115" x2="600" y2="45" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <defs>
+                <marker id="a3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/>
+                </marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 6.1 — VAE architecture: encoder maps input to a latent distribution, decoder reconstructs from a sampled z</p>
+          </div>
+
+          <h3>Standard Autoencoder vs Variational Autoencoder</h3>
+          <p>A plain (vanilla) autoencoder maps each input to a <strong>single fixed point</strong> in latent space. This makes the latent space unstructured — there's no guarantee that points near each other decode to similar, meaningful outputs, and sampling a random point in latent space usually produces garbage. This makes vanilla autoencoders bad generative models.</p>
+          <p>A <strong>Variational Autoencoder (VAE)</strong> fixes this by making the encoder output a <strong>probability distribution</strong> over latent space — typically a Gaussian defined by a mean \(\mu\) and standard deviation \(\sigma\) — instead of a single point. During training, a latent vector \(z\) is <em>sampled</em> from this distribution using the <strong>reparameterization trick</strong>:</p>
+          <div class="formula-block">\[ z = \mu + \sigma \odot \epsilon, \quad \epsilon \sim \mathcal{N}(0, I) \]</div>
+          <p>This trick lets gradients flow through the sampling step (since the randomness is isolated in \(\epsilon\)), making the whole model trainable end-to-end via backpropagation.</p>
+
+          <h3>Role of the Latent Space</h3>
+          <p>VAE training additionally forces the latent distribution for every input to stay close to a standard normal prior \(p(z) = \mathcal{N}(0, I)\). This regularization makes the latent space <strong>smooth and continuous</strong> — nearby points decode to similar, realistic outputs, and random sampling from the prior produces coherent new data. This is exactly what makes VAEs usable as <strong>generative models</strong>: after training, you can generate new samples by simply drawing \(z \sim \mathcal{N}(0,I)\) and passing it through the decoder alone.</p>
+
+          <h3>Deriving the ELBO</h3>
+          <p>We want to maximize the likelihood of the data, \(\log p_\theta(x)\), but this requires integrating over all possible latent codes:</p>
+          <div class="formula-block">\[ p_\theta(x) = \int p_\theta(x|z)\, p(z)\, dz \]</div>
+          <p>This integral is intractable for complex decoders. So instead, we introduce an approximate posterior \(q_\phi(z|x)\) (the encoder) and rewrite the log-likelihood:</p>
+          <div class="formula-block">\[ \log p_\theta(x) = \mathbb{E}_{q_\phi(z|x)}\left[\log \frac{p_\theta(x,z)}{q_\phi(z|x)}\right] + D_{KL}\big(q_\phi(z|x)\,\|\,p_\theta(z|x)\big) \]</div>
+          <p>Since KL divergence is always \(\geq 0\), the first term is a <strong>lower bound</strong> on \(\log p_\theta(x)\) — this is the <strong>Evidence Lower Bound (ELBO)</strong>:</p>
+          <div class="formula-block">\[ \log p_\theta(x) \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}\big(q_\phi(z|x)\,\|\,p(z)\big) = \text{ELBO} \]</div>
+          <p>Maximizing the ELBO (equivalently, minimizing its negative as a loss) is a tractable proxy for maximizing the true data likelihood. The ELBO decomposes into two interpretable terms:</p>
+          <ul>
+            <li><strong>Reconstruction term</strong> \(\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]\) — how well the decoder reconstructs \(x\) from a sampled \(z\); in practice this is implemented as MSE or binary cross-entropy loss.</li>
+            <li><strong>KL regularization term</strong> \(D_{KL}(q_\phi(z|x)\,\|\,p(z))\) — penalizes the encoder's distribution for straying too far from the standard normal prior, keeping the latent space smooth.</li>
+          </ul>
+          <p>The final VAE training objective (loss to minimize) is:</p>
+          <div class="formula-block">\[ \mathcal{L}_{VAE} = -\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] + D_{KL}\big(q_\phi(z|x)\,\|\,p(z)\big) \]</div>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> The reconstruction term pushes the decoder to be accurate; the KL term pushes the latent space to be smooth and generative. The tension between the two is what gives VAEs their characteristic slightly-blurry-but-well-structured generations.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="tab-content" id="s2-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q7. Explain the working principle of Generative Adversarial Networks (GANs). Describe the roles of the generator and discriminator, the minimax objective function, and the adversarial training process. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Core Idea</h3>
+          <p>A <strong>GAN</strong> consists of two neural networks trained simultaneously in an adversarial (competitive) game: a <strong>Generator (G)</strong> that tries to create fake data indistinguishable from real data, and a <strong>Discriminator (D)</strong> that tries to tell real data apart from the Generator's fakes. Neither network sees labeled "how to generate images" data — the entire learning signal comes from this competition.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+              <text x="70" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Random Noise z</text>
+              <rect x="20" y="60" width="100" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="70" y="80" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">z ~ N(0,I)</text>
+
+              <rect x="20" y="120" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="70" y="142" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Generator</text>
+              <text x="70" y="158" fill="var(--accent-hover)" font-size="11" text-anchor="middle">G(z)</text>
+
+              <text x="220" y="150" fill="var(--text)" font-size="11" text-anchor="middle">Fake data G(z)</text>
+
+              <rect x="330" y="60" width="120" height="130" rx="8" fill="var(--surface)" stroke="var(--accent-hover)" stroke-width="1.5"/>
+              <text x="390" y="120" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Discriminator</text>
+              <text x="390" y="136" fill="var(--accent-hover)" font-size="11" text-anchor="middle">D(x)</text>
+
+              <text x="220" y="70" fill="var(--text)" font-size="11" text-anchor="middle">Real data x</text>
+              <rect x="330" y="220" width="0" height="0"/>
+
+              <rect x="500" y="105" width="150" height="40" rx="6" fill="var(--surface2)" stroke="var(--warning)" stroke-width="1.5"/>
+              <text x="575" y="130" fill="var(--warning)" font-size="11.5" text-anchor="middle">Real or Fake?</text>
+
+              <line x1="70" y1="90" x2="70" y2="120" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="120" y1="145" x2="330" y2="120" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="230" y1="55" x2="330" y2="95" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="450" y1="125" x2="500" y2="125" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+
+              <path d="M575,145 C575,220 100,220 70,195" fill="none" stroke="var(--danger)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a5)"/>
+              <text x="330" y="235" fill="var(--danger)" font-size="10.5" text-anchor="middle">Backprop: gradient trains G to fool D</text>
+
+              <defs>
+                <marker id="a4" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+                <marker id="a5" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--danger)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 7.1 — GAN architecture: Generator produces fakes from noise; Discriminator judges real vs fake; gradients flow back to improve both</p>
+          </div>
+
+          <h3>Role of the Generator</h3>
+          <p>The Generator \(G\) takes a random noise vector \(z\) (sampled from a simple prior like \(\mathcal{N}(0,I)\)) and maps it to a synthetic data sample \(G(z)\) — e.g. an image. Its goal is to make \(G(z)\) so realistic that the Discriminator cannot distinguish it from real data. It never sees real data directly; it only learns from the gradient signal passed back through the Discriminator.</p>
+
+          <h3>Role of the Discriminator</h3>
+          <p>The Discriminator \(D\) is a binary classifier that takes a sample (real or generated) and outputs the probability that it is real. It is trained on both real data (label = 1) and the Generator's fakes (label = 0), and its goal is to get as good as possible at telling them apart.</p>
+
+          <h3>The Minimax Objective</h3>
+          <p>The two networks play a two-player minimax game with value function \(V(D, G)\):</p>
+          <div class="formula-block">\[ \min_{G} \max_{D} V(D,G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))] \]</div>
+          <ul>
+            <li><strong>D maximizes</strong> \(V\): it wants \(D(x) \to 1\) for real data and \(D(G(z)) \to 0\) for fake data — correctly classifying both.</li>
+            <li><strong>G minimizes</strong> \(V\): it wants \(D(G(z)) \to 1\), i.e. it wants the Discriminator to be fooled into thinking its fakes are real.</li>
+          </ul>
+          <p>At the theoretical equilibrium (Nash equilibrium) of this game, the Generator's distribution exactly matches the real data distribution, and the Discriminator can do no better than random guessing — \(D(x) = 0.5\) everywhere.</p>
+
+          <h3>Adversarial Training Process</h3>
+          <ol>
+            <li>Sample a batch of real data \(x\) and a batch of noise \(z\); generate fakes \(G(z)\).</li>
+            <li><strong>Train D:</strong> update the Discriminator's weights to maximize \(V(D,G)\) — improving its ability to separate real from fake (Generator weights frozen).</li>
+            <li><strong>Train G:</strong> update the Generator's weights to minimize \(\log(1 - D(G(z)))\) (or equivalently maximize \(\log D(G(z))\) for better gradients) — improving its ability to fool D (Discriminator weights frozen).</li>
+            <li>Alternate steps 2 and 3 repeatedly. As training progresses, both networks improve together — the Generator produces increasingly realistic samples, and the Discriminator gets increasingly good at spotting subtle flaws, pushing the Generator further.</li>
+          </ol>
+
+          <div class="callout warn">
+            <strong>Practical challenges:</strong> GAN training is notoriously unstable — <strong>mode collapse</strong> (Generator produces limited variety), <strong>vanishing gradients</strong> (if D becomes too strong too fast, G gets no useful signal), and lack of a clear convergence metric are common issues addressed by techniques like Wasserstein GAN, gradient penalty, and careful learning-rate balancing.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="tab-content" id="s2-tab-2">
+      <div class="question-block">
+        <h2 class="q-title">Q8. Explain the working principles of Diffusion Models. Describe the forward (noise addition) and reverse (denoising) processes, and discuss how diffusion models generate high-quality samples. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Core Idea</h3>
+          <p><strong>Diffusion models</strong> (e.g. DDPM — Denoising Diffusion Probabilistic Models) generate data by learning to reverse a gradual noising process. The intuition: it's easy to destroy an image by slowly adding noise until it becomes pure static; a diffusion model learns to run this process <strong>backward</strong> — starting from pure noise and gradually removing it, step by step, until a realistic sample emerges.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
+              <text x="360" y="24" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Forward Process q(xₜ | xₜ₋₁) — adds noise</text>
+
+              <g>
+                <circle cx="60" cy="90" r="30" fill="var(--surface2)" stroke="var(--success)" stroke-width="2"/>
+                <text x="60" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x₀</text>
+                <circle cx="220" cy="90" r="30" fill="var(--surface2)" stroke="var(--border)" stroke-width="2" stroke-dasharray="3,2"/>
+                <text x="220" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x₁</text>
+                <circle cx="380" cy="90" r="30" fill="var(--surface2)" stroke="var(--border)" stroke-width="2" stroke-dasharray="3,2"/>
+                <text x="380" y="95" fill="var(--text)" font-size="11" text-anchor="middle">...</text>
+                <circle cx="540" cy="90" r="30" fill="var(--surface2)" stroke="var(--danger)" stroke-width="2"/>
+                <text x="540" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x_T</text>
+                <text x="620" y="95" fill="var(--danger)" font-size="10.5" text-anchor="middle">pure noise</text>
+
+                <line x1="90" y1="90" x2="190" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+                <line x1="250" y1="90" x2="350" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+                <line x1="410" y1="90" x2="510" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+              </g>
+
+              <g>
+                <line x1="510" y1="150" x2="410" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+                <line x1="350" y1="150" x2="250" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+                <line x1="190" y1="150" x2="90" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+              </g>
+              <text x="360" y="185" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Reverse Process pθ(xₜ₋₁ | xₜ) — removes noise (learned by neural net)</text>
+
+              <defs>
+                <marker id="a6" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--warning)"/></marker>
+                <marker id="a7" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-hover)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 8.1 — Forward diffusion gradually adds noise; the reverse process, learned by a neural network, removes it step by step to generate new samples</p>
+          </div>
+
+          <h3>Forward Process (Noise Addition)</h3>
+          <p>The forward process is a fixed (not learned) <strong>Markov chain</strong> that gradually adds small amounts of Gaussian noise to a data sample \(x_0\) over \(T\) timesteps, until \(x_T\) is (approximately) pure noise:</p>
+          <div class="formula-block">\[ q(x_t \mid x_{t-1}) = \mathcal{N}\big(x_t;\ \sqrt{1-\beta_t}\,x_{t-1},\ \beta_t I\big) \]</div>
+          <p>Here \(\beta_t\) is a small variance added at step \(t\), following a fixed schedule. A convenient property of Gaussian noising is that we can jump directly from \(x_0\) to any noisy step \(x_t\) in closed form, without simulating every intermediate step:</p>
+          <div class="formula-block">\[ q(x_t \mid x_0) = \mathcal{N}\big(x_t;\ \sqrt{\bar\alpha_t}\,x_0,\ (1-\bar\alpha_t) I\big), \quad \bar\alpha_t = \prod_{s=1}^{t}(1-\beta_s) \]</div>
+
+          <h3>Reverse Process (Denoising)</h3>
+          <p>The reverse process is what the model actually <strong>learns</strong>. It is also modeled as a Markov chain, but each step now attempts to remove a small amount of noise:</p>
+          <div class="formula-block">\[ p_\theta(x_{t-1} \mid x_t) = \mathcal{N}\big(x_{t-1};\ \mu_\theta(x_t, t),\ \Sigma_\theta(x_t, t)\big) \]</div>
+          <p>In practice, a neural network (typically a <strong>U-Net</strong>) is trained to predict the noise \(\epsilon\) that was added at step \(t\), given the noisy input \(x_t\) and the timestep \(t\). The training loss is simply the mean squared error between the true noise and the predicted noise:</p>
+          <div class="formula-block">\[ \mathcal{L} = \mathbb{E}_{x_0,\, \epsilon,\, t}\Big[\ \lVert \epsilon - \epsilon_\theta(x_t, t) \rVert^2\ \Big] \]</div>
+          <p>Once trained, generation starts by sampling pure noise \(x_T \sim \mathcal{N}(0, I)\) and repeatedly applying the learned reverse step for \(t = T, T-1, \dots, 1\), gradually refining the noise into a coherent sample \(x_0\).</p>
+
+          <h3>Why Diffusion Models Produce High-Quality Samples</h3>
+          <ul>
+            <li><strong>Gradual refinement:</strong> Breaking generation into many small denoising steps is an easier learning problem than generating an entire realistic sample in one shot (as GANs attempt), leading to sharper, more diverse outputs.</li>
+            <li><strong>Stable training:</strong> Unlike GANs, there is no adversarial game — training is a straightforward regression (predict the noise), which avoids mode collapse and training instability.</li>
+            <li><strong>Better mode coverage:</strong> Diffusion models tend to cover the full diversity of the training distribution rather than collapsing onto a few common modes.</li>
+            <li><strong>Guidance mechanisms:</strong> Techniques like classifier-free guidance let the reverse process be conditioned on text prompts, enabling controllable, high-fidelity generation (as in DALL·E 2, Stable Diffusion, Midjourney).</li>
+          </ul>
+
+          <div class="callout warn">
+            <strong>Trade-off:</strong> The main cost of this quality is <strong>inference speed</strong> — generating a sample requires many sequential denoising steps (often 20–1000), making diffusion models slower at inference than a single forward pass through a GAN generator. Techniques like DDIM sampling reduce the number of steps needed.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="tab-content" id="s2-tab-3">
+      <div class="question-block">
+        <h2 class="q-title">Q9. Explain data augmentation techniques using generative models. Discuss how these techniques improve the performance and robustness of downstream machine learning models. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>What is Generative Data Augmentation?</h3>
+          <p>Traditional data augmentation applies simple transformations (rotation, cropping, flipping for images; synonym replacement for text) to existing data. <strong>Generative data augmentation</strong> goes further — it uses generative models (GANs, VAEs, diffusion models, or LLMs) to synthesize <strong>entirely new, realistic training examples</strong> rather than just perturbing existing ones, especially useful when real data is scarce, imbalanced, or expensive to collect/label.</p>
+
+          <h3>Key Techniques</h3>
+          <ul>
+            <li><strong>GAN-based augmentation:</strong> A GAN is trained on the existing (often minority-class) dataset, then used to generate additional synthetic samples of that class. Widely used in medical imaging, where diseased-tissue samples are rare compared to healthy ones.</li>
+            <li><strong>VAE-based augmentation:</strong> Because the VAE latent space is smooth, new samples can be created by interpolating between two real examples in latent space, or by sampling nearby points around a real example's latent code — producing plausible variations.</li>
+            <li><strong>Diffusion-based augmentation:</strong> A diffusion model trained on the target domain generates diverse, high-fidelity synthetic samples, often producing higher quality and more diversity than GAN-based approaches.</li>
+            <li><strong>LLM-based text augmentation:</strong> An LLM paraphrases existing sentences, generates new examples in a given style, or produces synthetic labeled examples for low-resource NLP tasks (e.g. generating more examples of a rare intent class for a chatbot).</li>
+            <li><strong>Conditional generation for class balancing:</strong> Class-conditional GANs/diffusion models can be specifically prompted to generate more examples of underrepresented classes, directly addressing class imbalance.</li>
+          </ul>
+
+          <h3>How This Improves Downstream Models</h3>
+          <table>
+            <tr><th>Benefit</th><th>Explanation</th></tr>
+            <tr><td>Addresses class imbalance</td><td>Synthetic minority-class samples reduce bias toward the majority class, improving recall on rare classes</td></tr>
+            <tr><td>Improves generalization</td><td>More diverse training data reduces overfitting to the limited patterns present in a small real dataset</td></tr>
+            <tr><td>Increases robustness</td><td>Exposure to a wider variety of synthetic variations makes models more resilient to distribution shift and edge cases at test time</td></tr>
+            <tr><td>Reduces data collection cost</td><td>Synthetic data reduces reliance on expensive/slow real-world data collection and manual labeling</td></tr>
+            <tr><td>Preserves privacy</td><td>Synthetic samples can replace sensitive real data (e.g. patient records) during model development</td></tr>
+          </table>
+
+          <div class="callout warn">
+            <strong>Caution:</strong> Poor-quality or unrealistic synthetic data can introduce artifacts or biases of its own into the downstream model — synthetic data quality should always be validated (e.g. via FID score for images, or human evaluation) before being trusted for training.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="tab-content" id="s2-tab-4">
+      <div class="question-block">
+        <h2 class="q-title">Q10. Discuss the concept of privacy-preserving synthetic data generation. Explain how generative models can be designed to protect sensitive information while preserving statistical utility of the data. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>Why Privacy-Preserving Synthetic Data?</h3>
+          <p>Many high-value datasets — medical records, financial transactions, personal user data — cannot be shared or used freely due to privacy regulations (HIPAA, GDPR) or ethical concerns. <strong>Privacy-preserving synthetic data generation</strong> uses generative models to create artificial datasets that statistically resemble the real data (preserving distributions, correlations, and patterns useful for analysis or model training) <strong>without containing any real individual's actual record</strong>.</p>
+
+          <h3>Core Techniques</h3>
+
+          <h4>1. Differential Privacy (DP)</h4>
+          <p>Differential privacy provides a mathematical guarantee that the presence or absence of any single individual's data in the training set has a negligible, bounded effect on the model's output. This is achieved by adding calibrated noise during training.</p>
+          <ul>
+            <li><strong>DP-SGD (Differentially Private Stochastic Gradient Descent):</strong> clips per-example gradients and adds Gaussian noise to them before updating model weights, bounding how much any single data point can influence the trained generative model.</li>
+            <li>The privacy guarantee is quantified by a parameter \(\varepsilon\) (epsilon) — smaller \(\varepsilon\) means stronger privacy but typically lower data utility, representing a fundamental privacy-utility trade-off.</li>
+          </ul>
+
+          <h4>2. DP-GANs</h4>
+          <p>A GAN whose Discriminator is trained using DP-SGD. Since the Generator only ever learns through gradients passed back from the Discriminator, making the Discriminator differentially private effectively makes the entire generation pipeline private — the Generator never gets a strong enough signal to memorize and reproduce any individual real record.</p>
+
+          <h4>3. Federated Generative Modeling</h4>
+          <p>The generative model is trained across multiple decentralized data sources (e.g. different hospitals) without the raw data ever leaving its original location — only model updates (gradients) are shared and aggregated centrally, combined with DP noise for additional protection.</p>
+
+          <h4>4. Membership Inference Defense</h4>
+          <p>Generative models are specifically evaluated against <strong>membership inference attacks</strong> (attempts to determine whether a specific real record was in the training set) to ensure the synthetic data generator hasn't simply memorized and can reproduce training examples.</p>
+
+          <h3>Preserving Statistical Utility</h3>
+          <p>The goal is not just privacy but also usefulness — synthetic data must preserve enough statistical structure (marginal distributions, correlations between features, class balance) that models trained on it perform comparably to models trained on the real data. This is validated using:</p>
+          <ul>
+            <li><strong>Utility metrics:</strong> training a downstream classifier on synthetic data and testing on real held-out data (Train-Synthetic-Test-Real, TSTR)</li>
+            <li><strong>Statistical similarity tests:</strong> comparing distributions of the real vs synthetic data (e.g. KS-test on individual features, correlation matrix comparison)</li>
+            <li><strong>Fidelity scores:</strong> such as FID for images, or custom domain-specific metrics for tabular/medical data</li>
+          </ul>
+
+          <div class="callout good">
+            <strong>Key insight:</strong> Privacy-preserving synthetic data generation is fundamentally a balancing act — the \(\varepsilon\) in differential privacy and the noise added during training directly trade off against data utility. Practitioners must choose an operating point appropriate to the sensitivity of the data and the intended downstream use.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end Unit II -->
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT III — Q11 to Q12
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel" id="s3">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s3',0)">Q11 · Chain-of-Thought</button>
+      <button class="tab-btn" onclick="showTab('s3',1)">Q12 · Self-Consistency</button>
+    </div>
+
+    <!-- Q11 -->
+    <div class="tab-content active" id="s3-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q11. Explain Chain-of-Thought (CoT) reasoning in Large Language Models. Demonstrate, with an example, how CoT prompting improves performance on multi-step reasoning tasks. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>What is Chain-of-Thought Reasoning?</h3>
+          <p><strong>Chain-of-Thought (CoT) prompting</strong> is a technique where an LLM is prompted (either through instruction or via few-shot examples) to generate <strong>intermediate reasoning steps</strong> before producing a final answer, instead of jumping straight to the answer. Rather than mapping the question directly to the answer, the model is guided to "think out loud," breaking a complex problem into a sequence of smaller, simpler sub-steps — similar to how a student shows their working on a math exam rather than writing only the final number.</p>
+
+          <h3>Why It Works</h3>
+          <ul>
+            <li>LLMs generate text autoregressively — each token is conditioned on everything generated before it. By first generating reasoning steps, the model conditions its final answer on its own intermediate deductions, which sharply reduces errors on tasks that require multiple logical or arithmetic steps.</li>
+            <li>Without CoT, the model must implicitly perform all reasoning "in one shot" within a single forward pass to the answer token — which fails on anything beyond fairly simple problems.</li>
+            <li>CoT emerges as a capability mainly in sufficiently large models — it is considered an <strong>emergent ability</strong> that appears once model scale crosses a certain threshold.</li>
+          </ul>
+
+          <h3>Example — Standard Prompting vs CoT Prompting</h3>
+          <p><strong>Problem:</strong> "Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many tennis balls does he have now?"</p>
+
+          <div class="callout warn">
+            <strong>Standard prompting (direct answer):</strong><br>
+            <strong>Q:</strong> Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many does he have now?<br>
+            <strong>A:</strong> 11
+            <p style="margin-top:8px;">Without shown reasoning, the model has a much higher chance of making an arithmetic slip on multi-step problems, especially as the number of steps grows.</p>
+          </div>
+
+          <div class="callout good">
+            <strong>Chain-of-Thought prompting:</strong><br>
+            <strong>Q:</strong> Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many does he have now?<br>
+            <strong>A:</strong> Roger started with 5 balls. 2 cans of 3 tennis balls each is 2 × 3 = 6 tennis balls. 5 + 6 = 11. The answer is 11.
+            <p style="margin-top:8px;">By explicitly writing out "2 cans × 3 balls = 6" and then "5 + 6 = 11" as separate steps, the model is far less likely to skip or miscombine a step — each intermediate result is grounded in the text before the final answer is produced.</p>
+          </div>
+
+          <h3>Where CoT Helps Most</h3>
+          <table>
+            <tr><th>Task Type</th><th>Example</th></tr>
+            <tr><td>Arithmetic reasoning</td><td>Multi-step word problems (as above)</td></tr>
+            <tr><td>Commonsense reasoning</td><td>"If it's raining and John forgot his umbrella, what should he do?"</td></tr>
+            <tr><td>Symbolic reasoning</td><td>Tracking state across a sequence of operations (e.g. last-letter concatenation)</td></tr>
+            <tr><td>Multi-hop question answering</td><td>Questions requiring combining facts from multiple sources</td></tr>
+          </table>
+
+          <h3>Prompting Variants</h3>
+          <ul>
+            <li><strong>Few-shot CoT:</strong> the prompt includes a few worked examples showing step-by-step reasoning before the actual question.</li>
+            <li><strong>Zero-shot CoT:</strong> simply appending a phrase like <em>"Let's think step by step"</em> to the prompt, without any worked examples, has been shown to reliably trigger step-by-step reasoning in large models.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Key takeaway:</strong> CoT doesn't add any new knowledge to the model — it restructures <em>how</em> the model uses its existing knowledge, giving it "room to think" across multiple generation steps instead of forcing a single leap to the answer.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="tab-content" id="s3-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q12. Explain the concept of self-consistency prompting. Describe how it can be combined with Chain-of-Thought reasoning to improve the reliability of LLM outputs. <span class="marks-badge">8M</span></h2>
+        <div class="answer-body">
+
+          <h3>The Problem with a Single CoT Path</h3>
+          <p>Even with Chain-of-Thought prompting, an LLM generates text via sampling — a single reasoning path can go wrong at any step (a slip in arithmetic, a wrong logical branch), and that one flawed path is all a standard CoT approach relies on to reach its final answer. There's no way to check the answer against alternative ways of solving the same problem.</p>
+
+          <h3>What is Self-Consistency?</h3>
+          <p><strong>Self-consistency</strong> is a decoding strategy that addresses this by generating <strong>multiple independent reasoning paths</strong> for the same question (by sampling with temperature &gt; 0 rather than always taking the single most likely path), extracting the final answer from each path, and then selecting the answer that occurs <strong>most frequently</strong> across all the sampled paths — essentially a majority vote over diverse chains of thought.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="110" width="130" height="40" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="85" y="135" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Question</text>
+
+              <rect x="220" y="20" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="45" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 1 → Answer: 11</text>
+
+              <rect x="220" y="90" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="115" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 2 → Answer: 11</text>
+
+              <rect x="220" y="160" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="185" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 3 → Answer: 9</text>
+
+              <rect x="220" y="230" width="160" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="248" fill="var(--text-muted)" font-size="9.5" text-anchor="middle">... Path 4, 5 → 11, 11</text>
+
+              <line x1="150" y1="130" x2="220" y2="40" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="110" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="180" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="243" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+
+              <rect x="530" y="105" width="160" height="50" rx="8" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="610" y="126" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">Majority Vote</text>
+              <text x="610" y="142" fill="#fff" font-size="11" text-anchor="middle">Final Answer: 11</text>
+
+              <line x1="380" y1="40" x2="530" y2="115" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="110" x2="530" y2="125" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="180" x2="530" y2="140" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="243" x2="530" y2="150" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+
+              <defs>
+                <marker id="a8" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 12.1 — Self-consistency: sample several CoT reasoning paths for the same question, then take a majority vote over their final answers</p>
+          </div>
+
+          <h3>How It Combines with Chain-of-Thought</h3>
+          <ol>
+            <li><strong>Prompt with CoT:</strong> Use a CoT prompt (few-shot or "let's think step by step") so the model produces explicit reasoning steps, not just a direct answer.</li>
+            <li><strong>Sample multiple times:</strong> Instead of greedy decoding (always picking the highest-probability next token), sample the model's output several times (e.g. 10–40 times) with a non-zero temperature, so each run can take a genuinely different reasoning path.</li>
+            <li><strong>Extract final answers:</strong> Parse out just the final answer from each of the generated reasoning chains, discarding the reasoning text itself at this stage.</li>
+            <li><strong>Marginalize via majority vote:</strong> Select the answer that appears most often across all sampled paths as the final output. Paths that reach the same correct answer via different routes reinforce each other, while a single flawed path gets outvoted.</li>
+          </ol>
+
+          <h3>Why This Improves Reliability</h3>
+          <ul>
+            <li><strong>Error cancellation:</strong> If a mistake in one reasoning path is essentially "random noise," it's unlikely that the same mistake recurs identically across many independently sampled paths — so the correct, more common answer dominates the vote.</li>
+            <li><strong>Captures problem diversity:</strong> Many reasoning problems can be solved via multiple valid approaches; sampling diverse paths mirrors how a human might double-check an answer using a different method.</li>
+            <li><strong>No extra training required:</strong> Self-consistency is purely a decoding-time strategy — it requires no fine-tuning, just multiple forward passes at inference time.</li>
+            <li><strong>Confidence signal:</strong> The proportion of paths agreeing on the majority answer can itself be used as a rough confidence estimate for the final output.</li>
+          </ul>
+
+          <div class="callout warn">
+            <strong>Trade-off:</strong> Self-consistency multiplies inference cost by the number of sampled paths (e.g. 20–40× more generation calls), so it's typically reserved for cases where correctness matters more than latency or cost — such as exam-style reasoning benchmarks or high-stakes decision support, rather than every everyday chatbot query.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end Unit III -->
+
+</div><!-- end page-wrapper -->
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function showTab(section, i) {
+    const panel = document.getElementById(section);
+    panel.querySelectorAll('.tab-content').forEach((el, idx) => {
+      el.classList.toggle('active', idx === i);
+    });
+    panel.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === i);
+    });
+  }
+</script>
+</body>
+</html>
