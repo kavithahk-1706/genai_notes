@@ -663,7 +663,7 @@ END FUNCTION</code></pre>
 
           <h4>Training Objective</h4>
           <p>Minimise the next-token cross-entropy loss over the task dataset \(\mathcal{D}\):</p>
-          <div class="formula">\[ \mathcal{L}(\theta) = -\frac{1}{N}\sum_{i=1}^{N}\sum_{t=1}^{T_i} \log P_\theta\big(y_t^{(i)} \mid x^{(i)}, y_{<t}^{(i)}\big) \qquad \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal{L} \]</div>
+          <div class="formula">\[ \mathcal{L}(\theta) = -\frac{1}{N}\sum_{i=1}^{N}\sum_{t=1}^{T_i} \log P_\theta\big(y_t^{(i)} \mid x^{(i)}, y_{&lt;t}^{(i)}\big) \qquad \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal{L} \]</div>
 
           <h4>Fine-Tuning Workflow</h4>
           <ol>
