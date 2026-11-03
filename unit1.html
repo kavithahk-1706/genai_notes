@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit I — Foundations of Generative AI & LLMs | Generative AI with LLMs</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <nav class="unit-nav">
+    <span class="nav-title">Unit I: Foundations of Generative AI &amp; LLMs</span>
+    <a href="unit2.html" class="nav-next">Unit II →</a>
+    <a href="index.html" class="nav-home">Home</a>
+  </nav>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" onclick="showTab(0)">Q1</button>
+    <button class="tab-btn" onclick="showTab(1)">Q2</button>
+    <button class="tab-btn" onclick="showTab(2)">Q3</button>
+    <button class="tab-btn" onclick="showTab(3)">Q4</button>
+    <button class="tab-btn" onclick="showTab(4)">Q5</button>
+    <button class="tab-btn" onclick="showTab(5)">Q6</button>
+    <button class="tab-btn" onclick="showTab(6)">Q7</button>
+    <button class="tab-btn" onclick="showTab(7)">Q8</button>
+    <button class="tab-btn" onclick="showTab(8)">Q9</button>
+    <button class="tab-btn" onclick="showTab(9)">Q10</button>
+  </div>
+
+  <!-- Q1 -->
+  <div class="tab-content" id="tab-0">
+    <div class="question-block" data-qid="u1-q1">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q1', 0)" aria-label="Mark as done"></button>
+        <h2 class="q-title">1. Explain the evolution of Generative AI from early statistical language models to modern foundation models. Discuss the key differences between traditional AI systems and Generative AI.</h2>
+      </div>
+      <div class="answer-body">
+<p>Generative AI is the result of about seven decades of progress in <em>modelling the probability of language</em>. Every stage below fixed one weakness of the previous stage.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 728 110" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="104.22500000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="62.112500000000004" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">N-gram models</text><text x="62.112500000000004" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">1950s–1990s</text><line x1="116.22500000000001" y1="39.0" x2="142.22500000000002" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a71)"/><rect x="144.22500000000002" y="16" width="110.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="199.22500000000002" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Neural LMs</text><text x="199.22500000000002" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">2000s: RNN, LSTM</text><line x1="256.225" y1="39.0" x2="282.225" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a71)"/><rect x="284.225" y="16" width="142.175" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="355.3125" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Seq2Seq + attention</text><text x="355.3125" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">2014–2017</text><line x1="428.40000000000003" y1="39.0" x2="454.40000000000003" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a71)"/><rect x="456.40000000000003" y="16" width="91.575" height="46" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="502.18750000000006" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Transformer</text><text x="502.18750000000006" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">2017</text><line x1="549.975" y1="39.0" x2="575.975" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a71)"/><rect x="577.975" y="16" width="129.525" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="642.7375000000001" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Foundation models</text><text x="642.7375000000001" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">2018 onwards</text><text x="358.75" y="98" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">each step removed one limitation of the previous one</text></svg>
+</div>
+<h3>Stage-by-stage evolution</h3>
+<table>
+  <tr><th>Stage</th><th>Idea</th><th>Limitation that led to the next stage</th></tr>
+  <tr><td><strong>Statistical (n-gram) models</strong>, 1950s&ndash;90s</td><td>Count how often a word follows the previous \(n-1\) words:<br>\(P(w_t\mid w_{t-n+1:t-1})=\dfrac{\mathrm{count}(w_{t-n+1:t})}{\mathrm{count}(w_{t-n+1:t-1})}\)</td><td>Only a short local context; unseen word combinations get probability 0 (data sparsity); no notion of similar words.</td></tr>
+  <tr><td><strong>Neural language models</strong>, 2000s</td><td>Dense word embeddings; RNN/LSTM carry a hidden state: \(P(w_t\mid w_{&lt;t})=\mathrm{softmax}(Wh_t)\)</td><td>Words must be processed one at a time (slow, not parallel); vanishing gradients for long-range dependencies.</td></tr>
+  <tr><td><strong>Seq2Seq + attention</strong>, 2014&ndash;17</td><td>Encoder&ndash;decoder; the decoder looks back at all encoder states instead of one fixed vector.</td><td>Still built on recurrence, so training stays sequential.</td></tr>
+  <tr><td><strong>Transformer</strong>, 2017</td><td>Self-attention only, computed for all tokens in parallel (Q3, Q4).</td><td>Needs huge data and compute &mdash; which GPUs/TPUs now provide.</td></tr>
+  <tr><td><strong>Foundation models</strong>, 2018&ndash;</td><td>BERT, GPT, T5 pre-trained on internet-scale data, then adapted by prompting or fine-tuning (Q2). GPT-3 (2020) and ChatGPT (2022) made them mainstream.</td><td>Hallucination, bias, cost: the topics of the later units.</td></tr>
+</table>
+<p>In plain words: early phones remembered only your last word or two (n-gram); RNNs had a short memory; a Transformer can look back at the whole message at once to choose the next word.</p>
+<h3>Traditional AI vs Generative AI</h3>
+<table>
+  <tr><th>Aspect</th><th>Traditional (discriminative) AI</th><th>Generative AI</th></tr>
+  <tr><td>Question answered</td><td>&ldquo;Which category is this?&rdquo; &mdash; learns \(P(y\mid x)\)</td><td>&ldquo;What would a plausible new example look like?&rdquo; &mdash; learns \(P(x)\) or \(P(x,y)\)</td></tr>
+  <tr><td>Output</td><td>Label, score or number</td><td>New text, image, audio or code</td></tr>
+  <tr><td>Training data</td><td>Task-specific labelled data</td><td>Large, broad, mostly unlabelled data (self-supervised)</td></tr>
+  <tr><td>Adaptability</td><td>One model per task</td><td>One general model, adapted by prompting/fine-tuning</td></tr>
+  <tr><td>Examples</td><td>Spam filter, credit scoring</td><td>ChatGPT, DALL&middot;E, Stable Diffusion</td></tr>
+</table>
+<p>The shift is from <strong>recognition to creation</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="tab-content" id="tab-1">
+    <div class="question-block" data-qid="u1-q2">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q2', 1)" aria-label="Mark as done"></button>
+        <h2 class="q-title">2. Describe the concept of Foundation Models. Explain how they differ from traditional task-specific machine learning models, and discuss their role in enabling Large Language Models.</h2>
+      </div>
+      <div class="answer-body">
+<p>A <strong>foundation model</strong> is a very large model, usually a Transformer, <strong>pre-trained on broad, internet-scale data with a self-supervised objective</strong>, so that one model can serve as the base for many downstream tasks. &ldquo;Foundation&rdquo; because many applications are built on top of it, like rooms on a building's foundation.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a72" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="250" y="71" width="160" height="48" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="330.0" y="94.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Foundation model</text><text x="330.0" y="108.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">pre-trained once</text><rect x="25" y="22" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="70.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Summarise</text><line x1="200.0" y1="71" x2="70" y2="52" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/><rect x="205" y="22" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="250.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Translate</text><line x1="290.0" y1="71" x2="250" y2="52" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/><rect x="385" y="22" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="430.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Code</text><line x1="380.0" y1="71" x2="430" y2="52" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/><rect x="545" y="22" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="590.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Q&amp;A</text><line x1="460.0" y1="71" x2="590" y2="52" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/><rect x="115" y="152" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="160.0" y="171.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Chat</text><line x1="245.0" y1="119" x2="160" y2="152" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/><rect x="455" y="152" width="90" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="500.0" y="171.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Classify</text><line x1="415.0" y1="119" x2="500" y2="152" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a72)"/></svg>
+</div>
+<h3>Self-supervised pre-training objectives</h3>
+<p>No manual labels are needed: the labels come from the data itself.</p>
+<div class="formula">\[\mathcal L_{\text{next-token}}=-\sum_{t}\log P_\theta(x_t\mid x_{&lt;t})\qquad\qquad \mathcal L_{\text{masked}}=-\sum_{i\in M}\log P_\theta(x_i\mid x_{\setminus M})\]</div>
+<p>The first is used by GPT-style (decoder) models, the second by BERT-style (encoder) models, where \(M\) is the set of masked positions.</p>
+<h3>Key characteristics</h3>
+<ul>
+  <li><strong>Scale:</strong> billions of parameters, trained on trillions of tokens.</li>
+  <li><strong>Self-supervision:</strong> learns from structure in the data, so unlabelled web text is enough.</li>
+  <li><strong>Emergent abilities:</strong> few-shot reasoning, arithmetic and coding appear at sufficient scale without being trained explicitly.</li>
+  <li><strong>Adaptability:</strong> same model adapted by prompting, in-context learning, or fine-tuning (Q41).</li>
+  <li><strong>Multimodal versions</strong> also exist (CLIP, GPT-4V, Gemini).</li>
+</ul>
+<h3>Foundation models vs task-specific models</h3>
+<table>
+  <tr><th>Aspect</th><th>Task-specific model</th><th>Foundation model</th></tr>
+  <tr><td>Training</td><td>From scratch for each task on labelled data</td><td>Pre-trained once on broad data; reused</td></tr>
+  <tr><td>Generalisation</td><td>Limited to the task it was trained for</td><td>Broad knowledge; transfers to new tasks</td></tr>
+  <tr><td>Cost</td><td>Training cost repeated for every task</td><td>Large one-time cost, cheap reuse</td></tr>
+  <tr><td>Deployment</td><td>A new model per application</td><td>One base + light adaptation</td></tr>
+  <tr><td>Data needed per task</td><td>Large labelled set</td><td>Few or zero examples (prompting)</td></tr>
+</table>
+<h3>Role in enabling LLMs</h3>
+<p>An LLM is the foundation model for language. The paradigm &ldquo;<em>pre-train once at scale, adapt cheaply</em>&rdquo; is what lets GPT, Claude and Llama do translation, summarisation, coding and chat without a separate model for each. <strong>Risks:</strong> any bias or error in the foundation model is inherited by every application built on it (homogenisation), and pre-training is very expensive.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="tab-content" id="tab-2">
+    <div class="question-block" data-qid="u1-q3">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q3', 2)" aria-label="Mark as done"></button>
+        <h2 class="q-title">3. Explain the Transformer architecture in detail with a neat diagram. Describe the roles of the encoder and decoder stacks, and explain how they interact in encoder-decoder based models.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Why Transformers?</h3>
+          <p>Before Transformers, sequence models like RNNs and LSTMs processed tokens one at a time, which made training slow and made it hard to capture long-range dependencies. The Transformer, introduced in <strong>"Attention Is All You Need" (Vaswani et al., 2017)</strong>, removes recurrence entirely and relies purely on the <strong>self-attention mechanism</strong>, allowing every token to attend to every other token in parallel.</p>
+
+          <h3>Overall Architecture</h3>
+          <p>The Transformer follows an <strong>encoder–decoder</strong> structure. The encoder maps an input sequence into a set of continuous representations; the decoder uses those representations, along with what it has generated so far, to produce the output sequence one token at a time.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 480" xmlns="http://www.w3.org/2000/svg">
+              <!-- Encoder stack -->
+              <text x="180" y="28" fill="var(--accent-hover)" font-size="15" font-weight="700" text-anchor="middle">ENCODER STACK (×N)</text>
+              <rect x="60" y="40" width="240" height="330" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+
+              <rect x="80" y="290" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="180" y="311" fill="var(--text)" font-size="12" text-anchor="middle">Feed Forward</text>
+
+              <rect x="80" y="240" width="200" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="180" y="257" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="80" y="190" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="180" y="211" fill="var(--text)" font-size="12" text-anchor="middle">Multi-Head Self-Attention</text>
+
+              <rect x="80" y="140" width="200" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="180" y="157" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <text x="180" y="120" fill="var(--text-dim)" font-size="18" text-anchor="middle">↑ ×N</text>
+
+              <rect x="80" y="90" width="200" height="30" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="180" y="110" fill="var(--text)" font-size="11" text-anchor="middle">Input Embedding + Positional Encoding</text>
+
+              <text x="180" y="370" fill="var(--text-muted)" font-size="11" text-anchor="middle">Input Tokens</text>
+
+              <!-- arrows inside encoder -->
+              <line x1="180" y1="120" x2="180" y2="140" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="166" x2="180" y2="190" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="224" x2="180" y2="240" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="180" y1="266" x2="180" y2="290" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- Decoder stack -->
+              <text x="600" y="28" fill="var(--accent-hover)" font-size="15" font-weight="700" text-anchor="middle">DECODER STACK (×N)</text>
+              <rect x="480" y="40" width="240" height="380" rx="8" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+
+              <rect x="500" y="340" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="600" y="361" fill="var(--text)" font-size="12" text-anchor="middle">Feed Forward</text>
+
+              <rect x="500" y="300" width="200" height="24" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="600" y="316" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="500" y="250" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent-hover)"/>
+              <text x="600" y="271" fill="var(--text)" font-size="11.5" text-anchor="middle">Encoder-Decoder Cross-Attn</text>
+
+              <rect x="500" y="210" width="200" height="24" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="600" y="226" fill="var(--text-muted)" font-size="11" text-anchor="middle">Add &amp; Norm</text>
+
+              <rect x="500" y="160" width="200" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)"/>
+              <text x="600" y="181" fill="var(--text)" font-size="11.5" text-anchor="middle">Masked Multi-Head Self-Attn</text>
+
+              <rect x="500" y="90" width="200" height="30" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+              <text x="600" y="110" fill="var(--text)" font-size="11" text-anchor="middle">Output Embedding + Positional Encoding</text>
+
+              <text x="600" y="420" fill="var(--text-muted)" font-size="11" text-anchor="middle">Outputs (shifted right)</text>
+
+              <line x1="600" y1="120" x2="600" y2="160" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="194" x2="600" y2="210" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="234" x2="600" y2="250" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="284" x2="600" y2="300" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+              <line x1="600" y1="324" x2="600" y2="340" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- Linear + softmax -->
+              <rect x="520" y="440" width="160" height="28" rx="6" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="600" y="459" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">Linear + Softmax</text>
+              <line x1="600" y1="374" x2="600" y2="440" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+              <!-- cross connection encoder->decoder -->
+              <line x1="300" y1="215" x2="500" y2="267" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#arrow2)"/>
+              <text x="400" y="205" fill="var(--accent-hover)" font-size="10.5" text-anchor="middle">Keys &amp; Values from Encoder</text>
+
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/>
+                </marker>
+                <marker id="arrow2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-hover)"/>
+                </marker>
+              </defs>
+            </svg>
+            <p class="source-note">Fig 1.1 — Transformer encoder–decoder architecture (Vaswani et al., 2017)</p>
+          </div>
+
+          <h3>Role of the Encoder Stack</h3>
+          <p>The encoder is a stack of <strong>N identical layers</strong> (N = 6 in the original paper). Each layer has two sub-layers:</p>
+          <ul>
+            <li><strong>Multi-Head Self-Attention:</strong> lets every input token look at every other input token and weigh how relevant each one is, producing a context-aware representation for each position.</li>
+            <li><strong>Position-wise Feed-Forward Network:</strong> a two-layer fully connected network applied identically to each position, adding non-linearity and representational power.</li>
+          </ul>
+          <p>Each sub-layer is wrapped with a <strong>residual connection</strong> followed by <strong>layer normalization</strong> — <code>LayerNorm(x + Sublayer(x))</code> — which stabilizes training and lets gradients flow through deep stacks. Since attention has no notion of order, <strong>positional encodings</strong> (sinusoidal functions of position) are added to the input embeddings so the model knows token order.</p>
+          <p>The output of the encoder is a sequence of contextualized vectors, one per input token, that summarize the entire input in relation to every other token.</p>
+
+          <h3>Role of the Decoder Stack</h3>
+          <p>The decoder is also a stack of N identical layers, but each layer has <strong>three</strong> sub-layers:</p>
+          <ul>
+            <li><strong>Masked Multi-Head Self-Attention:</strong> attends only to earlier positions in the output sequence (future tokens are masked out), preserving the autoregressive property needed for generation.</li>
+            <li><strong>Encoder-Decoder Cross-Attention:</strong> the queries come from the decoder, while the keys and values come from the encoder's output. This is exactly where the decoder "looks back" at the input sequence while generating each output token.</li>
+            <li><strong>Feed-Forward Network:</strong> same role as in the encoder.</li>
+          </ul>
+          <p>The final decoder output passes through a <strong>linear layer</strong> and a <strong>softmax</strong> to produce a probability distribution over the vocabulary for the next token.</p>
+
+          <h3>How Encoder and Decoder Interact</h3>
+          <ol>
+            <li>The encoder processes the full input sequence in parallel and produces a set of key-value pairs representing the input.</li>
+            <li>The decoder generates output tokens one at a time (autoregressively). At each step, it first attends to the tokens it has already generated (masked self-attention).</li>
+            <li>It then performs <strong>cross-attention</strong> against the encoder's output — this is the bridge that lets the decoder condition its generation on the full input sequence, not just what it has produced so far.</li>
+            <li>This repeats layer by layer, and the final representation is converted into a probability distribution to pick the next token.</li>
+          </ol>
+
+          <p><strong>Key takeaway:</strong> The encoder builds a rich, bidirectional understanding of the input; the decoder generates output autoregressively while continuously consulting the encoder's representation through cross-attention. This division of labor is what makes encoder-decoder Transformers (like the original machine translation model, T5, and BART) effective at sequence-to-sequence tasks.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="tab-content" id="tab-3">
+    <div class="question-block" data-qid="u1-q4">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q4', 3)" aria-label="Mark as done"></button>
+        <h2 class="q-title">4. Describe the self-attention and multi-head attention mechanisms used in Transformers. Derive the scaled dot-product attention formula and explain the significance of each term.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Self-attention</strong> lets every token build a new, context-aware representation of itself by looking at every other token in the same sequence. Distance does not matter, so long-range dependencies &mdash; the weakness of RNNs &mdash; are handled directly.</p>
+<h3>Query, Key, Value</h3>
+<p>Each input embedding (a row of \(X\)) is projected by three learned matrices:</p>
+<div class="formula">\[Q=XW^{Q},\qquad K=XW^{K},\qquad V=XW^{V}\]</div>
+<p>Think of a library search: the <strong>query</strong> is what I am looking for, each <strong>key</strong> labels what a book is about, and the <strong>value</strong> is the book's content that is returned when the key matches.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 656 80" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a73" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="82.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="51.25" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Input X</text><text x="51.25" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">n × d_model</text><line x1="94.5" y1="39.0" x2="120.5" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a73)"/><rect x="122.5" y="16" width="121.00000000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="183.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Q = XW^Q</text><text x="183.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">K = XW^K, V = XW^V</text><line x1="245.5" y1="39.0" x2="271.5" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a73)"/><rect x="273.5" y="16" width="88.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="317.5" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">QKᵀ / √d_k</text><text x="317.5" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">score matrix</text><line x1="363.5" y1="39.0" x2="389.5" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a73)"/><rect x="391.5" y="16" width="148.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="465.75" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">softmax</text><text x="465.75" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">weights (rows sum to 1)</text><line x1="542.0" y1="39.0" x2="568.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a73)"/><rect x="570.0" y="16" width="66.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="603.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">× V</text><text x="603.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">output Z</text></svg>
+</div>
+<h3>Derivation of scaled dot-product attention</h3>
+<ol>
+  <li><strong>Compatibility:</strong> the relevance of key \(j\) to query \(i\) is their dot product \(q_i\cdot k_j\). For all pairs at once: the score matrix \(QK^{T}\).</li>
+  <li><strong>Scaling:</strong> if the components of \(q,k\) are independent with mean 0 and variance 1, then \(\mathrm{Var}(q\cdot k)=d_k\). Large scores push softmax into a region with almost zero gradient, so divide by \(\sqrt{d_k}\), which brings the variance back to 1.</li>
+  <li><strong>Normalisation:</strong> softmax turns each row of scores into weights that sum to 1.</li>
+  <li><strong>Aggregation:</strong> the output is the weighted sum of the values.</li>
+</ol>
+<div class="formula">\[\mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^{T}}{\sqrt{d_k}}\right)V\]</div>
+<h3>Significance of each term</h3>
+<table>
+  <tr><th>Term</th><th>Meaning</th></tr>
+  <tr><td>\(Q\)</td><td>what the current token is looking for</td></tr>
+  <tr><td>\(K\)</td><td>what each token offers, matched against queries</td></tr>
+  <tr><td>\(V\)</td><td>the content that is actually mixed into the output</td></tr>
+  <tr><td>\(\sqrt{d_k}\)</td><td>keeps scores in a reasonable range, preventing softmax saturation</td></tr>
+  <tr><td>softmax</td><td>converts scores into a probability distribution over tokens</td></tr>
+</table>
+<h3>Worked example</h3>
+<p>Let \(d_k=4\) and token 1's scores against two tokens be \(q_1\cdot k_1=2,\ q_1\cdot k_2=1\). Scaled scores: \(2/\sqrt4=1\) and \(1/\sqrt4=0.5\). Softmax: \(e^{1}=2.718,\ e^{0.5}=1.649\), sum \(4.367\), so the weights are \(0.62\) and \(0.38\). The output for token 1 is \(z_1=0.62\,v_1+0.38\,v_2\).</p>
+<h3>Multi-head attention</h3>
+<p>Instead of one attention, run \(h\) heads in parallel, each with its own projections into a smaller space (\(d_k=d_{model}/h\)); concatenate and project:</p>
+<div class="formula">\[\mathrm{head}_i=\mathrm{Attention}(XW_i^{Q},XW_i^{K},XW_i^{V}),\qquad \mathrm{MultiHead}=\mathrm{Concat}(\mathrm{head}_1,\dots,\mathrm{head}_h)\,W^{O}\]</div>
+<p>Each head can specialise &mdash; one may track subject&ndash;verb agreement, another what &ldquo;it&rdquo; refers to. In the original Transformer \(d_{model}=512,\ h=8,\ d_k=64\), so the cost is similar to a single full-width head but the model sees several kinds of relationship at once.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="tab-content" id="tab-4">
+    <div class="question-block" data-qid="u1-q5">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q5', 4)" aria-label="Mark as done"></button>
+        <h2 class="q-title">5. Explain various tokenization techniques used in Large Language Models such as Byte-Pair Encoding (BPE), WordPiece, and SentencePiece. Illustrate the tokenization process with a suitable example. Write the algorithmic steps (pseudocode) for the Byte-Pair Encoding (BPE) tokenization algorithm.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Why Tokenization Matters</h3>
+          <p>LLMs cannot process raw text directly — text must be broken into discrete units called <strong>tokens</strong>, each mapped to an integer ID. The choice of tokenization strategy affects vocabulary size, how well the model handles rare/unseen words, and overall model efficiency. Modern LLMs use <strong>subword tokenization</strong> — a middle ground between word-level (huge vocabulary, can't handle unseen words) and character-level (small vocabulary, very long sequences).</p>
+
+          <h3>1. Byte Pair Encoding (BPE)</h3>
+          <p>BPE starts with a vocabulary of individual characters and <strong>iteratively merges the most frequent adjacent pair of symbols</strong> into a new symbol, repeating this a fixed number of times to build up a subword vocabulary. It is used in GPT-2/GPT-3.</p>
+          <p><strong>Example:</strong> Given the word <code>"lower"</code> appearing frequently alongside <code>"lowest"</code> and <code>"newer"</code>:</p>
+          <table>
+            <tr><th>Step</th><th>Action</th><th>Result</th></tr>
+            <tr><td>0</td><td>Start with characters</td><td>l · o · w · e · r</td></tr>
+            <tr><td>1</td><td>Most frequent pair: (l, o)</td><td>lo · w · e · r</td></tr>
+            <tr><td>2</td><td>Most frequent pair: (lo, w)</td><td>low · e · r</td></tr>
+            <tr><td>3</td><td>Most frequent pair: (e, r)</td><td>low · er</td></tr>
+          </table>
+          <p>After enough merges, <code>"low"</code> and <code>"er"</code> become subword units reused across <code>"lower"</code>, <code>"lowest"</code>, and <code>"newer"</code>, letting the model generalize to unseen combinations like <code>"lowering"</code> → <code>low + er + ing</code>.</p>
+
+          <h3>2. WordPiece</h3>
+          <p>WordPiece (used in BERT) is similar to BPE in that it also builds a vocabulary via merges, but instead of merging the <strong>most frequent</strong> pair, it merges the pair that <strong>maximizes the likelihood of the training data</strong> when added to the vocabulary — i.e. it picks merges that most improve the language model's probability of the corpus, not just raw frequency.</p>
+          <p><strong>Example:</strong> The word <code>"unhappiness"</code> might be split as:</p>
+          <p><code>un</code> + <code>##happi</code> + <code>##ness</code></p>
+          <p>The <code>##</code> prefix indicates the subword is a continuation of the previous token, not a new word — this lets WordPiece distinguish <code>"happiness"</code> from a token that happens to start with the same letters at the beginning of a word.</p>
+
+          <h3>3. SentencePiece</h3>
+          <p>SentencePiece is a tokenization <strong>framework</strong> (used by T5, LLaMA, ALBERT) rather than a single algorithm — it can implement BPE or a unigram language model internally. Its key innovation is that it treats the input as a raw stream of Unicode characters, <strong>including whitespace as a regular symbol</strong> (often represented as <code>▁</code>), rather than assuming text is pre-split on spaces.</p>
+          <p><strong>Example:</strong> The sentence <code>"Hello world"</code> tokenizes as:</p>
+          <p><code>▁Hello</code> + <code>▁world</code></p>
+          <p>Because whitespace is encoded explicitly, SentencePiece is <strong>language-agnostic</strong> and works well for languages like Japanese, Telugu, or Chinese that don't use spaces to separate words — this is the main reason multilingual LLMs favor it over BPE/WordPiece.</p>
+
+          <h3>Comparison</h3>
+          <table>
+            <tr><th>Technique</th><th>Merge Criterion</th><th>Used In</th><th>Whitespace Handling</th></tr>
+            <tr><td>BPE</td><td>Most frequent pair</td><td>GPT-2, GPT-3, RoBERTa</td><td>Pre-tokenized on spaces</td></tr>
+            <tr><td>WordPiece</td><td>Maximizes corpus likelihood</td><td>BERT, DistilBERT</td><td>Pre-tokenized on spaces</td></tr>
+            <tr><td>SentencePiece</td><td>BPE or Unigram LM (configurable)</td><td>T5, LLaMA, ALBERT, mT5</td><td>Treats space as a symbol (▁)</td></tr>
+          </table>
+
+          <p><strong>Common goal:</strong> All three balance vocabulary size against sequence length, and all handle out-of-vocabulary words gracefully by falling back to smaller subword units rather than an <code>&lt;UNK&gt;</code> token.</p>
+<h3>Algorithm &mdash; Byte-Pair Encoding (pseudocode)</h3>
+<pre><code>Input : corpus, target vocabulary size V
+1.  vocab  = all individual characters (or bytes)
+2.  split every word into characters + end-of-word marker </w>
+3.  while |vocab| &lt; V:
+4.      count every adjacent symbol pair over the whole corpus (weighted by word frequency)
+5.      (A, B) = most frequent pair
+6.      replace every occurrence of (A, B) by the new symbol AB
+7.      vocab = vocab + {AB};  merges.append((A, B))
+8.  return vocab, merges
+
+Encoding a new word:
+9.  split the word into characters + </w>
+10. for (A, B) in merges (in learned order): merge A B wherever they are adjacent
+11. return the resulting tokens</code></pre>
+<h3>Worked example</h3>
+<p>Corpus: <code>low</code>&times;5, <code>lower</code>&times;2, <code>newest</code>&times;6, <code>widest</code>&times;3. Initial pair counts: (e,s)=9, (s,t)=9, (t,&lt;/w&gt;)=9, (w,e)=8, (l,o)=7, (o,w)=7. Merges learned (ties broken in order of appearance):</p>
+<table>
+  <tr><th>Step</th><th>Merge</th><th>Count</th><th>New symbol</th></tr>
+  <tr><td>1</td><td>e + s</td><td>9</td><td>es</td></tr>
+  <tr><td>2</td><td>es + t</td><td>9</td><td>est</td></tr>
+  <tr><td>3</td><td>est + &lt;/w&gt;</td><td>9</td><td>est&lt;/w&gt;</td></tr>
+  <tr><td>4</td><td>l + o</td><td>7</td><td>lo</td></tr>
+  <tr><td>5</td><td>lo + w</td><td>7</td><td>low</td></tr>
+</table>
+<p>Encoding the unseen word <code>lowest</code>: <code>l o w e s t &lt;/w&gt;</code> &rarr; (1) <code>l o w es t</code> &rarr; (2) <code>l o w est</code> &rarr; (3) <code>l o w est&lt;/w&gt;</code> &rarr; (4) <code>lo w est&lt;/w&gt;</code> &rarr; (5) <code>low est&lt;/w&gt;</code>. Final tokens: <strong>[low, est&lt;/w&gt;]</strong> &mdash; a word never seen in training is built from known pieces.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="tab-content" id="tab-5">
+    <div class="question-block" data-qid="u1-q6">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q6', 5)" aria-label="Mark as done"></button>
+        <h2 class="q-title">6. Explain the concept of embeddings and vector representations in NLP. Differentiate between static word embeddings and contextual embeddings, and discuss their role in semantic similarity tasks.</h2>
+      </div>
+      <div class="answer-body">
+<h3>What are Embeddings?</h3>
+          <p>An <strong>embedding</strong> is a dense, low-dimensional vector representation of a discrete object (a word, subword, or token) such that objects with similar meaning end up close together in vector space. Instead of representing a word as a sparse one-hot vector of vocabulary size, embeddings compress meaning into a continuous space (typically 100–4000 dimensions), where geometric relationships (distance, direction) capture semantic relationships.</p>
+
+          <h3>Static Word Embeddings</h3>
+          <p>Static embeddings assign <strong>one fixed vector per word</strong>, regardless of context. Models like <strong>Word2Vec</strong> (CBOW / Skip-gram) and <strong>GloVe</strong> learn these vectors from co-occurrence statistics across a large corpus.</p>
+          <ul>
+            <li>The word <code>"bank"</code> gets the exact same vector whether it means a riverbank or a financial institution.</li>
+            <li>Famous property: vector arithmetic captures analogies, e.g. <code>vector("King") − vector("Man") + vector("Woman") ≈ vector("Queen")</code>.</li>
+            <li>Fast to use (a simple lookup table), but cannot disambiguate polysemous words.</li>
+          </ul>
+
+          <h3>Contextual Embeddings</h3>
+          <p>Contextual embeddings, produced by models like <strong>ELMo, BERT, and GPT</strong>, generate a <strong>different vector for the same word depending on its surrounding context</strong>. The embedding is the output of running the full sentence through a deep neural network (typically a Transformer), so it reflects the word's role in that specific sentence.</p>
+          <ul>
+            <li><code>"bank"</code> in <em>"I sat by the river bank"</em> gets a different vector than <code>"bank"</code> in <em>"I deposited money in the bank."</em></li>
+            <li>Captures syntax, polysemy, and long-range dependencies far better than static embeddings.</li>
+            <li>More computationally expensive — requires a forward pass through the model for every new context.</li>
+          </ul>
+
+          <h3>Comparison</h3>
+          <table>
+            <tr><th>Aspect</th><th>Static Embeddings</th><th>Contextual Embeddings</th></tr>
+            <tr><td>Vector per word</td><td>One, fixed</td><td>Many, depends on context</td></tr>
+            <tr><td>Handles polysemy</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Examples</td><td>Word2Vec, GloVe, FastText</td><td>ELMo, BERT, GPT embeddings</td></tr>
+            <tr><td>Computation</td><td>Lookup table — cheap</td><td>Full model forward pass — expensive</td></tr>
+            <tr><td>Captures context/syntax</td><td>Limited</td><td>Rich, bidirectional (BERT) or left-to-right (GPT)</td></tr>
+          </table>
+
+          <h3>Role in Semantic Similarity Tasks</h3>
+          <p>Once text is represented as vectors, semantic similarity between two pieces of text is typically measured using <strong>cosine similarity</strong>:</p>
+          <div class="formula">
+            \[ \text{sim}(\vec{u}, \vec{v}) = \frac{\vec{u} \cdot \vec{v}}{\lVert \vec{u} \rVert \, \lVert \vec{v} \rVert} \]
+          </div>
+          <p>A value close to 1 means the vectors point in nearly the same direction (highly similar meaning); close to 0 means unrelated; negative means opposite. This underlies applications such as:</p>
+          <ul>
+            <li><strong>Semantic search:</strong> retrieving documents whose embeddings are closest to a query embedding</li>
+            <li><strong>Duplicate/paraphrase detection:</strong> flagging sentence pairs with very high cosine similarity</li>
+            <li><strong>Clustering &amp; recommendation:</strong> grouping similar items in embedding space</li>
+            <li><strong>Retrieval-Augmented Generation (RAG):</strong> embedding a knowledge base and retrieving relevant chunks for an LLM's context</li>
+          </ul>
+
+          <p><strong>Key insight:</strong> Contextual embeddings from Transformer-based models are now the default for serious semantic-similarity work because a single static vector simply cannot represent a word that means different things in different sentences.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="tab-content" id="tab-6">
+    <div class="question-block" data-qid="u1-q7">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q7', 6)" aria-label="Mark as done"></button>
+        <h2 class="q-title">7. Differentiate between pre-training, fine-tuning, and alignment in the development lifecycle of a Large Language Model. Explain how each stage contributes to the final model's capabilities.</h2>
+      </div>
+      <div class="answer-body">
+<p>A modern LLM is built in three sequential stages. Pre-training gives <em>knowledge</em>, fine-tuning gives <em>skills</em>, alignment gives <em>behaviour</em>. Analogy: general schooling, then job training, then on-the-job mentoring.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 568 106" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a74" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="132.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="76.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Pre-training</text><text x="76.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">next-token, raw text</text><line x1="144.0" y1="39.0" x2="170.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a74)"/><rect x="172.0" y="16" width="165.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="254.5" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Fine-tuning (SFT)</text><text x="254.5" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">instruction–response pairs</text><line x1="339.0" y1="39.0" x2="365.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a74)"/><rect x="367.0" y="16" width="181.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="457.75" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Alignment</text><text x="457.75" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">human preferences: RLHF / DPO</text><text x="279.25" y="92" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">base model  →  instruction-following model  →  helpful, harmless, honest assistant</text></svg>
+</div>
+<h3>1. Pre-training</h3>
+<p>Trained from scratch on a massive unlabelled corpus (web, books, code) to predict the next token:</p>
+<div class="formula">\[\max_\theta\ \sum_t \log P_\theta(x_t\mid x_{&lt;t})\]</div>
+<p>It needs thousands of GPUs for weeks. The result is a <strong>base model</strong>: knowledgeable and fluent, but it only continues text; it does not follow instructions.</p>
+<h3>2. Fine-tuning (supervised, SFT)</h3>
+<p>Trained further on a much smaller curated set of instruction&ndash;response pairs with the same cross-entropy loss, computed on the response tokens \(y\):</p>
+<div class="formula">\[\mathcal L_{SFT}=-\sum_{t}\log P_\theta(y_t\mid x,\,y_{&lt;t})\]</div>
+<p>This teaches the model to follow instructions and use a desired format or domain style. It can be done cheaply with parameter-efficient methods such as LoRA/QLoRA (Q42, Q43).</p>
+<h3>3. Alignment</h3>
+<p>Shapes behaviour towards <strong>helpful, harmless and honest</strong> using human preference data. In RLHF, humans rank pairs of responses (preferred \(y_w\), rejected \(y_l\)); a reward model is trained with</p>
+<div class="formula">\[\mathcal L_{RM}=-\log\sigma\bigl(r_\phi(x,y_w)-r_\phi(x,y_l)\bigr)\]</div>
+<p>and the LLM policy \(\pi_\theta\) is then optimised with RL (e.g. PPO), with a KL penalty that keeps it close to the SFT model \(\pi_{ref}\):</p>
+<div class="formula">\[\max_\theta\ \mathbb E_{y\sim\pi_\theta}\bigl[r_\phi(x,y)\bigr]-\beta\,D_{KL}\bigl(\pi_\theta\,\|\,\pi_{ref}\bigr)\]</div>
+<p><strong>DPO</strong> reaches the same goal directly from preference pairs without a separate reward model or RL loop (details in Q48).</p>
+<h3>Contribution of each stage</h3>
+<table>
+  <tr><th>Stage</th><th>Data</th><th>Objective</th><th>What the model gains</th></tr>
+  <tr><td>Pre-training</td><td>Trillions of unlabelled tokens</td><td>Next-token prediction</td><td>World knowledge, fluency, reasoning foundations</td></tr>
+  <tr><td>Fine-tuning</td><td>10<sup>3</sup>&ndash;10<sup>6</sup> curated labelled examples</td><td>Supervised cross-entropy</td><td>Task competence, instruction following, format</td></tr>
+  <tr><td>Alignment</td><td>Human preference comparisons</td><td>Reward maximisation / preference loss</td><td>Safety, honesty, helpfulness</td></tr>
+</table>
+<p>Each stage builds on the previous one: together they turn a raw next-token predictor into a safe, instruction-following assistant.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="tab-content" id="tab-7">
+    <div class="question-block" data-qid="u1-q8">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q8', 7)" aria-label="Mark as done"></button>
+        <h2 class="q-title">8. Compare the architectures, capabilities, and intended use cases of popular LLMs such as GPT, Gemini, Claude, Llama, and Mistral. Discuss the significance of open-source LLMs in the Generative AI ecosystem.</h2>
+      </div>
+      <div class="answer-body">
+<p>All the popular LLMs share the same recipe &mdash; a <strong>decoder-only Transformer</strong> (Q3, Q4) pre-trained at scale and then fine-tuned and aligned (SFT + RLHF/DPO). They differ in scale, training data, safety approach, modalities and, above all, <strong>licensing</strong>: open weights or closed.</p>
+<h3>Comparison</h3>
+<table>
+  <tr><th>Model</th><th>Developer</th><th>Architecture / access</th><th>Strengths and typical use</th></tr>
+  <tr><td><strong>GPT</strong> series</td><td>OpenAI</td><td>Decoder-only Transformer; closed weights, via API/ChatGPT; later versions multimodal</td><td>General assistant, coding, content generation, large plug-in/tool ecosystem</td></tr>
+  <tr><td><strong>Gemini</strong></td><td>Google DeepMind</td><td>Decoder-only, <em>natively</em> multimodal (text, image, audio, video); closed</td><td>Multimodal reasoning, very long context, integration with Google products</td></tr>
+  <tr><td><strong>Claude</strong></td><td>Anthropic</td><td>Decoder-only; closed weights; safety-focused alignment (RLHF with Constitutional AI)</td><td>Long-context reasoning, coding, careful and safe behaviour</td></tr>
+  <tr><td><strong>Llama</strong></td><td>Meta</td><td>Decoder-only; <strong>open weights</strong> (under a community licence)</td><td>Research, custom fine-tuning, on-premise deployment</td></tr>
+  <tr><td><strong>Mistral</strong></td><td>Mistral AI</td><td>Decoder-only; efficient designs (sliding-window attention, mixture-of-experts in Mixtral); open-weight models</td><td>Lightweight, low-cost deployment and fine-tuning</td></tr>
+</table>
+<h3>Mixture-of-experts (MoE) in one line</h3>
+<p>An MoE layer has \(E\) expert feed-forward networks, and a router picks the top-\(k\) for each token:</p>
+<div class="formula">\[y=\sum_{i\in\mathrm{TopK}}g_i(x)\,E_i(x)\]</div>
+<p>Only \(k\) of \(E\) experts run per token, so the model has a large total capacity but a small compute cost per token.</p>
+<h3>Open-weight vs closed models</h3>
+<table>
+  <tr><th></th><th>Closed (GPT, Gemini, Claude)</th><th>Open-weight (Llama, Mistral)</th></tr>
+  <tr><td>Access</td><td>API only</td><td>Download and self-host</td></tr>
+  <tr><td>Data privacy</td><td>Prompts sent to a third party</td><td>Data stays on your own infrastructure</td></tr>
+  <tr><td>Cost</td><td>Pay per token</td><td>Fixed hardware cost; no per-token fee</td></tr>
+  <tr><td>Customisation</td><td>Limited fine-tuning options</td><td>Full fine-tuning, quantisation, pruning</td></tr>
+  <tr><td>Peak capability</td><td>Usually the most capable frontier models</td><td>Close behind and improving fast</td></tr>
+</table>
+<h3>Significance of open-source LLMs</h3>
+<ul>
+  <li><strong>Transparency and research:</strong> allow study of model internals, interpretability and reproducible results.</li>
+  <li><strong>Customisation and privacy:</strong> organisations can fine-tune on sensitive data without sending it to a third party.</li>
+  <li><strong>Cost and control:</strong> self-hosting removes per-token fees and gives control over latency and deployment.</li>
+  <li><strong>Democratisation:</strong> startups, students and researchers can build without expensive API budgets.</li>
+  <li><strong>Ecosystem:</strong> quantised versions, fine-tuned variants and tooling (e.g. Hugging Face) grow around open checkpoints.</li>
+</ul>
+<p><strong>Caveat:</strong> open weights also mean weaker control over misuse, so safety depends on the deployer.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="tab-content" id="tab-8">
+    <div class="question-block" data-qid="u1-q9">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q9', 8)" aria-label="Mark as done"></button>
+        <h2 class="q-title">9. Discuss the applications of Large Language Models in text generation, summarization, translation, question answering, and conversational AI, with suitable examples for each.</h2>
+      </div>
+      <div class="answer-body">
+<h3>1. Text Generation</h3>
+          <p>LLMs generate coherent, contextually relevant text by predicting the next token repeatedly, conditioned on everything generated so far.</p>
+          <p><em>Example: Given the prompt "Write a short poem about the monsoon," an LLM produces a fluent, stylistically appropriate poem — used in creative writing tools, marketing copy generation, and code generation (e.g. GitHub Copilot).</em></p>
+
+          <h3>2. Summarization</h3>
+          <p>LLMs condense long documents into shorter versions while preserving key information. This can be <strong>extractive</strong> (selecting important sentences) or <strong>abstractive</strong> (generating new sentences that paraphrase the content).</p>
+          <p><em>Example: Summarizing a 20-page research paper into a 200-word abstract, or condensing a news article into 3 bullet points — used in tools like news aggregators and legal document review.</em></p>
+
+          <h3>3. Machine Translation</h3>
+          <p>LLMs trained on multilingual data translate text between languages while preserving meaning, tone, and grammar, often outperforming older statistical machine translation systems because they capture context across the whole sentence rather than translating word by word.</p>
+          <p><em>Example: Translating "How are you?" into Telugu ("మీరు ఎలా ఉన్నారు?") while correctly handling grammatical gender and formality — used in tools like Google Translate (which now uses Transformer-based NMT) and real-time multilingual customer support.</em></p>
+
+          <h3>4. Question Answering (QA)</h3>
+          <p>LLMs answer natural-language questions either from their own trained knowledge (closed-book QA) or by reading a provided passage/document (open-book / reading-comprehension QA, often combined with retrieval).</p>
+          <p><em>Example: A student asks "What is the time complexity of merge sort?" and the model answers "O(n log n)" directly, or — given a textbook PDF — answers "According to Chapter 4, what causes thrashing in an OS?" by extracting the relevant explanation from the document.</em></p>
+
+          <h3>5. Conversational AI</h3>
+          <p>LLMs power multi-turn dialogue systems that maintain context across a conversation, adapt tone, and can call external tools — going beyond single-turn Q&amp;A to sustained, coherent interaction.</p>
+          <p><em>Example: A chatbot that remembers earlier turns in a conversation ("earlier you said you're a second-year student — here's advice tailored to that"), used in customer support bots, virtual assistants (Siri, Alexa-style agents), and tutoring systems.</em></p>
+
+          <h3>Summary Table</h3>
+          <table>
+            <tr><th>Application</th><th>Core Capability Used</th><th>Example Tool/Use Case</th></tr>
+            <tr><td>Text Generation</td><td>Autoregressive next-token prediction</td><td>Copy writing, code completion</td></tr>
+            <tr><td>Summarization</td><td>Compression while preserving meaning</td><td>News digest, legal review</td></tr>
+            <tr><td>Translation</td><td>Cross-lingual sequence mapping</td><td>Google Translate, multilingual support</td></tr>
+            <tr><td>Question Answering</td><td>Knowledge recall / reading comprehension</td><td>Search assistants, RAG systems</td></tr>
+            <tr><td>Conversational AI</td><td>Multi-turn context tracking</td><td>Chatbots, virtual assistants</td></tr>
+          </table>
+
+          <p><strong>Common thread:</strong> All five applications rely on the same underlying pretrained Transformer — the difference is in prompting, fine-tuning, and the surrounding system (retrieval, memory, tool-use) built around the base model.</p>
+      <h3>One model, five applications &mdash; only the prompt changes</h3>
+<table>
+  <tr><th>Application</th><th>Prompt pattern</th><th>Typical output</th><th>How it is judged</th></tr>
+  <tr><td>Generation</td><td>&ldquo;Write a &hellip; about &hellip;&rdquo;</td><td>New text</td><td>Fluency, relevance, human rating</td></tr>
+  <tr><td>Summarisation</td><td>&ldquo;Summarise in 3 bullets: &hellip;&rdquo;</td><td>Short faithful version</td><td>ROUGE, faithfulness</td></tr>
+  <tr><td>Translation</td><td>&ldquo;Translate to Telugu: &hellip;&rdquo;</td><td>Same meaning, new language</td><td>BLEU, human check</td></tr>
+  <tr><td>Question answering</td><td>&ldquo;Using this passage, answer: &hellip;&rdquo;</td><td>Short answer</td><td>Exact match, F1</td></tr>
+  <tr><td>Conversational AI</td><td>System prompt + chat history</td><td>Next reply in context</td><td>Helpfulness, safety, task success</td></tr>
+</table>
+<p>This works because all five are the same operation &mdash; <em>predict the next token given the context</em> &mdash; just with different context. That is why one LLM replaces five older task-specific systems.</p>
+<h3>Applications combine in real products</h3>
+<p>A customer-support bot (conversational AI) <strong>retrieves</strong> the policy passage, <strong>answers</strong> the question from it, <strong>translates</strong> the reply into the customer's language and <strong>summarises</strong> the whole chat for the human agent afterwards &mdash; four of the five applications in one workflow.</p>
+<h3>Common limitation across all five</h3>
+<p>Fluent output is not the same as correct output: generated text can contain invented facts, summaries can drop or distort details, translations can lose nuance, and chatbots can answer confidently without evidence. High-stakes uses therefore add retrieval (Q31), human review or guardrails.</p>
+</div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="tab-content" id="tab-9">
+    <div class="question-block" data-qid="u1-q10">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u1-q10', 9)" aria-label="Mark as done"></button>
+        <h2 class="q-title">10. Analyze the current industry use cases and emerging trends in Generative AI and LLMs across domains such as healthcare, education, software development, and customer service. Justify their impact with examples.</h2>
+      </div>
+      <div class="answer-body">
+<h3>1. Healthcare</h3>
+          <ul>
+            <li><strong>Clinical documentation:</strong> LLMs auto-generate doctor's notes from patient-doctor conversations, cutting administrative burden.</li>
+            <li><strong>Diagnostic assistance:</strong> Generative models assist radiologists by drafting preliminary findings from medical images, later reviewed by a human.</li>
+            <li><strong>Drug discovery:</strong> Generative models propose novel molecular structures with desired properties, accelerating early-stage research.</li>
+          </ul>
+          <p><em>Impact: Reduces physician burnout from paperwork and speeds up early research timelines — but requires strict human-in-the-loop review given the high stakes of medical errors.</em></p>
+
+          <h3>2. Education</h3>
+          <ul>
+            <li><strong>Personalized tutoring:</strong> LLM-based tutors adapt explanations to a student's level and answer follow-up questions in real time.</li>
+            <li><strong>Automated content generation:</strong> Generating practice questions, quizzes, and study notes tailored to a syllabus.</li>
+            <li><strong>Accessibility:</strong> Real-time summarization and translation of lecture content for students with different needs.</li>
+          </ul>
+          <p><em>Impact: Democratizes access to one-on-one style tutoring at scale, though it raises concerns about academic integrity and over-reliance on AI-generated answers.</em></p>
+
+          <h3>3. Software Development</h3>
+          <ul>
+            <li><strong>Code generation and completion:</strong> Tools like GitHub Copilot suggest entire functions based on natural-language comments or partial code.</li>
+            <li><strong>Automated testing:</strong> LLMs generate unit tests and identify edge cases from a function's signature and docstring.</li>
+            <li><strong>Debugging and code review:</strong> Models explain stack traces, suggest fixes, and flag code smells during review.</li>
+          </ul>
+          <p><em>Impact: Measurable productivity gains — studies report developers completing tasks noticeably faster with AI pair-programming, though code quality still needs human review.</em></p>
+
+          <h3>4. Customer Service</h3>
+          <ul>
+            <li><strong>AI chatbots and virtual agents:</strong> Handle routine queries (order status, refunds, FAQs) without human intervention.</li>
+            <li><strong>Sentiment-aware routing:</strong> Detecting frustrated customers from message tone and escalating to human agents automatically.</li>
+            <li><strong>Agent assist:</strong> Real-time suggested responses for human support agents, drafted by an LLM and edited before sending.</li>
+          </ul>
+          <p><em>Impact: Reduces response time and operating cost significantly for high-volume support, while human agents are freed up for complex, high-empathy cases.</em></p>
+
+          <h3>Emerging Cross-Domain Trends</h3>
+          <table>
+            <tr><th>Trend</th><th>Description</th></tr>
+            <tr><td>Retrieval-Augmented Generation (RAG)</td><td>Grounding LLM outputs in real, up-to-date documents to reduce hallucination</td></tr>
+            <tr><td>Multimodal models</td><td>Single models handling text, image, audio, and video jointly (e.g. GPT-4V-style systems)</td></tr>
+            <tr><td>AI agents / tool use</td><td>LLMs that call external APIs, browse, or execute code autonomously to complete multi-step tasks</td></tr>
+            <tr><td>Smaller, efficient models</td><td>Distilled/quantized LLMs deployed on-device for privacy and latency-sensitive use cases</td></tr>
+            <tr><td>Domain-specific fine-tuning</td><td>Base LLMs fine-tuned on legal, medical, or financial corpora for higher accuracy in specialized domains</td></tr>
+          </table>
+
+          <p><strong>Common risk across all domains:</strong> hallucination, bias in training data, and over-trust in AI outputs without human verification remain the biggest open challenges as adoption scales.</p>
+      <h3>Measuring impact &mdash; a worked estimate</h3>
+<p>A support team receives 10,000 tickets a day, and an LLM assistant fully resolves 40% of them, each taking about 6 minutes of agent time:</p>
+<div class="formula">\[10\,000\times0.40=4\,000\ \text{tickets},\qquad 4\,000\times6\ \text{min}=24\,000\ \text{min}=400\ \text{agent-hours per day}\]</div>
+<p>That is the capacity of about 50 full-time agents (8 h each) redirected to the harder cases. This is the kind of argument used to justify adoption, and it must be weighed against the cost of tokens, supervision and the errors the assistant makes.</p>
+<h3>Benefit vs risk by domain</h3>
+<table>
+  <tr><th>Domain</th><th>Main benefit</th><th>Main risk</th><th>Safeguard</th></tr>
+  <tr><td>Healthcare</td><td>Less paperwork, faster research</td><td>Wrong clinical statement</td><td>Clinician reviews every output</td></tr>
+  <tr><td>Education</td><td>Personal tutoring at scale</td><td>Over-reliance, cheating</td><td>Guided tutoring, assessment redesign</td></tr>
+  <tr><td>Software</td><td>Faster coding and testing</td><td>Insecure or incorrect code</td><td>Code review, tests, security scans</td></tr>
+  <tr><td>Customer service</td><td>24&times;7 instant support</td><td>Hallucinated policy</td><td>RAG grounding, escalation to humans</td></tr>
+</table>
+<h3>Emerging trends</h3>
+<ul>
+  <li><strong>Multimodal models</strong> that read images, audio and documents as well as text.</li>
+  <li><strong>Agents</strong> that plan and call tools to complete multi-step tasks, not just answer.</li>
+  <li><strong>RAG as the standard enterprise pattern</strong> for grounding answers in private data (Unit IV).</li>
+  <li><strong>Smaller, domain-specific and on-device models</strong> (fine-tuned with LoRA/QLoRA) for privacy and cost.</li>
+  <li><strong>Responsible-AI and LLMOps practices</strong> becoming a requirement for production deployments (Unit V).</li>
+</ul>
+</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab-content').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === i);
+  });
+}
+function toggleDone(qid, tabIdx) {
+  const block = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const isDone = block.classList.toggle('q-done');
+  const btn = document.querySelectorAll('.tab-btn')[tabIdx];
+  btn.classList.toggle('done', isDone);
+  try { localStorage.setItem('done-' + qid, isDone ? '1' : ''); } catch (e) {}
+}
+document.querySelectorAll('.question-block').forEach((block, idx) => {
+  let saved = false;
+  try { saved = !!localStorage.getItem('done-' + block.dataset.qid); } catch (e) {}
+  if (saved) {
+    block.classList.add('q-done');
+    const btn = document.querySelectorAll('.tab-btn')[idx];
+    if (btn) btn.classList.add('done');
+  }
+});
+showTab(0);
+</script>
+</body>
+</html>

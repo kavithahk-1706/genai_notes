@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit III — Prompt Engineering & LLM Application Development | Generative AI with LLMs</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <nav class="unit-nav">
+    <a href="unit2.html" class="nav-prev">← Unit II</a>
+    <span class="nav-title">Unit III: Prompt Engineering &amp; LLM Application Development</span>
+    <a href="unit4.html" class="nav-next">Unit IV →</a>
+    <a href="index.html" class="nav-home">Home</a>
+  </nav>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" onclick="showTab(0)">Q21</button>
+    <button class="tab-btn" onclick="showTab(1)">Q22</button>
+    <button class="tab-btn" onclick="showTab(2)">Q23</button>
+    <button class="tab-btn" onclick="showTab(3)">Q24</button>
+    <button class="tab-btn" onclick="showTab(4)">Q25</button>
+    <button class="tab-btn" onclick="showTab(5)">Q26</button>
+    <button class="tab-btn" onclick="showTab(6)">Q27</button>
+    <button class="tab-btn" onclick="showTab(7)">Q28</button>
+    <button class="tab-btn" onclick="showTab(8)">Q29</button>
+    <button class="tab-btn" onclick="showTab(9)">Q30</button>
+  </div>
+
+  <!-- Q21 -->
+  <div class="tab-content" id="tab-0">
+    <div class="question-block" data-qid="u3-q21">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q21', 0)" aria-label="Mark as done"></button>
+        <h2 class="q-title">21. Explain the fundamentals of prompt engineering. Discuss the key components of an effective prompt with suitable examples for each component.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Prompt engineering</strong> is the practice of designing and refining the input (prompt) to an LLM so that it reliably produces accurate, relevant and well-formatted output, <em>without changing the model's weights</em>. Because model behaviour is very sensitive to how a task is phrased, a good prompt is a cheap alternative to fine-tuning.</p>
+<p>In plain words: an LLM is a very capable but very literal new employee. The clearer your instruction, context, example and format, the better and more consistent the work; vague instructions get vague results.</p>
+<h3>Key components of an effective prompt</h3>
+<table>
+  <tr><th>Component</th><th>Purpose</th><th>Example</th></tr>
+  <tr><td><strong>Instruction</strong></td><td>The task to perform</td><td>&ldquo;Summarise the following article in three bullet points.&rdquo;</td></tr>
+  <tr><td><strong>Context</strong></td><td>Background the model needs</td><td>The article text, or domain background</td></tr>
+  <tr><td><strong>Input data</strong></td><td>The specific item to work on</td><td>The customer review to classify</td></tr>
+  <tr><td><strong>Output format</strong></td><td>Structure of the response</td><td>&ldquo;Respond only in JSON with keys <code>sentiment</code> and <code>confidence</code>.&rdquo;</td></tr>
+  <tr><td><strong>Examples</strong></td><td>Demonstrations of correct behaviour (few-shot, Q22)</td><td>Two reviews with their correct labels</td></tr>
+  <tr><td><strong>Role / constraints</strong></td><td>Tone, persona, length limits</td><td>&ldquo;Answer as a friendly support agent in under 50 words.&rdquo;</td></tr>
+</table>
+<h3>A complete prompt</h3>
+<pre><code>Role:        You are a customer-support analyst.
+Task:        Classify the sentiment of the review below.
+Context:     Reviews are for a food-delivery app.
+Format:      Reply in JSON: {"sentiment": "Positive|Negative|Neutral", "confidence": 0-1}
+Example:     "Great and fast!"  ->  {"sentiment": "Positive", "confidence": 0.95}
+Review:      "The food was cold and the service was slow."</code></pre>
+<h3>Good-practice rules</h3>
+<ul>
+  <li>Be <strong>specific</strong> about audience, length and format &mdash; &ldquo;Summarise this&rdquo; is weaker than &ldquo;Summarise for B.Tech students in 150 words&rdquo;.</li>
+  <li>Use <strong>delimiters</strong> (quotes, <code>###</code>, XML-like tags) to separate instructions from input data.</li>
+  <li>Say what to do rather than only what not to do; break complex tasks into steps (Q23, Q27).</li>
+  <li>Iterate: test, look at failures and refine (Q28).</li>
+</ul>
+<h3>The temperature parameter</h3>
+<p>Output randomness is controlled by the sampling temperature \(T\), applied to the logits \(z_i\):</p>
+<div class="formula">\[P(w_i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}}\]</div>
+<p>Low \(T\) (near 0) makes output focused and repeatable (extraction, classification); high \(T\) makes it more varied (creative writing).</p>
+<p><strong>Why it matters:</strong> a well-structured prompt reduces ambiguity and hallucination and gives consistent output across calls &mdash; often replacing costly fine-tuning.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="tab-content" id="tab-1">
+    <div class="question-block" data-qid="u3-q22">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q22', 1)" aria-label="Mark as done"></button>
+        <h2 class="q-title">22. Differentiate between zero-shot, one-shot, and few-shot prompting techniques. Illustrate each technique with an example prompt and discuss scenarios where each is most effective.</h2>
+      </div>
+      <div class="answer-body">
+<p>These techniques differ only in <strong>how many demonstrations</strong> are placed in the prompt. The model is never retrained: it learns the task from the prompt itself, which is called <em>in-context learning</em>.</p>
+<div class="formula">\[\hat y=\arg\max_y\ P_\theta\bigl(y\mid \underbrace{(x_1,y_1),\dots,(x_k,y_k)}_{k\text{ demonstrations}},\ x\bigr),\qquad k=0\ (\text{zero}),\ 1\ (\text{one}),\ 2\text{–}10\ (\text{few})\]</div>
+<h3>Zero-shot</h3>
+<p>Only an instruction; the model uses what it learned in pre-training.</p>
+<pre><code>Classify the sentiment as Positive or Negative:
+"The food was cold and the service was slow."</code></pre>
+<p><strong>Best for:</strong> simple, common tasks (basic sentiment, translation of common languages, short factual questions).</p>
+<h3>One-shot</h3>
+<p>One input&ndash;output example shows the expected behaviour and format.</p>
+<pre><code>Review: "Amazing product, highly recommend!"  -> Positive
+Review: "The food was cold and the service was slow."  -> ?</code></pre>
+<p><strong>Best for:</strong> when the output format is slightly unusual but one example makes it clear.</p>
+<h3>Few-shot</h3>
+<p>Several examples (typically 2&ndash;10) covering the different cases.</p>
+<pre><code>Review: "Amazing product!"             -> Positive
+Review: "Terrible, broke in a day."    -> Negative
+Review: "It's okay, does the job."     -> Neutral
+Review: "The food was cold and the service was slow." -> ?</code></pre>
+<p><strong>Best for:</strong> several categories or edge cases (note the Neutral class here), domain-specific labels, strict formatting, and consistency over many queries.</p>
+<h3>Comparison</h3>
+<table>
+  <tr><th></th><th>Zero-shot</th><th>One-shot</th><th>Few-shot</th></tr>
+  <tr><td>Demonstrations</td><td>0</td><td>1</td><td>2&ndash;10</td></tr>
+  <tr><td>Task signal</td><td>Instruction only</td><td>Instruction + 1 pattern</td><td>Instruction + several patterns</td></tr>
+  <tr><td>Prompt length / cost</td><td>Shortest</td><td>Longer</td><td>Longest (more tokens, higher latency)</td></tr>
+  <tr><td>Consistency of output</td><td>Lowest</td><td>Better</td><td>Best</td></tr>
+  <tr><td>Risk</td><td>Wrong format or interpretation</td><td>Copies the single example too closely</td><td>Sensitive to example choice, order and label balance</td></tr>
+</table>
+<h3>Practical tips</h3>
+<ul>
+  <li>Choose examples that are <strong>diverse</strong>, correct and similar to the real input; keep label proportions balanced, since the model tends to over-predict the most frequent or last label.</li>
+  <li>All demonstrations and the query must fit in the context window (Q26).</li>
+  <li>If few-shot is still unreliable for a complex reasoning task, add reasoning steps (Chain-of-Thought, Q23) or fine-tune (Q41).</li>
+</ul>
+<p>In plain words: zero-shot is telling an intern &ldquo;sort these emails by urgency&rdquo;; one-shot is showing one worked example; few-shot is showing a handful covering different cases.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="tab-content" id="tab-2">
+    <div class="question-block" data-qid="u3-q23">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q23', 2)" aria-label="Mark as done"></button>
+        <h2 class="q-title">23. Explain Chain-of-Thought (CoT) reasoning in Large Language Models. Demonstrate, with an example, how CoT prompting improves performance on multi-step reasoning tasks.</h2>
+      </div>
+      <div class="answer-body">
+<h3>What is Chain-of-Thought Reasoning?</h3>
+          <p><strong>Chain-of-Thought (CoT) prompting</strong> is a technique where an LLM is prompted (either through instruction or via few-shot examples) to generate <strong>intermediate reasoning steps</strong> before producing a final answer, instead of jumping straight to the answer. Rather than mapping the question directly to the answer, the model is guided to "think out loud," breaking a complex problem into a sequence of smaller, simpler sub-steps — similar to how a student shows their working on a math exam rather than writing only the final number.</p>
+
+          <h3>Why It Works</h3>
+          <ul>
+            <li>LLMs generate text autoregressively — each token is conditioned on everything generated before it. By first generating reasoning steps, the model conditions its final answer on its own intermediate deductions, which sharply reduces errors on tasks that require multiple logical or arithmetic steps.</li>
+            <li>Without CoT, the model must implicitly perform all reasoning "in one shot" within a single forward pass to the answer token — which fails on anything beyond fairly simple problems.</li>
+            <li>CoT emerges as a capability mainly in sufficiently large models — it is considered an <strong>emergent ability</strong> that appears once model scale crosses a certain threshold.</li>
+          </ul>
+
+          <h3>Example — Standard Prompting vs CoT Prompting</h3>
+          <p><strong>Problem:</strong> "Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many tennis balls does he have now?"</p>
+
+          <p><strong>Standard prompting (direct answer):</strong><br>
+            <strong>Q:</strong> Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many does he have now?<br>
+            <strong>A:</strong> 11
+            <p style="margin-top:8px;">Without shown reasoning, the model has a much higher chance of making an arithmetic slip on multi-step problems, especially as the number of steps grows.</p></p>
+
+          <p><strong>Chain-of-Thought prompting:</strong><br>
+            <strong>Q:</strong> Roger has 5 tennis balls. He buys 2 more cans of tennis balls. Each can has 3 tennis balls. How many does he have now?<br>
+            <strong>A:</strong> Roger started with 5 balls. 2 cans of 3 tennis balls each is 2 × 3 = 6 tennis balls. 5 + 6 = 11. The answer is 11.
+            <p style="margin-top:8px;">By explicitly writing out "2 cans × 3 balls = 6" and then "5 + 6 = 11" as separate steps, the model is far less likely to skip or miscombine a step — each intermediate result is grounded in the text before the final answer is produced.</p></p>
+
+          <h3>Where CoT Helps Most</h3>
+          <table>
+            <tr><th>Task Type</th><th>Example</th></tr>
+            <tr><td>Arithmetic reasoning</td><td>Multi-step word problems (as above)</td></tr>
+            <tr><td>Commonsense reasoning</td><td>"If it's raining and John forgot his umbrella, what should he do?"</td></tr>
+            <tr><td>Symbolic reasoning</td><td>Tracking state across a sequence of operations (e.g. last-letter concatenation)</td></tr>
+            <tr><td>Multi-hop question answering</td><td>Questions requiring combining facts from multiple sources</td></tr>
+          </table>
+
+          <h3>Prompting Variants</h3>
+          <ul>
+            <li><strong>Few-shot CoT:</strong> the prompt includes a few worked examples showing step-by-step reasoning before the actual question.</li>
+            <li><strong>Zero-shot CoT:</strong> simply appending a phrase like <em>"Let's think step by step"</em> to the prompt, without any worked examples, has been shown to reliably trigger step-by-step reasoning in large models.</li>
+          </ul>
+
+          <p><strong>Key takeaway:</strong> CoT doesn't add any new knowledge to the model — it restructures <em>how</em> the model uses its existing knowledge, giving it "room to think" across multiple generation steps instead of forcing a single leap to the answer.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="tab-content" id="tab-3">
+    <div class="question-block" data-qid="u3-q24">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q24', 3)" aria-label="Mark as done"></button>
+        <h2 class="q-title">24. Explain the concept of self-consistency prompting. Describe how it can be combined with Chain-of-Thought reasoning to improve the reliability of LLM outputs.</h2>
+      </div>
+      <div class="answer-body">
+<h3>The Problem with a Single CoT Path</h3>
+          <p>Even with Chain-of-Thought prompting, an LLM generates text via sampling — a single reasoning path can go wrong at any step (a slip in arithmetic, a wrong logical branch), and that one flawed path is all a standard CoT approach relies on to reach its final answer. There's no way to check the answer against alternative ways of solving the same problem.</p>
+
+          <h3>What is Self-Consistency?</h3>
+          <p><strong>Self-consistency</strong> is a decoding strategy that addresses this by generating <strong>multiple independent reasoning paths</strong> for the same question (by sampling with temperature &gt; 0 rather than always taking the single most likely path), extracting the final answer from each path, and then selecting the answer that occurs <strong>most frequently</strong> across all the sampled paths — essentially a majority vote over diverse chains of thought.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="110" width="130" height="40" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="85" y="135" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Question</text>
+
+              <rect x="220" y="20" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="45" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 1 → Answer: 11</text>
+
+              <rect x="220" y="90" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="115" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 2 → Answer: 11</text>
+
+              <rect x="220" y="160" width="160" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="185" fill="var(--text)" font-size="10.5" text-anchor="middle">Reasoning Path 3 → Answer: 9</text>
+
+              <rect x="220" y="230" width="160" height="26" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="300" y="248" fill="var(--text-muted)" font-size="9.5" text-anchor="middle">... Path 4, 5 → 11, 11</text>
+
+              <line x1="150" y1="130" x2="220" y2="40" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="110" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="180" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="150" y1="130" x2="220" y2="243" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+
+              <rect x="530" y="105" width="160" height="50" rx="8" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="610" y="126" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">Majority Vote</text>
+              <text x="610" y="142" fill="#fff" font-size="11" text-anchor="middle">Final Answer: 11</text>
+
+              <line x1="380" y1="40" x2="530" y2="115" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="110" x2="530" y2="125" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="180" x2="530" y2="140" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+              <line x1="380" y1="243" x2="530" y2="150" stroke="var(--text-dim)" stroke-width="1.2" marker-end="url(#a8)"/>
+
+              <defs>
+                <marker id="a8" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="source-note">Fig 12.1 — Self-consistency: sample several CoT reasoning paths for the same question, then take a majority vote over their final answers</p>
+          </div>
+
+          <h3>How It Combines with Chain-of-Thought</h3>
+          <ol>
+            <li><strong>Prompt with CoT:</strong> Use a CoT prompt (few-shot or "let's think step by step") so the model produces explicit reasoning steps, not just a direct answer.</li>
+            <li><strong>Sample multiple times:</strong> Instead of greedy decoding (always picking the highest-probability next token), sample the model's output several times (e.g. 10–40 times) with a non-zero temperature, so each run can take a genuinely different reasoning path.</li>
+            <li><strong>Extract final answers:</strong> Parse out just the final answer from each of the generated reasoning chains, discarding the reasoning text itself at this stage.</li>
+            <li><strong>Marginalize via majority vote:</strong> Select the answer that appears most often across all sampled paths as the final output. Paths that reach the same correct answer via different routes reinforce each other, while a single flawed path gets outvoted.</li>
+          </ol>
+
+          <h3>Why This Improves Reliability</h3>
+          <ul>
+            <li><strong>Error cancellation:</strong> If a mistake in one reasoning path is essentially "random noise," it's unlikely that the same mistake recurs identically across many independently sampled paths — so the correct, more common answer dominates the vote.</li>
+            <li><strong>Captures problem diversity:</strong> Many reasoning problems can be solved via multiple valid approaches; sampling diverse paths mirrors how a human might double-check an answer using a different method.</li>
+            <li><strong>No extra training required:</strong> Self-consistency is purely a decoding-time strategy — it requires no fine-tuning, just multiple forward passes at inference time.</li>
+            <li><strong>Confidence signal:</strong> The proportion of paths agreeing on the majority answer can itself be used as a rough confidence estimate for the final output.</li>
+          </ul>
+
+          <p><strong>Trade-off:</strong> Self-consistency multiplies inference cost by the number of sampled paths (e.g. 20–40× more generation calls), so it's typically reserved for cases where correctness matters more than latency or cost — such as exam-style reasoning benchmarks or high-stakes decision support, rather than every everyday chatbot query.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="tab-content" id="tab-4">
+    <div class="question-block" data-qid="u3-q25">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q25', 4)" aria-label="Mark as done"></button>
+        <h2 class="q-title">25. Discuss techniques for generating structured outputs (such as JSON) from LLMs. Explain how function calling can be used to integrate LLM outputs with external tools and APIs.</h2>
+      </div>
+      <div class="answer-body">
+<p>Applications need output that code can parse, not free-form prose. <strong>Structured output</strong> (usually JSON) makes the LLM a reliable component of a software system. <strong>Function calling</strong> then lets it use external tools and data.</p>
+<h3>Techniques for structured output</h3>
+<table>
+  <tr><th>Technique</th><th>How it works</th><th>Reliability</th></tr>
+  <tr><td><strong>Prompt-based formatting</strong></td><td>Instruct &ldquo;respond only with valid JSON matching this schema&rdquo;, optionally with a few-shot example.</td><td>Good, but can still add text or break the syntax</td></tr>
+  <tr><td><strong>JSON mode / schema-constrained decoding</strong></td><td>The API restricts the tokens the model may produce so that the output always matches the schema.</td><td>Guarantees valid structure</td></tr>
+  <tr><td><strong>Grammar-constrained generation</strong></td><td>A formal (context-free) grammar defines allowed output, e.g. any JSON, SQL or a custom format.</td><td>Guarantees conformance to the grammar</td></tr>
+  <tr><td><strong>Validate and retry</strong></td><td>Parse the output (e.g. with a Pydantic model); if invalid, send the error back and ask the model to fix it.</td><td>Good safety net</td></tr>
+</table>
+<p>Constrained decoding works by masking the logits: at each step the probability of any token that would make the output invalid is set to zero and the rest are renormalised,</p>
+<div class="formula">\[P'(x_t\mid x_{&lt;t})\ \propto\ P(x_t\mid x_{&lt;t})\cdot\mathbf 1\bigl[x_t\text{ keeps the output valid}\bigr]\]</div>
+<h3>Function calling (tool use)</h3>
+<p>The developer describes each available function by a name, a description and a parameter schema. When the model decides that the request needs an outside capability (live weather, a database, sending an email), it does <strong>not</strong> guess; it outputs a structured request naming the function and its arguments. The application runs it and returns the result to the model.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 812 80" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a78" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="121.00000000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="70.5" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">User query</text><text x="70.5" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">+ tool definitions</text><line x1="133.0" y1="39.0" x2="159.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a78)"/><rect x="161.0" y="16" width="99.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="210.5" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">LLM</text><text x="210.5" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">chooses a tool</text><line x1="262.0" y1="39.0" x2="288.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a78)"/><rect x="290.0" y="16" width="110.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="345.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">JSON call</text><text x="345.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">name + arguments</text><line x1="402.0" y1="39.0" x2="428.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a78)"/><rect x="430.0" y="16" width="88.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="474.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Your code</text><text x="474.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">runs the API</text><line x1="520.0" y1="39.0" x2="546.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a78)"/><rect x="548.0" y="16" width="104.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="600.25" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Result</text><text x="600.25" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">returned to LLM</text><line x1="654.5" y1="39.0" x2="680.5" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a78)"/><rect x="682.5" y="16" width="110.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="737.5" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Final answer</text><text x="737.5" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">natural language</text></svg>
+</div>
+<pre><code>// function definition given to the model
+{"name": "get_weather",
+ "description": "Current weather for a city",
+ "parameters": {"type": "object",
+                "properties": {"city": {"type": "string"}},
+                "required": ["city"]}}
+
+// model output for "Will I need an umbrella in Pune?"
+{"name": "get_weather", "arguments": {"city": "Pune"}}</code></pre>
+<h3>Workflow</h3>
+<ol>
+  <li>Send the user query together with the tool definitions.</li>
+  <li>The LLM decides whether a tool is needed and emits a JSON function call.</li>
+  <li>The application <strong>validates the arguments and executes</strong> the real function/API.</li>
+  <li>The result is sent back to the LLM as extra context.</li>
+  <li>The LLM writes the final, grounded answer.</li>
+</ol>
+<p>In plain words: the LLM is an office manager who does not know today's weather but knows exactly which colleague to call and what to ask. The model never executes anything itself, so permissions and validation are enforced in your code.</p>
+<p><strong>Significance:</strong> together these turn an LLM from a text generator into the reasoning layer of larger systems, the basis of agents and tool-augmented applications (Q10, Q29).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q26 -->
+  <div class="tab-content" id="tab-5">
+    <div class="question-block" data-qid="u3-q26">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q26', 5)" aria-label="Mark as done"></button>
+        <h2 class="q-title">26. Explain the principles of context engineering. Discuss strategies for effectively managing the context window of an LLM when handling large or multi-turn inputs.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Context engineering</strong> is the process of designing, organising and supplying the <em>right information</em> to an LLM so that it can give accurate, task-specific answers. Prompt engineering asks &ldquo;<em>what should the model do?</em>&rdquo;; context engineering asks &ldquo;<em>what information does the model need?</em>&rdquo;</p>
+<table>
+  <tr><th>Aspect</th><th>Prompt engineering</th><th>Context engineering</th></tr>
+  <tr><td>Focus</td><td>The instructions</td><td>The information given to the model</td></tr>
+  <tr><td>Content</td><td>Instructions, constraints, examples</td><td>Documents, conversation history, retrieved data, tool results</td></tr>
+  <tr><td>Goal</td><td>Guide behaviour</td><td>Provide relevant knowledge within a limited window</td></tr>
+</table>
+<h3>Principles</h3>
+<ul>
+  <li>Provide relevant and sufficient context; remove unnecessary or distracting information.</li>
+  <li>Organise it in a clear structure (labelled sections); define the task and expected output.</li>
+  <li>Keep the context consistent (no contradictory facts); include constraints and examples where useful.</li>
+</ul>
+<p>Example: &ldquo;Summarise this paper&rdquo; fails because the model does not know the audience, length or focus. Adding <em>Audience: B.Tech AIML; Length: 150 words; Focus: problem, method, findings; Format: bullet points</em> fixes it.</p>
+<h3>The context window</h3>
+<p>An LLM can read only a limited number of tokens \(N\) at a time. Everything, including the answer it will write, must fit:</p>
+<div class="formula">\[n_{\text{system}}+n_{\text{history}}+n_{\text{retrieved}}+n_{\text{query}}+n_{\text{output}}\ \le\ N\]</div>
+<div class="svg-wrap">
+<svg viewBox="0 0 600 102" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a79" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><text x="300" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">8 000-token window (illustrative budget)</text><rect x="10" y="26" width="36.2" height="34" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="28.125" y="76" text-anchor="middle" fill="var(--text-muted)" font-size="10">500</text><text x="28.125" y="92" text-anchor="middle" fill="var(--accent)" font-size="10">System</text><rect x="46.25" y="26" width="217.5" height="34" fill="none" stroke="var(--success)" stroke-width="2"/><text x="155.0" y="47" text-anchor="middle" fill="var(--text)" font-size="10.5">History</text><text x="155.0" y="76" text-anchor="middle" fill="var(--text-muted)" font-size="10">3000</text><rect x="263.75" y="26" width="217.5" height="34" fill="none" stroke="var(--warning)" stroke-width="2"/><text x="372.5" y="47" text-anchor="middle" fill="var(--text)" font-size="10.5">Retrieved</text><text x="372.5" y="76" text-anchor="middle" fill="var(--text-muted)" font-size="10">3000</text><rect x="481.25" y="26" width="14.5" height="34" fill="none" stroke="var(--important)" stroke-width="2"/><text x="488.5" y="76" text-anchor="middle" fill="var(--text-muted)" font-size="10">200</text><text x="488.5" y="92" text-anchor="middle" fill="var(--important)" font-size="10">Question</text><rect x="495.75" y="26" width="94.2" height="34" fill="none" stroke="var(--text-dim)" stroke-width="2"/><text x="542.875" y="47" text-anchor="middle" fill="var(--text)" font-size="10.5">Output reserve</text><text x="542.875" y="76" text-anchor="middle" fill="var(--text-muted)" font-size="10">1300</text></svg>
+</div>
+<p>Long contexts also cost more and are slower, and models tend to use information at the <strong>start and end</strong> of a long context better than information in the middle (&ldquo;lost in the middle&rdquo;).</p>
+<h3>Strategies for large or multi-turn inputs</h3>
+<table>
+  <tr><th>Strategy</th><th>What it does</th></tr>
+  <tr><td><strong>Truncation / sliding window</strong></td><td>Keep only the last \(k\) turns; simple, but old facts are lost.</td></tr>
+  <tr><td><strong>Summarisation</strong></td><td>Replace old turns by a running summary; keeps key facts in fewer tokens.</td></tr>
+  <tr><td><strong>Retrieval (RAG)</strong></td><td>Store documents outside and fetch only the chunks relevant to the current query (Unit IV).</td></tr>
+  <tr><td><strong>Prioritisation and ordering</strong></td><td>Put the most important instructions and evidence at the beginning or end; drop low-value text.</td></tr>
+  <tr><td><strong>Chunking and map-reduce</strong></td><td>Process a long document in pieces, then combine the partial results.</td></tr>
+  <tr><td><strong>Structured memory</strong></td><td>Keep short-term memory (recent turns) and long-term memory (facts, preferences in a store) separately.</td></tr>
+  <tr><td><strong>Compression</strong></td><td>Remove boilerplate, deduplicate, use concise formats (e.g. JSON fields instead of prose).</td></tr>
+</table>
+<p><strong>Budgeting:</strong> decide in advance how many tokens each part may use (see the bar above) and trim the lowest-value part first.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q27 -->
+  <div class="tab-content" id="tab-6">
+    <div class="question-block" data-qid="u3-q27">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q27', 6)" aria-label="Mark as done"></button>
+        <h2 class="q-title">27. Explain the concept of prompt chaining. Design a prompt chaining workflow for a multi-step task (e.g., research, summarization, and report generation), describing the role of each prompt in the chain. Write the algorithmic steps (pseudocode) for implementing this prompt chaining workflow.</h2>
+      </div>
+      <div class="answer-body">
+<h3>What is Prompt Chaining?</h3>
+          <p><strong>Prompt chaining</strong> is a technique where a complex task is broken into a sequence of smaller sub-tasks, each handled by its own prompt. The <strong>output of one prompt becomes (part of) the input of the next</strong>. Instead of asking the LLM to "research, summarize and write a report" in one giant prompt, we run a pipeline of focused prompts.</p>
+
+          <p><strong>Core idea:</strong> \( \text{Output}_n = \text{LLM}(\text{Prompt}_n,\ \text{Output}_{n-1}) \) — each step sees only what it needs, which makes it simpler, more accurate and debuggable.</p>
+
+          <h3>Why Chain Prompts?</h3>
+          <ul>
+            <li><strong>Better accuracy:</strong> one focused instruction per call; the model is not overloaded.</li>
+            <li><strong>Debuggability:</strong> you can inspect the intermediate output of every step and fix the exact failing stage.</li>
+            <li><strong>Context control:</strong> avoids exceeding the context window by passing only condensed outputs forward.</li>
+            <li><strong>Modularity:</strong> a step can be swapped, retried, or given a different model/temperature.</li>
+            <li><strong>Validation gates:</strong> checks (format, length, fact-check) can be inserted between steps.</li>
+          </ul>
+
+          <h3>Workflow: Research → Summarize → Report</h3>
+          <p><strong>P1 Plan</strong> → <strong>P2 Research</strong> → <strong>P3 Summarize</strong> → <strong>P4 Outline</strong> → <strong>P5 Draft Report</strong> → <strong>P6 Review</strong></p>
+
+          <table>
+            <tr><th>Step</th><th>Role of the prompt</th><th>Input</th><th>Output</th></tr>
+            <tr><td><strong>P1 — Plan</strong></td><td>Decompose the topic into 4–5 research sub-questions</td><td>User topic</td><td>List of sub-questions</td></tr>
+            <tr><td><strong>P2 — Research</strong></td><td>Answer each sub-question using retrieved documents / search results; extract key facts with sources</td><td>Sub-questions + documents</td><td>Raw findings with citations</td></tr>
+            <tr><td><strong>P3 — Summarize</strong></td><td>Condense findings into concise bullet-point summaries, removing duplication</td><td>Raw findings</td><td>Per-question summaries</td></tr>
+            <tr><td><strong>P4 — Outline</strong></td><td>Arrange summaries into a logical report structure (intro, sections, conclusion)</td><td>Summaries</td><td>Structured outline</td></tr>
+            <tr><td><strong>P5 — Draft</strong></td><td>Write the full report section by section in the required tone and length</td><td>Outline + summaries</td><td>Draft report</td></tr>
+            <tr><td><strong>P6 — Review</strong></td><td>Check consistency, grammar, factual alignment with sources; return the final version</td><td>Draft + findings</td><td>Final report</td></tr>
+          </table>
+
+          <h3>Pseudocode</h3>
+          <pre><code>FUNCTION generate_report(topic):
+    // Step 1: Plan
+    plan_prompt   = "List 5 research sub-questions about: " + topic
+    sub_questions = LLM(plan_prompt)
+
+    // Step 2: Research (loop over each sub-question)
+    findings = []
+    FOR EACH q IN sub_questions:
+        docs     = retrieve_documents(q)            // search / vector DB
+        res_prompt = "Using ONLY these docs, answer: " + q + "\n" + docs
+        answer   = LLM(res_prompt)
+        IF NOT validate(answer):                    // gate: empty / off-topic
+            answer = LLM(res_prompt)                // retry once
+        findings.APPEND(answer)
+
+    // Step 3: Summarize
+    sum_prompt = "Summarize these findings in bullets:\n" + findings
+    summary    = LLM(sum_prompt)
+
+    // Step 4: Outline
+    outline = LLM("Create a report outline from:\n" + summary)
+
+    // Step 5: Draft
+    draft = LLM("Write a full report following outline:\n" + outline
+                + "\nUse facts from:\n" + summary)
+
+    // Step 6: Review
+    final = LLM("Proofread, fix inconsistencies, keep facts intact:\n" + draft)
+
+    RETURN final
+END FUNCTION</code></pre>
+
+          <p><strong>Conclusion:</strong> Prompt chaining converts one fragile, overloaded prompt into a reliable pipeline of simple, verifiable steps. It is the foundation of agents and frameworks like LangChain (Q2).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q28 -->
+  <div class="tab-content" id="tab-7">
+    <div class="question-block" data-qid="u3-q28">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q28', 7)" aria-label="Mark as done"></button>
+        <h2 class="q-title">28. Discuss prompt evaluation and optimization techniques. Explain the metrics and iterative refinement strategies used to improve prompt performance for a given task.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Prompt evaluation</strong> assesses how good a prompt is by analysing the responses it produces. <strong>Prompt optimisation</strong> modifies the prompt to improve accuracy, consistency and relevance. The goal is to improve accuracy, reduce ambiguity and hallucination, increase consistency and cut irrelevant output.</p>
+<h3>Evaluation criteria</h3>
+<table>
+  <tr><th>Criterion</th><th>Question asked</th></tr>
+  <tr><td>Accuracy</td><td>Is the answer factually correct?</td></tr>
+  <tr><td>Relevance</td><td>Does it address the task?</td></tr>
+  <tr><td>Clarity</td><td>Is it easy to understand?</td></tr>
+  <tr><td>Completeness</td><td>Does it contain everything required?</td></tr>
+  <tr><td>Consistency</td><td>Is quality similar across repeated runs?</td></tr>
+  <tr><td>Format compliance</td><td>Does it follow the requested structure?</td></tr>
+</table>
+<h3>Metrics</h3>
+<p>Run each candidate prompt on the same fixed <strong>test set</strong> of \(N\) inputs and compute:</p>
+<div class="formula">\[\text{Accuracy}=\frac{\#\text{correct}}{N},\qquad \text{Format rate}=\frac{\#\text{valid-format outputs}}{N},\qquad F_1=\frac{2PR}{P+R}\]</div>
+<ul>
+  <li><strong>Consistency:</strong> run the same input \(k\) times at temperature &gt; 0 and measure the fraction of runs that agree with the majority answer.</li>
+  <li><strong>Text-overlap metrics</strong> (BLEU, ROUGE, BERTScore) when reference answers exist (Q46).</li>
+  <li><strong>LLM-as-a-judge / human rating</strong> on a 1&ndash;5 scale for open-ended output.</li>
+  <li><strong>Operational:</strong> token count, latency and cost per request.</li>
+</ul>
+<h3>Iterative refinement</h3>
+<div class="svg-wrap">
+<svg viewBox="0 0 658 112" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a80" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="97.9" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="58.95" y="43.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Draft prompt</text><line x1="109.9" y1="39.0" x2="135.9" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a80)"/><rect x="137.9" y="16" width="116.87500000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="196.3375" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Run on test set</text><text x="196.3375" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">several inputs</text><line x1="256.77500000000003" y1="39.0" x2="282.77500000000003" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a80)"/><rect x="284.775" y="16" width="66.275" height="46" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="317.91249999999997" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Measure</text><text x="317.91249999999997" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">metrics</text><line x1="353.04999999999995" y1="39.0" x2="379.04999999999995" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a80)"/><rect x="381.04999999999995" y="16" width="123.2" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="442.65" y="43.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Analyse failures</text><line x1="506.24999999999994" y1="39.0" x2="532.25" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a80)"/><rect x="534.25" y="16" width="104.22500000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="586.3625" y="43.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Refine prompt</text><path d="M588.475,64 L588.475,84 L60,84 L60,66" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="60" y1="70" x2="60" y2="64" stroke="var(--accent)" stroke-width="1" marker-end="url(#a80)"/><text x="324.2375" y="100" text-anchor="middle" fill="var(--accent-hover)" font-size="10.5">repeat until the target score is reached</text></svg>
+</div>
+<table>
+  <tr><th>Technique</th><th>Example</th></tr>
+  <tr><td>Add constraints</td><td>Audience, length, format, focus (&ldquo;150 words, bullet points&rdquo;)</td></tr>
+  <tr><td>Add examples (few-shot)</td><td>Show correct input&ndash;output pairs for the failing cases</td></tr>
+  <tr><td>Ask for reasoning</td><td>&ldquo;Think step by step&rdquo; (Q23); self-consistency (Q24)</td></tr>
+  <tr><td>Use delimiters / structure</td><td>Separate instructions from data</td></tr>
+  <tr><td>Tune decoding</td><td>Lower temperature for consistency</td></tr>
+  <tr><td>A/B testing</td><td>Compare two prompt versions on the same set; keep the better one</td></tr>
+</table>
+<p>Before/after example: <em>&ldquo;Summarise this research paper.&rdquo;</em> (no audience, length or focus) becomes <em>&ldquo;Summarise this paper for B.Tech AIML students in 150 words: research problem, methodology, key findings; simple language, bullet points.&rdquo;</em> &mdash; scored on the six criteria above, the second prompt wins on relevance, completeness and format.</p>
+<p><strong>Good practice:</strong> change one thing at a time, keep a version history of prompts and a fixed regression test set, and re-test when the model is updated.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q29 -->
+  <div class="tab-content" id="tab-8">
+    <div class="question-block" data-qid="u3-q29">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q29', 8)" aria-label="Mark as done"></button>
+        <h2 class="q-title">29. Explain the role of LLM APIs and integration frameworks (such as LangChain) in building intelligent applications. Describe, with a diagram, the architecture of a typical LLM-powered application.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Role of LLM APIs</h3>
+          <p>An <strong>LLM API</strong> (OpenAI, Anthropic Claude, Google Gemini, Cohere, etc.) exposes a hosted model over HTTP so applications can use it without training or hosting it. The developer sends a request (messages, parameters) and receives generated text, embeddings or tool calls.</p>
+          <table>
+            <tr><th>API Feature</th><th>Purpose</th></tr>
+            <tr><td>Chat / completion endpoint</td><td>Send messages (system, user, assistant) and receive the model's reply</td></tr>
+            <tr><td>Parameters</td><td><code>temperature</code> (randomness), <code>max_tokens</code> (length), <code>top_p</code>, stop sequences</td></tr>
+            <tr><td>Embeddings endpoint</td><td>Convert text into vectors for semantic search / RAG</td></tr>
+            <tr><td>Function / tool calling</td><td>Model returns structured JSON to call external tools or APIs</td></tr>
+            <tr><td>Streaming</td><td>Tokens delivered as generated — responsive UIs</td></tr>
+          </table>
+          <p><strong>Benefits:</strong> no GPU infrastructure, instant access to state-of-the-art models, pay-per-token pricing, easy scaling. <strong>Challenges:</strong> latency, cost, rate limits, data privacy, vendor lock-in.</p>
+
+          <h3>Role of Integration Frameworks (LangChain, LlamaIndex)</h3>
+          <p>A raw API call only gives text in → text out. Real applications need prompts, memory, retrieval, tools and multi-step logic. <strong>LangChain</strong> provides these building blocks as reusable, composable components:</p>
+          <table>
+            <tr><th>LangChain Component</th><th>Function</th></tr>
+            <tr><td><strong>Models</strong></td><td>Unified interface to many LLM providers — swap models with one line</td></tr>
+            <tr><td><strong>Prompt Templates</strong></td><td>Reusable parameterised prompts with variables</td></tr>
+            <tr><td><strong>Chains</strong></td><td>Link multiple steps (prompt → LLM → parser → next prompt) — implements prompt chaining</td></tr>
+            <tr><td><strong>Memory</strong></td><td>Stores conversation history so the app is context-aware</td></tr>
+            <tr><td><strong>Retrievers / Vector stores</strong></td><td>Connect to document loaders, embeddings and vector DBs for RAG</td></tr>
+            <tr><td><strong>Tools &amp; Agents</strong></td><td>Let the LLM decide which tool (search, calculator, DB, API) to call</td></tr>
+            <tr><td><strong>Output Parsers</strong></td><td>Convert free text into structured JSON / objects</td></tr>
+          </table>
+
+          <h3>Architecture of a Typical LLM-Powered Application</h3>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg">
+              <rect class="box" x="20" y="120" width="110" height="60" rx="8"/>
+              <text class="lbl" x="75" y="147">User / UI</text><text class="lbl-s" x="75" y="164">Web, App, Chat</text>
+
+              <rect class="box" x="170" y="120" width="130" height="60" rx="8"/>
+              <text class="lbl" x="235" y="147">Application</text><text class="lbl-s" x="235" y="164">Backend / API server</text>
+
+              <rect class="box3" x="340" y="60" width="200" height="180" rx="10"/>
+              <text class="lbl" x="440" y="82">Orchestration (LangChain)</text>
+              <rect class="box3" x="355" y="95" width="75" height="34" rx="6"/><text class="lbl-s" x="392" y="116">Prompt Tmpl</text>
+              <rect class="box3" x="450" y="95" width="75" height="34" rx="6"/><text class="lbl-s" x="487" y="116">Chains</text>
+              <rect class="box3" x="355" y="140" width="75" height="34" rx="6"/><text class="lbl-s" x="392" y="161">Memory</text>
+              <rect class="box3" x="450" y="140" width="75" height="34" rx="6"/><text class="lbl-s" x="487" y="161">Agents/Tools</text>
+              <rect class="box3" x="355" y="185" width="170" height="34" rx="6"/><text class="lbl-s" x="440" y="206">Output Parser / Guardrails</text>
+
+              <rect class="box2" x="600" y="40" width="140" height="60" rx="8"/>
+              <text class="lbl" x="670" y="66">LLM API</text><text class="lbl-s" x="670" y="83">GPT / Claude / Gemini</text>
+              <rect class="box2" x="600" y="125" width="140" height="60" rx="8"/>
+              <text class="lbl" x="670" y="151">Vector DB</text><text class="lbl-s" x="670" y="168">FAISS / Pinecone / Chroma</text>
+              <rect class="box2" x="600" y="210" width="140" height="60" rx="8"/>
+              <text class="lbl" x="670" y="236">External Tools</text><text class="lbl-s" x="670" y="253">Search, SQL, REST APIs</text>
+
+              <path class="arr" d="M130,150 L170,150"/>
+              <path class="arr" d="M300,150 L340,150"/>
+              <path class="arr" d="M540,100 L600,72"/>
+              <path class="arr" d="M540,150 L600,155"/>
+              <path class="arr" d="M540,200 L600,238"/>
+              <text class="lbl-s" x="380" y="300">Response flows back: LLM → Parser → Application → User</text>
+              <text class="lbl-s" x="380" y="318">Layers: Presentation → Application → Orchestration → Model / Data / Tools</text>
+            </svg>
+            <h3>Trace of one request through the application</h3>
+<ol>
+  <li>The user asks: &ldquo;What is the refund window?&rdquo;</li>
+  <li>The app turns the question into an embedding and retrieves the top-3 policy passages (retriever).</li>
+  <li>A <strong>prompt template</strong> inserts the passages, the chat history from <strong>memory</strong> and the question into one prompt.</li>
+  <li>The prompt is sent to the <strong>LLM API</strong> with chosen parameters (low temperature for factual answers).</li>
+  <li>An <strong>output parser</strong> checks and formats the reply; the app returns it and stores the turn in memory.</li>
+</ol>
+<h3>Pseudo-code of a chain</h3>
+<pre><code>prompt = Template("Answer using only the context.\nContext: {context}\nQuestion: {question}")
+def answer(question):
+    docs   = retriever.search(question, k=3)
+    text   = prompt.fill(context=join(docs), question=question)
+    reply  = llm.generate(text, temperature=0.2, max_tokens=300)
+    memory.save(question, reply)
+    return parse(reply)</code></pre>
+<p>A framework such as LangChain provides ready-made versions of every line here, so the developer composes components instead of writing the plumbing.</p>
+<h3>Cost estimate (illustrative prices)</h3>
+<p>API cost per request \(=n_{in}\,p_{in}+n_{out}\,p_{out}\). With 1,500 input tokens at an assumed \$3 per million and 500 output tokens at an assumed \$15 per million: \(1500\times\frac{3}{10^6}+500\times\frac{15}{10^6}=0.0045+0.0075=\$0.012\). At 10,000 requests a day this is about \$120 per day &mdash; which is why prompt length, caching and model choice matter in design.</p>
+<p class="source-note">Fig: Layered architecture of an LLM-powered application</p>
+          </div>
+
+          <p><strong>Request Flow</strong></p>
+          <ol>
+            <li>User submits a query through the UI.</li>
+            <li>Backend passes it to the orchestration layer, which loads memory and fills a prompt template.</li>
+            <li>If needed, retriever fetches context from the vector DB, or an agent calls an external tool.</li>
+            <li>The full prompt is sent to the LLM API; the response is parsed and validated (guardrails).</li>
+            <li>The final answer is returned to the user and the interaction is stored in memory/logs.</li>
+          </ol>
+
+          <p><strong>Conclusion:</strong> APIs give the intelligence; frameworks like LangChain give the plumbing — memory, retrieval, tools and chaining — turning a raw model into a complete, production-ready application.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q30 -->
+  <div class="tab-content" id="tab-9">
+    <div class="question-block" data-qid="u3-q30">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u3-q30', 9)" aria-label="Mark as done"></button>
+        <h2 class="q-title">30. Design the architecture for a conversational AI system using an LLM API. Discuss how the same underlying techniques can be extended to build intelligent content generation and information extraction applications.</h2>
+      </div>
+      <div class="answer-body">
+<p>A <strong>conversational AI system</strong> uses an LLM to talk with users in natural language across several turns. Its reliability comes from the software around the model, not from the model alone.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 798 134" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a81" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="88.0" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="54.0" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">User</text><text x="54.0" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">text / voice</text><line x1="100.0" y1="39.0" x2="126.0" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a81)"/><rect x="128.0" y="16" width="93.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="174.75" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Interface</text><text x="174.75" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">chat UI / API</text><line x1="223.5" y1="39.0" x2="249.5" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a81)"/><rect x="251.5" y="16" width="116.87500000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="309.9375" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Context manager</text><text x="309.9375" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">history + memory</text><line x1="370.375" y1="39.0" x2="396.375" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a81)"/><rect x="398.375" y="16" width="110.55000000000001" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="453.65" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Prompt builder</text><text x="453.65" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">system + context</text><line x1="510.925" y1="39.0" x2="536.925" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a81)"/><rect x="538.925" y="16" width="104.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="591.175" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">LLM API</text><text x="591.175" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">generates reply</text><line x1="645.425" y1="39.0" x2="671.425" y2="39.0" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a81)"/><rect x="673.425" y="16" width="104.5" height="46" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="725.675" y="38.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Guardrails</text><text x="725.675" y="52.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">filter + format</text><rect x="313.9625" y="84" width="160" height="34" rx="6" fill="var(--surface2)" stroke="var(--success)"/><text x="393.9625" y="105.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Tools / RAG / database</text><line x1="413.9625" y1="84" x2="413.9625" y2="64" stroke="var(--success)" stroke-width="1" marker-end="url(#a81)"/><line x1="373.9625" y1="64" x2="373.9625" y2="84" stroke="var(--success)" stroke-width="1" marker-end="url(#a81)"/></svg>
+</div>
+<h3>Components</h3>
+<table>
+  <tr><th>Component</th><th>Role</th></tr>
+  <tr><td>User interface</td><td>Accepts text or voice; web, mobile or messaging app</td></tr>
+  <tr><td>Language understanding</td><td>Interprets the request (intent, entities); may be done by the LLM itself</td></tr>
+  <tr><td>Context / memory manager</td><td>Keeps recent turns and a summary or store of important facts so follow-ups make sense</td></tr>
+  <tr><td>Prompt builder</td><td>Assembles system instructions + memory + retrieved or tool data + user message</td></tr>
+  <tr><td>LLM API</td><td>Generates the response (Q29)</td></tr>
+  <tr><td>Tools / knowledge</td><td>Databases, APIs or RAG for facts and actions (Q25, Unit IV)</td></tr>
+  <tr><td>Guardrails and response generation</td><td>Safety filters, format checks and the final answer to the user</td></tr>
+</table>
+<h3>Workflow (one turn)</h3>
+<pre><code>history = [system_prompt]
+loop:
+    user_msg = receive()
+    context  = select(history, user_msg)        # recent turns + summary + retrieved facts
+    prompt   = build_prompt(context, user_msg)
+    reply    = llm_api(prompt)                  # may call tools and loop
+    reply    = apply_guardrails(reply)
+    history.append(user_msg, reply)             # update memory
+    send(reply)</code></pre>
+<p>Memory design: <em>buffer</em> (all turns), <em>window</em> (last \(k\) turns) or <em>summary</em> (compressed older turns), chosen by the context-window budget (Q26).</p>
+<h3>Key challenges</h3>
+<ul>
+  <li>Hallucination, context management over many turns, consistency of answers.</li>
+  <li>Privacy of the sensitive information users share; latency for real-time chat; ambiguous or incomplete questions.</li>
+</ul>
+<h3>Extending the same architecture</h3>
+<table>
+  <tr><th>Application</th><th>What changes</th><th>Example</th></tr>
+  <tr><td><strong>Intelligent content generation</strong></td><td>Prompt templates with audience, tone and length; no dialogue memory needed; human review step</td><td>Product descriptions, reports, quizzes, marketing copy</td></tr>
+  <tr><td><strong>Information extraction</strong></td><td>Prompt asks for specific fields in a fixed JSON schema (Q25); low temperature; validate and retry</td><td>From an invoice: <code>{"vendor": ..., "date": ..., "total": ...}</code></td></tr>
+</table>
+<p>All three share the loop <strong>build prompt &rarr; call the LLM API &rarr; post-process and validate &rarr; use the output</strong>; only the prompt template, the memory and the validation differ.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab-content').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === i);
+  });
+}
+function toggleDone(qid, tabIdx) {
+  const block = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const isDone = block.classList.toggle('q-done');
+  const btn = document.querySelectorAll('.tab-btn')[tabIdx];
+  btn.classList.toggle('done', isDone);
+  try { localStorage.setItem('done-' + qid, isDone ? '1' : ''); } catch (e) {}
+}
+document.querySelectorAll('.question-block').forEach((block, idx) => {
+  let saved = false;
+  try { saved = !!localStorage.getItem('done-' + block.dataset.qid); } catch (e) {}
+  if (saved) {
+    block.classList.add('q-done');
+    const btn = document.querySelectorAll('.tab-btn')[idx];
+    if (btn) btn.classList.add('done');
+  }
+});
+showTab(0);
+</script>
+</body>
+</html>

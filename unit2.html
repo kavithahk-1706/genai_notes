@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit II — Generative Models for Data Generation | Generative AI with LLMs</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <nav class="unit-nav">
+    <a href="unit1.html" class="nav-prev">← Unit I</a>
+    <span class="nav-title">Unit II: Generative Models for Data Generation</span>
+    <a href="unit3.html" class="nav-next">Unit III →</a>
+    <a href="index.html" class="nav-home">Home</a>
+  </nav>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" onclick="showTab(0)">Q11</button>
+    <button class="tab-btn" onclick="showTab(1)">Q12</button>
+    <button class="tab-btn" onclick="showTab(2)">Q13</button>
+    <button class="tab-btn" onclick="showTab(3)">Q14</button>
+    <button class="tab-btn" onclick="showTab(4)">Q15</button>
+    <button class="tab-btn" onclick="showTab(5)">Q16</button>
+    <button class="tab-btn" onclick="showTab(6)">Q17</button>
+    <button class="tab-btn" onclick="showTab(7)">Q18</button>
+    <button class="tab-btn" onclick="showTab(8)">Q19</button>
+    <button class="tab-btn" onclick="showTab(9)">Q20</button>
+  </div>
+
+  <!-- Q11 -->
+  <div class="tab-content" id="tab-0">
+    <div class="question-block" data-qid="u2-q11">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q11', 0)" aria-label="Mark as done"></button>
+        <h2 class="q-title">11. Explain the concept of generative modeling and probabilistic generative models. Differentiate between discriminative and generative approaches to machine learning with examples.</h2>
+      </div>
+      <div class="answer-body">
+<p>A <strong>generative model</strong> learns the probability distribution that produced the training data, \(P(X)\) or the joint \(P(X,Y)\), so that it can <strong>sample new data</strong> \(x\sim P_\theta(X)\) that looks like the training data but is not in it. A discriminative model learns only how to separate classes.</p>
+<p>In plain words: a discriminative model is an art critic who can tell a real Picasso from a fake; a generative model is a forger who has studied Picasso so well that it can paint a new &ldquo;Picasso&rdquo;.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 470 176" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a75" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><text x="110" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">(a) discriminative: P(y | x)</text><rect x="0" y="22" width="220" height="130" rx="3" fill="none" stroke="var(--border)"/><circle cx="43.470443592043225" cy="86.59225211065427" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="49.278027328115485" cy="88.741121389463" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="60.531693380754376" cy="69.35903893263327" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="33.57939162841446" cy="97.14888695547256" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="44.411576630432336" cy="75.43591459768106" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="76.80837276246037" cy="83.92948627080813" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="69.8043038560731" cy="84.14871551317606" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="61.11899818394313" cy="72.42219126484686" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="60.933868964548296" cy="98.24963105715868" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="166.01997325686526" cy="103.68506682325365" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="172.54210491626208" cy="79.3051317761719" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="176.36213083661997" cy="98.27958498552744" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="156.25577701869133" cy="78.116423052911" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="181.0831984270736" cy="94.0189671919568" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="174.62825265889535" cy="108.63726080919734" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="174.4216972788929" cy="110.15955203301948" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="160.37838977603275" cy="105.83271575546821" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="162.56332646623346" cy="110.68112198136276" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><line x1="110" y1="28" x2="110" y2="146" stroke="var(--important)" stroke-width="2" stroke-dasharray="5 3"/><text x="110" y="166" text-anchor="middle" fill="var(--important)" font-size="10.5">learns only the boundary</text><text x="350" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">(b) generative: P(x | y) P(y)</text><rect x="240" y="22" width="220" height="130" rx="3" fill="none" stroke="var(--border)"/><ellipse cx="295" cy="85" rx="40" ry="32" fill="none" stroke="var(--accent)" stroke-width="2"/><ellipse cx="405" cy="95" rx="40" ry="32" fill="none" stroke="var(--warning)" stroke-width="2"/><circle cx="283.47044359204324" cy="86.59225211065427" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="289.2780273281155" cy="88.741121389463" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="300.5316933807544" cy="69.35903893263327" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="273.57939162841444" cy="97.14888695547256" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="284.41157663043236" cy="75.43591459768106" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="316.80837276246035" cy="83.92948627080813" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="309.8043038560731" cy="84.14871551317606" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="301.1189981839431" cy="72.42219126484686" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="300.9338689645483" cy="98.24963105715868" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="406.0199732568653" cy="103.68506682325365" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="412.5421049162621" cy="79.3051317761719" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="416.36213083661994" cy="98.27958498552744" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="396.25577701869133" cy="78.116423052911" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="421.0831984270736" cy="94.0189671919568" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="414.62825265889535" cy="108.63726080919734" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="414.4216972788929" cy="110.15955203301948" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="400.37838977603275" cy="105.83271575546821" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><circle cx="402.5633264662335" cy="110.68112198136276" r="3.2" fill="var(--warning)" stroke="var(--warning)" stroke-width="1"/><text x="350" y="166" text-anchor="middle" fill="var(--success)" font-size="10.5">learns each class → can sample</text></svg>
+</div>
+<h3>Probabilistic generative models</h3>
+<p>Data generation is treated as a random process controlled by parameters \(\theta\). Training uses <strong>maximum likelihood estimation</strong>:</p>
+<div class="formula">\[\theta^{*}=\arg\max_\theta\ \mathbb E_{x\sim P_{data}}\bigl[\log P_\theta(x)\bigr]\]</div>
+<p>Examples: Naive Bayes, Gaussian Mixture Models, Hidden Markov Models, and the deep generative models VAE, GAN and diffusion models (Q12&ndash;Q16).</p>
+<h3>How the two are related</h3>
+<p>A generative model can be turned into a classifier with Bayes' rule, but not the other way round:</p>
+<div class="formula">\[P(y\mid x)=\frac{P(x\mid y)\,P(y)}{P(x)}\]</div>
+<h3>Discriminative vs generative</h3>
+<table>
+  <tr><th>Aspect</th><th>Discriminative</th><th>Generative</th></tr>
+  <tr><td>Learns</td><td>Decision boundary / \(P(y\mid x)\)</td><td>Data distribution \(P(x)\) or \(P(x,y)\)</td></tr>
+  <tr><td>Goal</td><td>Classify or predict labels</td><td>Generate realistic new samples</td></tr>
+  <tr><td>Examples</td><td>Logistic regression, SVM, CNN classifier</td><td>Naive Bayes, VAE, GAN, diffusion</td></tr>
+  <tr><td>Data</td><td>Needs labelled data</td><td>Can learn without labels</td></tr>
+  <tr><td>Can generate samples?</td><td>No</td><td>Yes</td></tr>
+  <tr><td>Strength</td><td>Usually higher accuracy on the classification task itself</td><td>Models the whole data structure; handles missing data and anomaly detection</td></tr>
+</table>
+<h3>Example &mdash; spam</h3>
+<p>A discriminative spam filter learns \(P(\text{spam}\mid\text{email})\) and only labels emails. A generative model learns \(P(\text{email}\mid\text{spam})\), so it can also <em>write</em> a synthetic spam-like email, which can be used as extra training data for the filter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="tab-content" id="tab-1">
+    <div class="question-block" data-qid="u2-q12">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q12', 1)" aria-label="Mark as done"></button>
+        <h2 class="q-title">12. Describe the architecture of Autoencoders and Variational Autoencoders (VAEs). Explain the role of the latent space and derive the Evidence Lower Bound (ELBO) loss function used in VAE training.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Autoencoders — Basic Idea</h3>
+          <p>An <strong>autoencoder</strong> is a neural network trained to reconstruct its own input. It consists of an <strong>encoder</strong> that compresses the input \(x\) into a low-dimensional <strong>latent representation</strong> \(z\), and a <strong>decoder</strong> that reconstructs \(x\) from \(z\). Training minimizes reconstruction error (e.g. mean squared error) between input and output.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+              <text x="80" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Input x</text>
+              <polygon points="30,60 130,90 130,150 30,180" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="80" y="118" fill="var(--accent-hover)" font-size="11" text-anchor="middle">Encoder</text>
+              <text x="80" y="132" fill="var(--accent-hover)" font-size="11" text-anchor="middle">qφ(z|x)</text>
+
+              <ellipse cx="280" cy="115" rx="55" ry="45" fill="var(--surface2)" stroke="var(--warning)" stroke-width="1.5"/>
+              <text x="280" y="110" fill="var(--warning)" font-size="11" text-anchor="middle">Latent Space</text>
+              <text x="280" y="126" fill="var(--warning)" font-size="11" text-anchor="middle">z ~ N(μ, σ²)</text>
+
+              <polygon points="430,90 430,150 530,180 530,60" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="480" y="118" fill="var(--accent-hover)" font-size="11" text-anchor="middle">Decoder</text>
+              <text x="480" y="132" fill="var(--accent-hover)" font-size="11" text-anchor="middle">pθ(x|z)</text>
+
+              <text x="620" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Output x̂</text>
+
+              <line x1="130" y1="115" x2="225" y2="115" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="335" y1="115" x2="430" y2="115" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="80" y1="45" x2="80" y2="60" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <line x1="530" y1="115" x2="600" y2="45" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a3)"/>
+              <defs>
+                <marker id="a3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/>
+                </marker>
+              </defs>
+            </svg>
+            <p class="source-note">Fig 6.1 — VAE architecture: encoder maps input to a latent distribution, decoder reconstructs from a sampled z</p>
+          </div>
+
+          <h3>Standard Autoencoder vs Variational Autoencoder</h3>
+          <p>A plain (vanilla) autoencoder maps each input to a <strong>single fixed point</strong> in latent space. This makes the latent space unstructured — there's no guarantee that points near each other decode to similar, meaningful outputs, and sampling a random point in latent space usually produces garbage. This makes vanilla autoencoders bad generative models.</p>
+          <p>A <strong>Variational Autoencoder (VAE)</strong> fixes this by making the encoder output a <strong>probability distribution</strong> over latent space — typically a Gaussian defined by a mean \(\mu\) and standard deviation \(\sigma\) — instead of a single point. During training, a latent vector \(z\) is <em>sampled</em> from this distribution using the <strong>reparameterization trick</strong>:</p>
+          <div class="formula">\[ z = \mu + \sigma \odot \epsilon, \quad \epsilon \sim \mathcal{N}(0, I) \]</div>
+          <p>This trick lets gradients flow through the sampling step (since the randomness is isolated in \(\epsilon\)), making the whole model trainable end-to-end via backpropagation.</p>
+
+          <h3>Role of the Latent Space</h3>
+          <p>VAE training additionally forces the latent distribution for every input to stay close to a standard normal prior \(p(z) = \mathcal{N}(0, I)\). This regularization makes the latent space <strong>smooth and continuous</strong> — nearby points decode to similar, realistic outputs, and random sampling from the prior produces coherent new data. This is exactly what makes VAEs usable as <strong>generative models</strong>: after training, you can generate new samples by simply drawing \(z \sim \mathcal{N}(0,I)\) and passing it through the decoder alone.</p>
+
+          <h3>Deriving the ELBO</h3>
+          <p>We want to maximize the likelihood of the data, \(\log p_\theta(x)\), but this requires integrating over all possible latent codes:</p>
+          <div class="formula">\[ p_\theta(x) = \int p_\theta(x|z)\, p(z)\, dz \]</div>
+          <p>This integral is intractable for complex decoders. So instead, we introduce an approximate posterior \(q_\phi(z|x)\) (the encoder) and rewrite the log-likelihood:</p>
+          <div class="formula">\[ \log p_\theta(x) = \mathbb{E}_{q_\phi(z|x)}\left[\log \frac{p_\theta(x,z)}{q_\phi(z|x)}\right] + D_{KL}\big(q_\phi(z|x)\,\|\,p_\theta(z|x)\big) \]</div>
+          <p>Since KL divergence is always \(\geq 0\), the first term is a <strong>lower bound</strong> on \(\log p_\theta(x)\) — this is the <strong>Evidence Lower Bound (ELBO)</strong>:</p>
+          <div class="formula">\[ \log p_\theta(x) \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}\big(q_\phi(z|x)\,\|\,p(z)\big) = \text{ELBO} \]</div>
+          <p>Maximizing the ELBO (equivalently, minimizing its negative as a loss) is a tractable proxy for maximizing the true data likelihood. The ELBO decomposes into two interpretable terms:</p>
+          <ul>
+            <li><strong>Reconstruction term</strong> \(\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]\) — how well the decoder reconstructs \(x\) from a sampled \(z\); in practice this is implemented as MSE or binary cross-entropy loss.</li>
+            <li><strong>KL regularization term</strong> \(D_{KL}(q_\phi(z|x)\,\|\,p(z))\) — penalizes the encoder's distribution for straying too far from the standard normal prior, keeping the latent space smooth.</li>
+          </ul>
+          <p>The final VAE training objective (loss to minimize) is:</p>
+          <div class="formula">\[ \mathcal{L}_{VAE} = -\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] + D_{KL}\big(q_\phi(z|x)\,\|\,p(z)\big) \]</div>
+
+          <p><strong>Key takeaway:</strong> The reconstruction term pushes the decoder to be accurate; the KL term pushes the latent space to be smooth and generative. The tension between the two is what gives VAEs their characteristic slightly-blurry-but-well-structured generations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="tab-content" id="tab-2">
+    <div class="question-block" data-qid="u2-q13">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q13', 2)" aria-label="Mark as done"></button>
+        <h2 class="q-title">13. Explain the working principle of Generative Adversarial Networks (GANs). Describe the roles of the generator and discriminator, the minimax objective function, and the adversarial training process. Write the algorithm/pseudocode for the GAN training loop, showing the alternating update steps for the discriminator and generator.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Core Idea</h3>
+          <p>A <strong>GAN</strong> consists of two neural networks trained simultaneously in an adversarial (competitive) game: a <strong>Generator (G)</strong> that tries to create fake data indistinguishable from real data, and a <strong>Discriminator (D)</strong> that tries to tell real data apart from the Generator's fakes. Neither network sees labeled "how to generate images" data — the entire learning signal comes from this competition.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+              <text x="70" y="40" fill="var(--text)" font-size="12" text-anchor="middle">Random Noise z</text>
+              <rect x="20" y="60" width="100" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="70" y="80" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">z ~ N(0,I)</text>
+
+              <rect x="20" y="120" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="70" y="142" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Generator</text>
+              <text x="70" y="158" fill="var(--accent-hover)" font-size="11" text-anchor="middle">G(z)</text>
+
+              <text x="220" y="150" fill="var(--text)" font-size="11" text-anchor="middle">Fake data G(z)</text>
+
+              <rect x="330" y="60" width="120" height="130" rx="8" fill="var(--surface)" stroke="var(--accent-hover)" stroke-width="1.5"/>
+              <text x="390" y="120" fill="var(--accent-hover)" font-size="12" text-anchor="middle">Discriminator</text>
+              <text x="390" y="136" fill="var(--accent-hover)" font-size="11" text-anchor="middle">D(x)</text>
+
+              <text x="220" y="70" fill="var(--text)" font-size="11" text-anchor="middle">Real data x</text>
+              <rect x="330" y="220" width="0" height="0"/>
+
+              <rect x="500" y="105" width="150" height="40" rx="6" fill="var(--surface2)" stroke="var(--warning)" stroke-width="1.5"/>
+              <text x="575" y="130" fill="var(--warning)" font-size="11.5" text-anchor="middle">Real or Fake?</text>
+
+              <line x1="70" y1="90" x2="70" y2="120" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="120" y1="145" x2="330" y2="120" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="230" y1="55" x2="330" y2="95" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+              <line x1="450" y1="125" x2="500" y2="125" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#a4)"/>
+
+              <path d="M575,145 C575,220 100,220 70,195" fill="none" stroke="var(--danger)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#a5)"/>
+              <text x="330" y="235" fill="var(--danger)" font-size="10.5" text-anchor="middle">Backprop: gradient trains G to fool D</text>
+
+              <defs>
+                <marker id="a4" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+                <marker id="a5" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--danger)"/></marker>
+              </defs>
+            </svg>
+            <p class="source-note">Fig 7.1 — GAN architecture: Generator produces fakes from noise; Discriminator judges real vs fake; gradients flow back to improve both</p>
+          </div>
+
+          <h3>Role of the Generator</h3>
+          <p>The Generator \(G\) takes a random noise vector \(z\) (sampled from a simple prior like \(\mathcal{N}(0,I)\)) and maps it to a synthetic data sample \(G(z)\) — e.g. an image. Its goal is to make \(G(z)\) so realistic that the Discriminator cannot distinguish it from real data. It never sees real data directly; it only learns from the gradient signal passed back through the Discriminator.</p>
+
+          <h3>Role of the Discriminator</h3>
+          <p>The Discriminator \(D\) is a binary classifier that takes a sample (real or generated) and outputs the probability that it is real. It is trained on both real data (label = 1) and the Generator's fakes (label = 0), and its goal is to get as good as possible at telling them apart.</p>
+
+          <h3>The Minimax Objective</h3>
+          <p>The two networks play a two-player minimax game with value function \(V(D, G)\):</p>
+          <div class="formula">\[ \min_{G} \max_{D} V(D,G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))] \]</div>
+          <ul>
+            <li><strong>D maximizes</strong> \(V\): it wants \(D(x) \to 1\) for real data and \(D(G(z)) \to 0\) for fake data — correctly classifying both.</li>
+            <li><strong>G minimizes</strong> \(V\): it wants \(D(G(z)) \to 1\), i.e. it wants the Discriminator to be fooled into thinking its fakes are real.</li>
+          </ul>
+          <p>At the theoretical equilibrium (Nash equilibrium) of this game, the Generator's distribution exactly matches the real data distribution, and the Discriminator can do no better than random guessing — \(D(x) = 0.5\) everywhere.</p>
+
+          <h3>Adversarial Training Process</h3>
+          <ol>
+            <li>Sample a batch of real data \(x\) and a batch of noise \(z\); generate fakes \(G(z)\).</li>
+            <li><strong>Train D:</strong> update the Discriminator's weights to maximize \(V(D,G)\) — improving its ability to separate real from fake (Generator weights frozen).</li>
+            <li><strong>Train G:</strong> update the Generator's weights to minimize \(\log(1 - D(G(z)))\) (or equivalently maximize \(\log D(G(z))\) for better gradients) — improving its ability to fool D (Discriminator weights frozen).</li>
+            <li>Alternate steps 2 and 3 repeatedly. As training progresses, both networks improve together — the Generator produces increasingly realistic samples, and the Discriminator gets increasingly good at spotting subtle flaws, pushing the Generator further.</li>
+          </ol>
+
+          <p><strong>Practical challenges:</strong> GAN training is notoriously unstable — <strong>mode collapse</strong> (Generator produces limited variety), <strong>vanishing gradients</strong> (if D becomes too strong too fast, G gets no useful signal), and lack of a clear convergence metric are common issues addressed by techniques like Wasserstein GAN, gradient penalty, and careful learning-rate balancing.</p>
+<h3>Pseudocode &mdash; GAN training loop</h3>
+<pre><code>for each training iteration:
+    # ---- Step 1: update the discriminator D (G fixed), repeat k times ----
+    sample m real examples   x(1..m) ~ P_data
+    sample m noise vectors   z(1..m) ~ P_z
+    fake samples             x~(i) = G(z(i))
+    L_D = -(1/m) * sum_i [ log D(x(i)) + log(1 - D(x~(i))) ]
+    update D by gradient descent on L_D          # ascend V(D, G)
+
+    # ---- Step 2: update the generator G (D fixed) ----
+    sample m new noise vectors  z(1..m) ~ P_z
+    L_G = -(1/m) * sum_i log D(G(z(i)))          # non-saturating loss
+    update G by gradient descent on L_G
+until convergence or fixed number of iterations</code></pre>
+<p>The original loss for \(G\) is \(\frac1m\sum_i\log(1-D(G(z^{(i)})))\); the non-saturating form \(-\log D(G(z))\) is used in practice because it gives strong gradients early in training, when \(D\) rejects almost every fake.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="tab-content" id="tab-3">
+    <div class="question-block" data-qid="u2-q14">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q14', 3)" aria-label="Mark as done"></button>
+        <h2 class="q-title">14. Discuss the common challenges encountered while training GANs, such as mode collapse and training instability. Explain at least two techniques used to mitigate these issues.</h2>
+      </div>
+      <div class="answer-body">
+<p>GAN training is a two-player game in which both networks keep changing, so it is much harder to train than a normal supervised network.</p>
+<h3>Common challenges</h3>
+<table>
+  <tr><th>Problem</th><th>What happens</th></tr>
+  <tr><td><strong>Mode collapse</strong></td><td>The generator produces only a few outputs (even one) that fool \(D\) instead of covering all of \(P_{data}\). A digit GAN may generate only convincing &ldquo;3&rdquo;s.</td></tr>
+  <tr><td><strong>Training instability</strong></td><td>\(G\) and \(D\) chase moving targets; losses oscillate, especially if one network becomes much stronger.</td></tr>
+  <tr><td><strong>Vanishing gradients</strong></td><td>If \(D\) becomes too good, \(D(G(z))\approx0\) and \(G\) gets almost no learning signal.</td></tr>
+  <tr><td><strong>Non-convergence</strong></td><td>A minimax game has no guarantee of reaching the Nash equilibrium.</td></tr>
+  <tr><td><strong>Hard evaluation</strong></td><td>No single loss value tells sample quality (FID and Inception Score are used instead).</td></tr>
+</table>
+<div class="svg-wrap">
+<svg viewBox="0 0 470 168" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a76" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><text x="110" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">real data: 3 modes</text><rect x="0" y="22" width="220" height="120" rx="3" fill="none" stroke="var(--border)"/><circle cx="50.407674575146885" cy="68.70433161338626" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="57.98851688489065" cy="75.92821021597382" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="55.55553728855695" cy="75.20369987995501" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="24.27623004447905" cy="58.76241555761179" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="64.5076955479258" cy="65.36308391292927" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="62.639621637027396" cy="46.0754147275132" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="43.639038102415206" cy="50.87662197431389" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="46.92547780638094" cy="62.66188276541163" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="88.5770243419117" cy="89.80227281669853" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="100.29722410448886" cy="114.98843338510787" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="121.69191987168225" cy="87.74575164488938" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="123.074467622973" cy="86.99562706236051" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="115.16791090050913" cy="86.5611723718097" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="88.07809393691153" cy="113.37057081007416" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="97.21608082978518" cy="89.75732209209036" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="131.22652878834072" cy="113.40667955572486" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="165.72942738086476" cy="71.613207602203" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="176.72583263031567" cy="61.401897181021326" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="162.01029863948688" cy="70.87513603916797" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="183.38824540870397" cy="71.79631524341903" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="192.32463381336504" cy="47.75640032273924" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="168.8923571277849" cy="42.97441805667084" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="159.41088401979002" cy="39.345029681524345" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="166.25980043385636" cy="58.71195990667556" r="3.2" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><text x="350" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">collapsed generator: 1 mode</text><rect x="240" y="22" width="220" height="120" rx="3" fill="none" stroke="var(--border)"/><circle cx="328.1488572524717" cy="106.40563298371688" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="342.86746191162604" cy="93.15848553771264" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="364.0147952844711" cy="99.3068267186814" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="341.8948966572435" cy="99.32386190452709" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="359.0054419022" cy="84.05203346328844" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="370.90438077834636" cy="82.82316027709794" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="360.990980980816" cy="112.41571201797267" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="328.79497155665536" cy="110.35857894329564" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="344.1121169370419" cy="102.82667784604749" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="328.39944902005925" cy="83.6821762731619" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="335.9604574698461" cy="116.38647638528198" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="336.6469535025724" cy="109.20651084824743" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="368.90483406229094" cy="115.91357785939718" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="343.15279977433255" cy="94.77255538208485" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="351.0868801104973" cy="109.92170852916382" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="332.7543262388526" cy="108.94233003344787" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="363.07797381401866" cy="112.94899549075288" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="329.6117895174844" cy="116.04880666151863" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="332.01191402355784" cy="94.266659278152" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="354.87641167607546" cy="115.05113867919924" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="342.95821917153717" cy="115.27111429940047" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="351.9863376323225" cy="93.24821329634464" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="341.9391993691886" cy="88.38919991817959" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><circle cx="331.4406342177052" cy="87.35924960643695" r="3.2" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><text x="350" y="158" text-anchor="middle" fill="var(--important)" font-size="10.5">always the one output that fools D</text></svg>
+</div>
+<h3>Why gradients vanish</h3>
+<p>For a fixed generator the optimal discriminator is \(D^{*}(x)=\dfrac{p_{data}(x)}{p_{data}(x)+p_g(x)}\), and the minimax value then becomes</p>
+<div class="formula">\[V(D^{*},G)=2\,\mathrm{JSD}\bigl(p_{data}\,\|\,p_g\bigr)-\log4\]</div>
+<p>When the real and generated distributions barely overlap, the JS divergence is a constant (\(\log2\)) and gives no gradient. The usual first fix is the <strong>non-saturating loss</strong> \(\mathcal L_G=-\log D(G(z))\), which has strong gradients when \(D\) is winning.</p>
+<h3>Mitigation techniques</h3>
+<ol>
+  <li><strong>Wasserstein GAN with gradient penalty (WGAN-GP):</strong> replaces the JS-based loss by the Earth-Mover distance, which gives smooth gradients even for non-overlapping distributions:
+    <div class="formula">\[\min_G\max_{\|D\|_L\le1}\ \mathbb E_{x\sim p_{data}}[D(x)]-\mathbb E_{z}[D(G(z))],\qquad \text{penalty: }\lambda\,\mathbb E_{\hat x}\bigl[(\|\nabla_{\hat x}D(\hat x)\|_2-1)^2\bigr]\]</div>
+    Here \(D\) is a &ldquo;critic&rdquo; and the penalty enforces the Lipschitz constraint. Training is much more stable and mode collapse is reduced.</li>
+  <li><strong>Minibatch discrimination:</strong> \(D\) sees relationships between samples in a batch, so it can detect a generator that produces near-identical samples.</li>
+  <li><strong>Feature matching:</strong> \(G\) is trained to match the average intermediate features of \(D\) on real and fake batches instead of maximising \(D\)'s output.</li>
+  <li><strong>Label smoothing / noisy labels:</strong> use 0.9 instead of 1 as the real label so \(D\) does not become over-confident.</li>
+  <li><strong>Spectral normalisation:</strong> bounds the Lipschitz constant of \(D\)'s layers.</li>
+</ol>
+<p>A widely used combination is WGAN-GP or spectral normalisation together with a balanced update schedule for \(D\) and \(G\).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="tab-content" id="tab-4">
+    <div class="question-block" data-qid="u2-q15">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q15', 4)" aria-label="Mark as done"></button>
+        <h2 class="q-title">15. Explain the architecture and working of Conditional GANs (CGANs). Describe how conditioning information is incorporated into both the generator and discriminator, with suitable application examples.</h2>
+      </div>
+      <div class="answer-body">
+<p>A plain GAN gives no control over <em>what</em> it generates: it cannot be told to make &ldquo;a cat&rdquo;. A <strong>Conditional GAN (CGAN)</strong> feeds extra information \(y\) (a class label, a text embedding or another image) to <strong>both</strong> the generator and the discriminator, so the output can be controlled.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 640 196" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a77" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="22" width="64" height="32" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="42.0" y="42.0" text-anchor="middle" fill="var(--text)" font-size="11.5">noise z</text><rect x="10" y="100" width="64" height="32" rx="6" fill="var(--surface2)" stroke="var(--success)"/><text x="42.0" y="120.0" text-anchor="middle" fill="var(--text)" font-size="11.5">label y</text><rect x="120" y="48" width="84" height="58" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="162.0" y="76.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Generator</text><text x="162.0" y="90.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">G(z | y)</text><line x1="74" y1="38" x2="120" y2="64" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><line x1="74" y1="116" x2="120" y2="92" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><rect x="250" y="40" width="92" height="32" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="296.0" y="60.0" text-anchor="middle" fill="var(--text)" font-size="11.5">fake x̃</text><rect x="250" y="100" width="92" height="32" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="296.0" y="120.0" text-anchor="middle" fill="var(--text)" font-size="11.5">real x</text><line x1="204" y1="62" x2="250" y2="58" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><rect x="400" y="64" width="96" height="60" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="448.0" y="93.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Discriminator</text><text x="448.0" y="107.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">D(x | y)</text><line x1="342" y1="56" x2="400" y2="84" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><line x1="342" y1="116" x2="400" y2="104" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><path d="M42,132 L42,168 L448,168 L448,124" fill="none" stroke="var(--success)" stroke-width="1.3" stroke-dasharray="4 3"/><line x1="448" y1="140" x2="448" y2="126" stroke="var(--success)" stroke-width="1" marker-end="url(#a77)"/><rect x="540" y="79" width="86" height="30" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="583.0" y="98.0" text-anchor="middle" fill="var(--text)" font-size="11.5">real / fake?</text><line x1="496" y1="94" x2="540" y2="94" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a77)"/><text x="240" y="184" text-anchor="middle" fill="var(--success)" font-size="10.5">the same label y is fed to both networks</text></svg>
+</div>
+<h3>How the condition is used</h3>
+<ul>
+  <li><strong>Generator:</strong> \(\tilde x=G(z\mid y)\). The condition is usually a one-hot label or an embedding that is <strong>concatenated with the noise</strong> \(z\) before the first layer.</li>
+  <li><strong>Discriminator:</strong> \(D(x\mid y)\). The condition is concatenated with the sample (for images, often as extra input channels or a feature vector). \(D\) must decide not only &ldquo;is this realistic?&rdquo; but &ldquo;is this realistic <em>and does it match y</em>?&rdquo; &mdash; so a real-looking dog image labelled &ldquo;cat&rdquo; is rejected.</li>
+</ul>
+<h3>Objective</h3>
+<div class="formula">\[\min_G\max_D V(D,G)=\mathbb E_{x\sim P_{data}}\bigl[\log D(x\mid y)\bigr]+\mathbb E_{z\sim P_z}\bigl[\log\bigl(1-D(G(z\mid y)\mid y)\bigr)\bigr]\]</div>
+<p>It is the same minimax game as a GAN, with every term conditioned on \(y\). At equilibrium \(G(\cdot\mid y)\) samples from \(P_{data}(x\mid y)\).</p>
+<h3>Working</h3>
+<ol>
+  <li>Sample a real pair \((x,y)\) and noise \(z\).</li>
+  <li>Generate \(\tilde x=G(z\mid y)\) with the <em>same</em> \(y\).</li>
+  <li>Train \(D\) to output 1 for \((x,y)\) and 0 for \((\tilde x,y)\) (and optionally 0 for real \(x\) with a wrong \(y\)).</li>
+  <li>Train \(G\) so that \(D(G(z\mid y)\mid y)\to1\).</li>
+</ol>
+<h3>Applications</h3>
+<table>
+  <tr><th>Application</th><th>Condition \(y\)</th><th>Output</th></tr>
+  <tr><td>Class-conditional generation</td><td>digit / object label</td><td>image of that class (e.g. MNIST digit 7)</td></tr>
+  <tr><td>Image-to-image translation (Pix2Pix)</td><td>input image (sketch, day photo)</td><td>photo, night image</td></tr>
+  <tr><td>Text-to-image synthesis</td><td>text embedding</td><td>image matching the description</td></tr>
+  <tr><td>Super-resolution</td><td>low-resolution image</td><td>high-resolution image</td></tr>
+  <tr><td>Data augmentation</td><td>minority-class label</td><td>extra samples of a rare class (Q18)</td></tr>
+</table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="tab-content" id="tab-5">
+    <div class="question-block" data-qid="u2-q16">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q16', 5)" aria-label="Mark as done"></button>
+        <h2 class="q-title">16. Explain the working principles of Diffusion Models. Describe the forward (noise addition) and reverse (denoising) processes, and discuss how diffusion models generate high-quality samples.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Core Idea</h3>
+          <p><strong>Diffusion models</strong> (e.g. DDPM — Denoising Diffusion Probabilistic Models) generate data by learning to reverse a gradual noising process. The intuition: it's easy to destroy an image by slowly adding noise until it becomes pure static; a diffusion model learns to run this process <strong>backward</strong> — starting from pure noise and gradually removing it, step by step, until a realistic sample emerges.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg">
+              <text x="360" y="24" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Forward Process q(xₜ | xₜ₋₁) — adds noise</text>
+
+              <g>
+                <circle cx="60" cy="90" r="30" fill="var(--surface2)" stroke="var(--success)" stroke-width="2"/>
+                <text x="60" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x₀</text>
+                <circle cx="220" cy="90" r="30" fill="var(--surface2)" stroke="var(--border)" stroke-width="2" stroke-dasharray="3,2"/>
+                <text x="220" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x₁</text>
+                <circle cx="380" cy="90" r="30" fill="var(--surface2)" stroke="var(--border)" stroke-width="2" stroke-dasharray="3,2"/>
+                <text x="380" y="95" fill="var(--text)" font-size="11" text-anchor="middle">...</text>
+                <circle cx="540" cy="90" r="30" fill="var(--surface2)" stroke="var(--danger)" stroke-width="2"/>
+                <text x="540" y="95" fill="var(--text)" font-size="11" text-anchor="middle">x_T</text>
+                <text x="620" y="95" fill="var(--danger)" font-size="10.5" text-anchor="middle">pure noise</text>
+
+                <line x1="90" y1="90" x2="190" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+                <line x1="250" y1="90" x2="350" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+                <line x1="410" y1="90" x2="510" y2="90" stroke="var(--warning)" stroke-width="2" marker-end="url(#a6)"/>
+              </g>
+
+              <g>
+                <line x1="510" y1="150" x2="410" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+                <line x1="350" y1="150" x2="250" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+                <line x1="190" y1="150" x2="90" y2="150" stroke="var(--accent-hover)" stroke-width="2" marker-end="url(#a7)"/>
+              </g>
+              <text x="360" y="185" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Reverse Process pθ(xₜ₋₁ | xₜ) — removes noise (learned by neural net)</text>
+
+              <defs>
+                <marker id="a6" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--warning)"/></marker>
+                <marker id="a7" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--accent-hover)"/></marker>
+              </defs>
+            </svg>
+            <p class="source-note">Fig 8.1 — Forward diffusion gradually adds noise; the reverse process, learned by a neural network, removes it step by step to generate new samples</p>
+          </div>
+
+          <h3>Forward Process (Noise Addition)</h3>
+          <p>The forward process is a fixed (not learned) <strong>Markov chain</strong> that gradually adds small amounts of Gaussian noise to a data sample \(x_0\) over \(T\) timesteps, until \(x_T\) is (approximately) pure noise:</p>
+          <div class="formula">\[ q(x_t \mid x_{t-1}) = \mathcal{N}\big(x_t;\ \sqrt{1-\beta_t}\,x_{t-1},\ \beta_t I\big) \]</div>
+          <p>Here \(\beta_t\) is a small variance added at step \(t\), following a fixed schedule. A convenient property of Gaussian noising is that we can jump directly from \(x_0\) to any noisy step \(x_t\) in closed form, without simulating every intermediate step:</p>
+          <div class="formula">\[ q(x_t \mid x_0) = \mathcal{N}\big(x_t;\ \sqrt{\bar\alpha_t}\,x_0,\ (1-\bar\alpha_t) I\big), \quad \bar\alpha_t = \prod_{s=1}^{t}(1-\beta_s) \]</div>
+
+          <h3>Reverse Process (Denoising)</h3>
+          <p>The reverse process is what the model actually <strong>learns</strong>. It is also modeled as a Markov chain, but each step now attempts to remove a small amount of noise:</p>
+          <div class="formula">\[ p_\theta(x_{t-1} \mid x_t) = \mathcal{N}\big(x_{t-1};\ \mu_\theta(x_t, t),\ \Sigma_\theta(x_t, t)\big) \]</div>
+          <p>In practice, a neural network (typically a <strong>U-Net</strong>) is trained to predict the noise \(\epsilon\) that was added at step \(t\), given the noisy input \(x_t\) and the timestep \(t\). The training loss is simply the mean squared error between the true noise and the predicted noise:</p>
+          <div class="formula">\[ \mathcal{L} = \mathbb{E}_{x_0,\, \epsilon,\, t}\Big[\ \lVert \epsilon - \epsilon_\theta(x_t, t) \rVert^2\ \Big] \]</div>
+          <p>Once trained, generation starts by sampling pure noise \(x_T \sim \mathcal{N}(0, I)\) and repeatedly applying the learned reverse step for \(t = T, T-1, \dots, 1\), gradually refining the noise into a coherent sample \(x_0\).</p>
+
+          <h3>Why Diffusion Models Produce High-Quality Samples</h3>
+          <ul>
+            <li><strong>Gradual refinement:</strong> Breaking generation into many small denoising steps is an easier learning problem than generating an entire realistic sample in one shot (as GANs attempt), leading to sharper, more diverse outputs.</li>
+            <li><strong>Stable training:</strong> Unlike GANs, there is no adversarial game — training is a straightforward regression (predict the noise), which avoids mode collapse and training instability.</li>
+            <li><strong>Better mode coverage:</strong> Diffusion models tend to cover the full diversity of the training distribution rather than collapsing onto a few common modes.</li>
+            <li><strong>Guidance mechanisms:</strong> Techniques like classifier-free guidance let the reverse process be conditioned on text prompts, enabling controllable, high-fidelity generation (as in DALL·E 2, Stable Diffusion, Midjourney).</li>
+          </ul>
+
+          <p><strong>Trade-off:</strong> The main cost of this quality is <strong>inference speed</strong> — generating a sample requires many sequential denoising steps (often 20–1000), making diffusion models slower at inference than a single forward pass through a GAN generator. Techniques like DDIM sampling reduce the number of steps needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="tab-content" id="tab-6">
+    <div class="question-block" data-qid="u2-q17">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q17', 6)" aria-label="Mark as done"></button>
+        <h2 class="q-title">17. Discuss techniques for synthetic data generation for images, text, tabular data, and time-series data. Identify suitable generative models for each data type with justification.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Synthetic data generation</strong> creates artificial samples that follow the statistical properties of real data. It is used when real data is scarce, imbalanced, expensive or private. The right generative model is chosen by the <em>structure</em> of the data: spatial, sequential, mixed-type or temporal.</p>
+<h3>Model choice by data type</h3>
+<table>
+  <tr><th>Data type</th><th>Suitable models</th><th>Justification</th></tr>
+  <tr><td><strong>Images</strong></td><td>GANs (StyleGAN, CGAN), diffusion models (DDPM, Stable Diffusion), VAEs</td><td>Convolutional/attention backbones exploit spatial locality; GANs and diffusion produce sharp, high-resolution detail.</td></tr>
+  <tr><td><strong>Text</strong></td><td>Autoregressive LLMs (GPT-style Transformers), sequence VAEs</td><td>Text is discrete and sequential; \(P(x)=\prod_tP(x_t\mid x_{&lt;t})\) captures grammar and long-range dependencies. Prompting or fine-tuning on a few seed examples can produce large synthetic sets.</td></tr>
+  <tr><td><strong>Tabular</strong></td><td>CTGAN, TVAE, copula-based models</td><td>Columns mix numeric and categorical types with complex correlations and imbalanced categories. CTGAN uses mode-specific normalisation of numeric columns and conditional sampling over categories.</td></tr>
+  <tr><td><strong>Time series</strong></td><td>TimeGAN, RNN/LSTM-based VAEs, diffusion for time series</td><td>Must preserve temporal dynamics and autocorrelation. TimeGAN combines an adversarial loss with a supervised next-step loss and an embedding/reconstruction loss.</td></tr>
+</table>
+<h3>Other techniques</h3>
+<ul>
+  <li><strong>Images:</strong> latent-space sampling or interpolation in a VAE, conditional generation for rare classes, text-prompted diffusion.</li>
+  <li><strong>Text:</strong> paraphrasing, back-translation, LLM-generated instruction&ndash;response pairs.</li>
+  <li><strong>Tabular / time series:</strong> SMOTE-style interpolation (a simple non-deep baseline), bootstrap, simulation.</li>
+</ul>
+<h3>How the quality of synthetic data is checked</h3>
+<ul>
+  <li><strong>Fidelity (does it look real?)</strong> For images, the Fr&eacute;chet Inception Distance, where \((\mu_r,\Sigma_r)\) and \((\mu_g,\Sigma_g)\) are the mean and covariance of Inception features of real and generated images (lower is better):
+    <div class="formula">\[\mathrm{FID}=\|\mu_r-\mu_g\|^2+\mathrm{Tr}\!\bigl(\Sigma_r+\Sigma_g-2(\Sigma_r\Sigma_g)^{1/2}\bigr)\]</div></li>
+  <li><strong>Utility (is it useful?)</strong> &ldquo;Train on Synthetic, Test on Real&rdquo; (TSTR): a model trained only on synthetic data should perform close to one trained on real data.</li>
+  <li><strong>Diversity and privacy:</strong> check for mode collapse and that no real record is copied (Q19).</li>
+</ul>
+<p>Summary: matching the model's inductive bias to the data's structure is what gives good synthetic data. A common mistake is to assume that one model type, such as a GAN, works equally well on every data type.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="tab-content" id="tab-7">
+    <div class="question-block" data-qid="u2-q18">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q18', 7)" aria-label="Mark as done"></button>
+        <h2 class="q-title">18. Explain data augmentation techniques using generative models. Discuss how these techniques improve the performance and robustness of downstream machine learning models.</h2>
+      </div>
+      <div class="answer-body">
+<h3>What is Generative Data Augmentation?</h3>
+          <p>Traditional data augmentation applies simple transformations (rotation, cropping, flipping for images; synonym replacement for text) to existing data. <strong>Generative data augmentation</strong> goes further — it uses generative models (GANs, VAEs, diffusion models, or LLMs) to synthesize <strong>entirely new, realistic training examples</strong> rather than just perturbing existing ones, especially useful when real data is scarce, imbalanced, or expensive to collect/label.</p>
+
+          <h3>Key Techniques</h3>
+          <ul>
+            <li><strong>GAN-based augmentation:</strong> A GAN is trained on the existing (often minority-class) dataset, then used to generate additional synthetic samples of that class. Widely used in medical imaging, where diseased-tissue samples are rare compared to healthy ones.</li>
+            <li><strong>VAE-based augmentation:</strong> Because the VAE latent space is smooth, new samples can be created by interpolating between two real examples in latent space, or by sampling nearby points around a real example's latent code — producing plausible variations.</li>
+            <li><strong>Diffusion-based augmentation:</strong> A diffusion model trained on the target domain generates diverse, high-fidelity synthetic samples, often producing higher quality and more diversity than GAN-based approaches.</li>
+            <li><strong>LLM-based text augmentation:</strong> An LLM paraphrases existing sentences, generates new examples in a given style, or produces synthetic labeled examples for low-resource NLP tasks (e.g. generating more examples of a rare intent class for a chatbot).</li>
+            <li><strong>Conditional generation for class balancing:</strong> Class-conditional GANs/diffusion models can be specifically prompted to generate more examples of underrepresented classes, directly addressing class imbalance.</li>
+          </ul>
+
+          <h3>How This Improves Downstream Models</h3>
+          <table>
+            <tr><th>Benefit</th><th>Explanation</th></tr>
+            <tr><td>Addresses class imbalance</td><td>Synthetic minority-class samples reduce bias toward the majority class, improving recall on rare classes</td></tr>
+            <tr><td>Improves generalization</td><td>More diverse training data reduces overfitting to the limited patterns present in a small real dataset</td></tr>
+            <tr><td>Increases robustness</td><td>Exposure to a wider variety of synthetic variations makes models more resilient to distribution shift and edge cases at test time</td></tr>
+            <tr><td>Reduces data collection cost</td><td>Synthetic data reduces reliance on expensive/slow real-world data collection and manual labeling</td></tr>
+            <tr><td>Preserves privacy</td><td>Synthetic samples can replace sensitive real data (e.g. patient records) during model development</td></tr>
+          </table>
+
+          <p><strong>Caution:</strong> Poor-quality or unrealistic synthetic data can introduce artifacts or biases of its own into the downstream model — synthetic data quality should always be validated (e.g. via FID score for images, or human evaluation) before being trusted for training.</p>
+      <h3>Worked example &mdash; fixing a class imbalance</h3>
+<p>A chest X-ray dataset has 1,000 normal and only 50 diseased images. A model that always predicts &ldquo;normal&rdquo; gets accuracy \(1000/1050=95.2\%\) but a recall of 0 for the disease &mdash; useless. A conditional GAN or diffusion model is trained on the 50 diseased images and generates 450 more, so training has 1,000 vs 500 instead of 1,000 vs 50. The model now sees enough positive examples, and the measure that improves is <strong>recall (and F1) on the minority class</strong>, not overall accuracy.</p>
+<h3>How augmentation helps downstream models</h3>
+<ul>
+  <li><strong>Less over-fitting:</strong> more varied training examples act as a regulariser (more data is the simplest regulariser).</li>
+  <li><strong>Robustness:</strong> synthetic variations in lighting, pose, wording or noise make the model less sensitive to such changes at test time.</li>
+  <li><strong>Privacy:</strong> synthetic records can replace sensitive real ones in sharing and testing.</li>
+  <li><strong>Cost:</strong> cheaper than collecting and labelling new real data.</li>
+</ul>
+<h3>Pitfalls and good practice</h3>
+<ul>
+  <li><strong>Augment only the training split.</strong> Validation and test sets must stay real, otherwise the measured score is inflated (data leakage).</li>
+  <li><strong>Synthetic data inherits the generator's biases</strong> and can miss rare real variations; a generator trained on 50 images cannot invent what those 50 do not contain.</li>
+  <li><strong>Check quality:</strong> filter low-quality samples (e.g. by a classifier or human spot-checks) and test with &ldquo;train on synthetic, test on real&rdquo;.</li>
+  <li><strong>Mix, don't replace:</strong> training only on generated data over several generations makes models degrade (model collapse), so always keep real data in the mix.</li>
+</ul>
+</div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="tab-content" id="tab-8">
+    <div class="question-block" data-qid="u2-q19">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q19', 8)" aria-label="Mark as done"></button>
+        <h2 class="q-title">19. Discuss the concept of privacy-preserving synthetic data generation. Explain how generative models can be designed to protect sensitive information while preserving statistical utility of the data.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Why Privacy-Preserving Synthetic Data?</h3>
+          <p>Many high-value datasets — medical records, financial transactions, personal user data — cannot be shared or used freely due to privacy regulations (HIPAA, GDPR) or ethical concerns. <strong>Privacy-preserving synthetic data generation</strong> uses generative models to create artificial datasets that statistically resemble the real data (preserving distributions, correlations, and patterns useful for analysis or model training) <strong>without containing any real individual's actual record</strong>.</p>
+
+          <h3>Core Techniques</h3>
+
+          <p><strong>1. Differential Privacy (DP)</strong></p>
+          <p>Differential privacy provides a mathematical guarantee that the presence or absence of any single individual's data in the training set has a negligible, bounded effect on the model's output. This is achieved by adding calibrated noise during training.</p>
+          <ul>
+            <li><strong>DP-SGD (Differentially Private Stochastic Gradient Descent):</strong> clips per-example gradients and adds Gaussian noise to them before updating model weights, bounding how much any single data point can influence the trained generative model.</li>
+            <li>The privacy guarantee is quantified by a parameter \(\varepsilon\) (epsilon) — smaller \(\varepsilon\) means stronger privacy but typically lower data utility, representing a fundamental privacy-utility trade-off.</li>
+          </ul>
+
+          <p><strong>2. DP-GANs</strong></p>
+          <p>A GAN whose Discriminator is trained using DP-SGD. Since the Generator only ever learns through gradients passed back from the Discriminator, making the Discriminator differentially private effectively makes the entire generation pipeline private — the Generator never gets a strong enough signal to memorize and reproduce any individual real record.</p>
+
+          <p><strong>3. Federated Generative Modeling</strong></p>
+          <p>The generative model is trained across multiple decentralized data sources (e.g. different hospitals) without the raw data ever leaving its original location — only model updates (gradients) are shared and aggregated centrally, combined with DP noise for additional protection.</p>
+
+          <p><strong>4. Membership Inference Defense</strong></p>
+          <p>Generative models are specifically evaluated against <strong>membership inference attacks</strong> (attempts to determine whether a specific real record was in the training set) to ensure the synthetic data generator hasn't simply memorized and can reproduce training examples.</p>
+
+          <h3>Preserving Statistical Utility</h3>
+          <p>The goal is not just privacy but also usefulness — synthetic data must preserve enough statistical structure (marginal distributions, correlations between features, class balance) that models trained on it perform comparably to models trained on the real data. This is validated using:</p>
+          <ul>
+            <li><strong>Utility metrics:</strong> training a downstream classifier on synthetic data and testing on real held-out data (Train-Synthetic-Test-Real, TSTR)</li>
+            <li><strong>Statistical similarity tests:</strong> comparing distributions of the real vs synthetic data (e.g. KS-test on individual features, correlation matrix comparison)</li>
+            <li><strong>Fidelity scores:</strong> such as FID for images, or custom domain-specific metrics for tabular/medical data</li>
+          </ul>
+
+          <p><strong>Key insight:</strong> Privacy-preserving synthetic data generation is fundamentally a balancing act — the \(\varepsilon\) in differential privacy and the noise added during training directly trade off against data utility. Practitioners must choose an operating point appropriate to the sensitivity of the data and the intended downstream use.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="tab-content" id="tab-9">
+    <div class="question-block" data-qid="u2-q20">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u2-q20', 9)" aria-label="Mark as done"></button>
+        <h2 class="q-title">20. Compare VAEs, GANs, and Diffusion Models in terms of architecture, training stability, sample quality, and computational cost. Evaluate their applicability in domains such as healthcare, finance, cybersecurity, and smart manufacturing.</h2>
+      </div>
+      <div class="answer-body">
+<p>VAEs, GANs and diffusion models all learn to sample from the data distribution but with very different mechanisms and trade-offs.</p>
+<h3>Comparison</h3>
+<table>
+  <tr><th>Aspect</th><th>VAE</th><th>GAN</th><th>Diffusion model</th></tr>
+  <tr><td>Core idea</td><td>Encoder&ndash;decoder with a probabilistic latent space</td><td>Generator vs discriminator game</td><td>Learn to reverse a gradual noising process</td></tr>
+  <tr><td>Training objective</td><td>\(-\mathrm{ELBO}=\) reconstruction \(+\,D_{KL}(q\|p)\)</td><td>\(\min_G\max_D\ \mathbb E[\log D(x)]+\mathbb E[\log(1-D(G(z)))]\)</td><td>\(\mathbb E\,\|\epsilon-\epsilon_\theta(x_t,t)\|^2\)</td></tr>
+  <tr><td>Training stability</td><td>Stable (single likelihood-based loss)</td><td>Unstable; mode collapse risk</td><td>Stable (simple regression loss)</td></tr>
+  <tr><td>Sample quality</td><td>Often blurry</td><td>Sharp, but may lack diversity</td><td>State of the art in fidelity and diversity</td></tr>
+  <tr><td>Sampling speed</td><td>Fast (one pass)</td><td>Fast (one pass)</td><td>Slow (tens to hundreds of denoising steps)</td></tr>
+  <tr><td>Training cost</td><td>Low</td><td>Moderate</td><td>High</td></tr>
+  <tr><td>Latent space</td><td>Smooth, interpretable, good for interpolation</td><td>Less structured</td><td>Implicit noise trajectory</td></tr>
+  <tr><td>Likelihood</td><td>Lower bound available</td><td>None (implicit)</td><td>Lower bound available</td></tr>
+</table>
+<h3>Applicability by domain</h3>
+<table>
+  <tr><th>Domain</th><th>Best fit</th><th>Why</th></tr>
+  <tr><td><strong>Healthcare</strong></td><td>VAE for anomaly detection and patient-data representations; diffusion for high-fidelity synthetic scans</td><td>Interpretable latent space and stable training; quality matters more than speed offline.</td></tr>
+  <tr><td><strong>Finance</strong></td><td>GAN (e.g. CTGAN) for synthetic transactions</td><td>Fast sampling of large tabular data for fraud-detection training.</td></tr>
+  <tr><td><strong>Cybersecurity</strong></td><td>GAN to generate attack/intrusion patterns</td><td>Fast production of many adversarial examples to harden detectors.</td></tr>
+  <tr><td><strong>Smart manufacturing</strong></td><td>VAE for real-time defect detection on sensor data; diffusion offline for synthetic defect images</td><td>VAE is cheap and stable enough for the factory floor; diffusion gives realistic images for training quality-control models.</td></tr>
+</table>
+<h3>Evaluation</h3>
+<p>Sample quality is compared with FID (lower is better), diversity with precision/recall of samples, and usefulness with downstream accuracy (TSTR).</p>
+<p><strong>Overall:</strong> VAEs give stability and interpretability at the cost of sharpness; GANs give speed and sharpness at the cost of stability; diffusion models give the best quality and stability at the cost of compute, especially at inference. Choose by the domain's need for fidelity, latency, interpretability and compute budget.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab-content').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === i);
+  });
+}
+function toggleDone(qid, tabIdx) {
+  const block = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const isDone = block.classList.toggle('q-done');
+  const btn = document.querySelectorAll('.tab-btn')[tabIdx];
+  btn.classList.toggle('done', isDone);
+  try { localStorage.setItem('done-' + qid, isDone ? '1' : ''); } catch (e) {}
+}
+document.querySelectorAll('.question-block').forEach((block, idx) => {
+  let saved = false;
+  try { saved = !!localStorage.getItem('done-' + block.dataset.qid); } catch (e) {}
+  if (saved) {
+    block.classList.add('q-done');
+    const btn = document.querySelectorAll('.tab-btn')[idx];
+    if (btn) btn.classList.add('done');
+  }
+});
+showTab(0);
+</script>
+</body>
+</html>

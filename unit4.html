@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit IV — Retrieval-Augmented Generation (RAG) | Generative AI with LLMs</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <nav class="unit-nav">
+    <a href="unit3.html" class="nav-prev">← Unit III</a>
+    <span class="nav-title">Unit IV: Retrieval-Augmented Generation (RAG)</span>
+    <a href="unit5.html" class="nav-next">Unit V →</a>
+    <a href="index.html" class="nav-home">Home</a>
+  </nav>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" onclick="showTab(0)">Q31</button>
+    <button class="tab-btn" onclick="showTab(1)">Q32</button>
+    <button class="tab-btn" onclick="showTab(2)">Q33</button>
+    <button class="tab-btn" onclick="showTab(3)">Q34</button>
+    <button class="tab-btn" onclick="showTab(4)">Q35</button>
+    <button class="tab-btn" onclick="showTab(5)">Q36</button>
+    <button class="tab-btn" onclick="showTab(6)">Q37</button>
+    <button class="tab-btn" onclick="showTab(7)">Q38</button>
+    <button class="tab-btn" onclick="showTab(8)">Q39</button>
+    <button class="tab-btn" onclick="showTab(9)">Q40</button>
+  </div>
+
+  <!-- Q31 -->
+  <div class="tab-content" id="tab-0">
+    <div class="question-block" data-qid="u4-q31">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q31', 0)" aria-label="Mark as done"></button>
+        <h2 class="q-title">31. Discuss the major limitations of standalone Large Language Models, including hallucination and knowledge cutoff issues. Explain how Retrieval-Augmented Generation (RAG) addresses these limitations.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Limitations of Standalone LLMs</h3>
+          <table>
+            <tr><th>Limitation</th><th>Explanation</th></tr>
+            <tr><td><strong>Hallucination</strong></td><td>The model generates fluent but factually wrong or fabricated content (fake citations, invented facts) because it predicts the <em>most probable next token</em>, not the <em>true</em> one.</td></tr>
+            <tr><td><strong>Knowledge cutoff</strong></td><td>Knowledge is frozen at the end of training; the model knows nothing about later events, prices, laws or research.</td></tr>
+            <tr><td><strong>No private / domain data</strong></td><td>Cannot answer about a company's internal documents, policies or databases it was never trained on.</td></tr>
+            <tr><td><strong>No source attribution</strong></td><td>Knowledge is stored implicitly in weights — it cannot cite where an answer came from, hurting trust and auditability.</td></tr>
+            <tr><td><strong>Limited context window</strong></td><td>Only a fixed number of tokens can be fed in; large corpora cannot be pasted into the prompt.</td></tr>
+            <tr><td><strong>Costly to update</strong></td><td>Adding new knowledge via retraining/fine-tuning is expensive and slow.</td></tr>
+            <tr><td><strong>Bias &amp; inconsistency</strong></td><td>Reflects biases of training data and can give different answers to the same question.</td></tr>
+          </table>
+
+          <h3>What is RAG?</h3>
+          <p><strong>Retrieval-Augmented Generation (RAG)</strong> combines an information-retrieval system with an LLM. Instead of relying only on memorised (parametric) knowledge, the system first <strong>retrieves relevant documents</strong> from an external knowledge base and then supplies them as context so the LLM generates a <strong>grounded answer</strong>.</p>
+
+          <div class="formula">
+            \[ P(y \mid x) \;=\; \sum_{d \in \text{Top-}k} P(d \mid x)\; P(y \mid x, d) \]
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Here \(x\) is the query, \(d\) a retrieved document, and \(y\) the generated answer — the answer is conditioned on retrieved evidence.</p>
+
+          <h3>RAG Pipeline</h3>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 250" xmlns="http://www.w3.org/2000/svg">
+              <text class="lbl-s" x="200" y="18">OFFLINE — Indexing</text>
+              <rect class="box" x="10" y="30" width="100" height="50" rx="8"/><text class="lbl" x="60" y="60">Documents</text>
+              <rect class="box" x="140" y="30" width="90" height="50" rx="8"/><text class="lbl" x="185" y="60">Chunking</text>
+              <rect class="box" x="260" y="30" width="100" height="50" rx="8"/><text class="lbl" x="310" y="60">Embedding</text>
+              <rect class="box2" x="390" y="30" width="110" height="50" rx="8"/><text class="lbl" x="445" y="60">Vector DB</text>
+              <path class="arr" d="M110,55 L140,55"/><path class="arr" d="M230,55 L260,55"/><path class="arr" d="M360,55 L390,55"/>
+
+              <text class="lbl-s" x="200" y="132">ONLINE — Query time</text>
+              <rect class="box" x="10" y="145" width="100" height="50" rx="8"/><text class="lbl" x="60" y="175">User Query</text>
+              <rect class="box" x="140" y="145" width="100" height="50" rx="8"/><text class="lbl" x="190" y="175">Embed Query</text>
+              <rect class="box3" x="270" y="145" width="110" height="50" rx="8"/><text class="lbl" x="325" y="175">Retrieve Top-k</text>
+              <rect class="box3" x="410" y="145" width="130" height="50" rx="8"/><text class="lbl" x="475" y="168">Prompt =</text><text class="lbl-s" x="475" y="184">Query + Context</text>
+              <rect class="box2" x="570" y="145" width="90" height="50" rx="8"/><text class="lbl" x="615" y="175">LLM</text>
+              <rect class="box" x="690" y="145" width="80" height="50" rx="8"/><text class="lbl" x="730" y="168">Grounded</text><text class="lbl" x="730" y="184">Answer</text>
+              <path class="arr" d="M110,170 L140,170"/><path class="arr" d="M240,170 L270,170"/><path class="arr" d="M380,170 L410,170"/><path class="arr" d="M540,170 L570,170"/><path class="arr" d="M660,170 L690,170"/>
+              <path class="dash" d="M445,80 L325,145"/>
+              <text class="lbl-s" x="410" y="115">similarity search</text>
+            </svg>
+            <h3>Worked example &mdash; the same question with and without RAG</h3>
+<p>Question: &ldquo;What is our refund window for orders placed after 1 November 2026?&rdquo;</p>
+<table>
+  <tr><th></th><th>Standalone LLM</th><th>RAG system</th></tr>
+  <tr><td>Knowledge used</td><td>Only what was in training data</td><td>Retrieves the current refund-policy document</td></tr>
+  <tr><td>Typical answer</td><td>Guesses a &ldquo;standard 30 days&rdquo; (plausible but possibly wrong)</td><td>&ldquo;14 days from delivery, per Refund Policy v3, section 2&rdquo;</td></tr>
+  <tr><td>Verifiable?</td><td>No source</td><td>Yes &mdash; cites the passage</td></tr>
+  <tr><td>If the policy changes</td><td>Needs retraining</td><td>Update the document; the next answer changes</td></tr>
+</table>
+<h3>Parametric vs non-parametric memory</h3>
+<p>A standalone LLM stores knowledge in its <strong>parameters</strong> (parametric memory): fixed, hard to inspect and expensive to change. RAG adds an external <strong>non-parametric memory</strong> (the document store) that can be edited, audited and access-controlled at any time, while the model supplies the language ability.</p>
+<h3>RAG vs fine-tuning</h3>
+<table>
+  <tr><th>Need</th><th>Better choice</th></tr>
+  <tr><td>Fresh or frequently changing facts</td><td>RAG</td></tr>
+  <tr><td>Answers with citations</td><td>RAG</td></tr>
+  <tr><td>Private documents with access rules</td><td>RAG</td></tr>
+  <tr><td>A new style, format or behaviour</td><td>Fine-tuning</td></tr>
+  <tr><td>Both facts and behaviour</td><td>Combine them</td></tr>
+</table>
+<p><strong>Remaining limits of RAG:</strong> if retrieval returns the wrong passage the answer is still wrong, and the model may still ignore the context; hence the evaluation in Q39.</p>
+<p class="source-note">Fig: RAG pipeline — offline indexing and online retrieval + generation</p>
+          </div>
+
+          <h3>How RAG Solves Each Limitation</h3>
+          <table>
+            <tr><th>LLM Limitation</th><th>RAG Solution</th></tr>
+            <tr><td>Hallucination</td><td>Answer is grounded in retrieved text; prompt instructs "answer only from the context, else say you don't know"</td></tr>
+            <tr><td>Knowledge cutoff</td><td>Knowledge base is updated simply by adding/re-indexing documents — no retraining</td></tr>
+            <tr><td>Private data</td><td>Enterprise documents are indexed and securely retrieved at query time</td></tr>
+            <tr><td>No citations</td><td>Retrieved chunks carry metadata (source, page) so answers can cite sources</td></tr>
+            <tr><td>Context-window limit</td><td>Only the top-k relevant chunks are inserted, not the entire corpus</td></tr>
+            <tr><td>Update cost</td><td>Much cheaper than fine-tuning; knowledge changes are instant</td></tr>
+          </table>
+
+          <p><strong>Caveat:</strong> RAG reduces but does not eliminate hallucination — poor retrieval (wrong/missing chunks) still leads to wrong answers. Retrieval quality is the bottleneck (see Q5–Q6).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q32 -->
+  <div class="tab-content" id="tab-1">
+    <div class="question-block" data-qid="u4-q32">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q32', 1)" aria-label="Mark as done"></button>
+        <h2 class="q-title">32. Explain the architecture and workflow of a Retrieval-Augmented Generation (RAG) system with a neat diagram, describing the role of each component from query to response generation. Write the algorithm/pseudocode for the end-to-end RAG pipeline, from query embedding to final response generation.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Retrieval-Augmented Generation (RAG)</strong> improves an LLM by retrieving relevant information from an external knowledge source <em>before</em> generating the answer: <strong>Query &rarr; Retrieve &rarr; Augment &rarr; Generate</strong>. The LLM does not have to memorise everything; it looks up what it needs.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 700 166" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a82" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><text x="10" y="12" text-anchor="start" fill="var(--text-muted)" font-size="11">Offline: knowledge preparation</text><rect x="10" y="20" width="120" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="70.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Documents</text><text x="70.0" y="55.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">PDF, web, DB</text><rect x="160" y="20" width="120" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="220.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Chunking</text><text x="220.0" y="55.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">split + clean</text><line x1="132" y1="42" x2="158" y2="42" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="310" y="20" width="120" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="370.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Embedding model</text><text x="370.0" y="55.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">chunk → vector</text><line x1="282" y1="42" x2="308" y2="42" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="460" y="20" width="120" height="44" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="520.0" y="41.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Vector database</text><text x="520.0" y="55.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">vectors + text</text><line x1="432" y1="42" x2="458" y2="42" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><text x="10" y="102" text-anchor="start" fill="var(--text-muted)" font-size="11">Online: query processing</text><rect x="10" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="56.5" y="136.0" text-anchor="middle" fill="var(--text)" font-size="11">User query</text><rect x="123" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="169.5" y="131.0" text-anchor="middle" fill="var(--text)" font-size="11">Embed query</text><text x="169.5" y="145.0" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">same model</text><line x1="105" y1="132" x2="122" y2="132" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="236" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="282.5" y="131.0" text-anchor="middle" fill="var(--text)" font-size="11">Retrieve</text><text x="282.5" y="145.0" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">top-k chunks</text><line x1="218" y1="132" x2="235" y2="132" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="349" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="395.5" y="131.0" text-anchor="middle" fill="var(--text)" font-size="11">Augment</text><text x="395.5" y="145.0" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">query + context</text><line x1="331" y1="132" x2="348" y2="132" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="462" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="508.5" y="131.0" text-anchor="middle" fill="var(--text)" font-size="11">LLM</text><text x="508.5" y="145.0" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">generate</text><line x1="444" y1="132" x2="461" y2="132" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><rect x="575" y="110" width="93" height="44" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="621.5" y="131.0" text-anchor="middle" fill="var(--text)" font-size="11">Answer</text><text x="621.5" y="145.0" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">grounded</text><line x1="557" y1="132" x2="574" y2="132" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a82)"/><path d="M520,64 L520,86 L168,86 L168,108" fill="none" stroke="var(--accent)" stroke-width="1.3" stroke-dasharray="4 3"/><line x1="168" y1="98" x2="168" y2="109" stroke="var(--accent)" stroke-width="1" marker-end="url(#a82)"/></svg>
+</div>
+<h3>Components and their roles</h3>
+<table>
+  <tr><th>Component</th><th>Role</th></tr>
+  <tr><td>Knowledge source</td><td>Documents, databases, web pages or company data</td></tr>
+  <tr><td>Document processing and chunking</td><td>Extract and clean text; split into smaller meaningful chunks (Q35)</td></tr>
+  <tr><td>Embedding model</td><td>Converts chunks <em>and</em> queries into vectors in the same space (Q33)</td></tr>
+  <tr><td>Vector database</td><td>Stores the vectors with text and metadata; fast similarity search (Q34)</td></tr>
+  <tr><td>Retriever</td><td>Finds the top-\(k\) chunks most similar to the query; may add re-ranking (Q38)</td></tr>
+  <tr><td>Context augmentation</td><td>Combines instructions + retrieved chunks + query into one prompt (Q36)</td></tr>
+  <tr><td>LLM</td><td>Generates the final answer using the augmented prompt</td></tr>
+</table>
+<h3>Workflow &mdash; two phases</h3>
+<ol>
+  <li><strong>Knowledge preparation (before queries):</strong> collect documents &rarr; chunk &rarr; embed &rarr; store vectors.</li>
+  <li><strong>Query processing (at query time):</strong> embed the query &rarr; similarity search &rarr; take top-\(k\) chunks &rarr; build the augmented prompt &rarr; generate the response.</li>
+</ol>
+<p>Retrieval selects the \(k\) chunks with the highest cosine similarity to the query:</p>
+<div class="formula">\[\mathrm{Top}_k(q)=\operatorname*{arg\,top\text{-}k}_{d_i}\ \frac{e_q\cdot e_{d_i}}{\|e_q\|\,\|e_{d_i}\|}\]</div>
+<p>and generation conditions on both the query and the retrieved text. In the original RAG formulation the answer probability marginalises over retrieved documents \(z\):</p>
+<div class="formula">\[P(y\mid x)\ \approx\ \sum_{z\in\mathrm{Top}_k(x)}p_\eta(z\mid x)\,p_\theta(y\mid x,z)\]</div>
+<h3>Pseudocode &mdash; end-to-end RAG</h3>
+<pre><code>// Phase 1: indexing (offline)
+for each document D in corpus:
+    for each chunk c in split(D, size=500, overlap=50):
+        v = embed(c)
+        index.add(v, text=c, metadata=D.source)
+
+// Phase 2: answering (online)
+function answer(query, k = 4):
+    q        = embed(query)                  # same embedding model
+    chunks   = index.search(q, top_k = k)    # nearest vectors
+    context  = join(chunks.text)
+    prompt   = "Answer ONLY from the context. If it is not there, say you don't know.\n"
+             + "Context:\n" + context + "\nQuestion: " + query
+    return LLM(prompt)</code></pre>
+<p><strong>Example:</strong> &ldquo;What is the minimum attendance to appear for the semester exam?&rdquo; &mdash; the regulations stored in the vector database are searched, the attendance clause is retrieved, and the LLM answers from that clause instead of from memory.</p>
+<h3>Why RAG</h3>
+<p>It reduces hallucination (answers are grounded in evidence), overcomes the knowledge cutoff (update the knowledge base, not the model), gives access to private data, and allows citation of sources (Q31).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q33 -->
+  <div class="tab-content" id="tab-2">
+    <div class="question-block" data-qid="u4-q33">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q33', 2)" aria-label="Mark as done"></button>
+        <h2 class="q-title">33. Explain the concept of embedding models and semantic search. Describe how vector similarity measures (e.g., cosine similarity) are used to retrieve semantically relevant documents.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Embedding Models</h3>
+          <p>An <strong>embedding</strong> is a dense numerical vector (e.g., 384–3072 dimensions) that represents the <em>meaning</em> of a word, sentence or document. An embedding model (Sentence-BERT, OpenAI <code>text-embedding-3</code>, BGE, E5) maps text into a vector space such that <strong>semantically similar texts lie close together</strong>.</p>
+          <div class="formula">\[ f_\theta : \text{text} \;\longrightarrow\; \mathbf{v} \in \mathbb{R}^d \]</div>
+          <p>Example: "car" and "automobile" get nearby vectors, while "car" and "banana" are far apart — even though "car" and "automobile" share no letters.</p>
+
+          <h3>Keyword Search vs Semantic Search</h3>
+          <table>
+            <tr><th>Aspect</th><th>Keyword (BM25 / TF-IDF)</th><th>Semantic Search</th></tr>
+            <tr><td>Matching</td><td>Exact word overlap</td><td>Meaning-based, via vector similarity</td></tr>
+            <tr><td>Synonyms</td><td>Fails ("cheap" vs "affordable")</td><td>Handles naturally</td></tr>
+            <tr><td>Typos / paraphrase</td><td>Weak</td><td>Robust</td></tr>
+            <tr><td>Exact IDs / rare terms</td><td>Strong</td><td>Can be weaker</td></tr>
+          </table>
+
+          <h3>Semantic Search Process</h3>
+          <p><strong>Embed all documents</strong> → <strong>Store in vector DB</strong> → <strong>Embed query</strong> → <strong>Compute similarity</strong> → <strong>Return Top-k</strong></p>
+
+          <h3>Vector Similarity Measures</h3>
+          <p><strong>1. Cosine Similarity (most common)</strong></p>
+          <p>Measures the <strong>angle</strong> between two vectors, ignoring their length. Range \([-1, 1]\); closer to 1 means more similar in meaning.</p>
+          <div class="formula">\[ \cos(\mathbf{q},\mathbf{d}) \;=\; \frac{\mathbf{q}\cdot\mathbf{d}}{\|\mathbf{q}\|\,\|\mathbf{d}\|} \;=\; \frac{\sum_{i=1}^{n} q_i d_i}{\sqrt{\sum_{i=1}^{n} q_i^2}\;\sqrt{\sum_{i=1}^{n} d_i^2}} \]</div>
+
+          <p><strong>2. Dot Product</strong></p>
+          <div class="formula">\[ \mathbf{q}\cdot\mathbf{d} = \sum_{i=1}^{n} q_i d_i \]</div>
+          <p>Equals cosine similarity when vectors are normalised to unit length; faster to compute.</p>
+
+          <p><strong>3. Euclidean (L2) Distance</strong></p>
+          <div class="formula">\[ d(\mathbf{q},\mathbf{d}) = \sqrt{\sum_{i=1}^{n} (q_i - d_i)^2} \]</div>
+          <p>Smaller distance = more similar. Sensitive to vector magnitude.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+              <line x1="40" y1="230" x2="490" y2="230" stroke="#555" stroke-width="1"/>
+              <line x1="40" y1="230" x2="40" y2="20" stroke="#555" stroke-width="1"/>
+              <path class="arr" d="M40,230 L380,60" style="stroke:#9b8cff"/>
+              <text class="lbl" x="395" y="55" style="fill:#9b8cff">Query q</text>
+              <path class="arr" d="M40,230 L420,120" style="stroke:#4ade80"/>
+              <text class="lbl" x="448" y="125" style="fill:#4ade80">Doc A (θ small)</text>
+              <path class="arr" d="M40,230 L120,40" style="stroke:#f87171"/>
+              <text class="lbl" x="120" y="30" style="fill:#f87171">Doc B (θ large)</text>
+              <path d="M110,200 A75,75 0 0 0 100,215" stroke="#fbbf24" fill="none"/>
+              <text class="lbl-s" x="130" y="205" style="fill:#fbbf24">θ</text>
+            </svg>
+            <h3>Worked example &mdash; ranking with cosine similarity</h3>
+<p>Let the query be \(q=(1,2)\) and three documents \(d_1=(2,4)\), \(d_2=(2,1)\), \(d_3=(-2,1)\). Then \(\|q\|=\sqrt5\).</p>
+<table>
+  <tr><th>Doc</th><th>\(q\cdot d\)</th><th>\(\|d\|\)</th><th>Cosine</th><th>Euclidean distance</th></tr>
+  <tr><td>\(d_1\)</td><td>10</td><td>\(\sqrt{20}\)</td><td>\(10/(\sqrt5\sqrt{20})=1.0\)</td><td>\(\sqrt{1+4}=2.24\)</td></tr>
+  <tr><td>\(d_2\)</td><td>4</td><td>\(\sqrt5\)</td><td>\(4/5=0.8\)</td><td>\(\sqrt{1+1}=1.41\)</td></tr>
+  <tr><td>\(d_3\)</td><td>0</td><td>\(\sqrt5\)</td><td>0.0 (unrelated)</td><td>\(\sqrt{9+1}=3.16\)</td></tr>
+</table>
+<p>Cosine ranks \(d_1\) first because it points in exactly the same direction as \(q\) (same &ldquo;topic&rdquo;, just a longer text), then \(d_2\), then \(d_3\). Euclidean distance would rank \(d_2\) first because \(d_1\) is longer and therefore farther away. For text, direction carries the meaning and length mostly reflects document size, so cosine (or dot product on normalised vectors) is preferred.</p>
+<h3>Practical points</h3>
+<ul>
+  <li><strong>Normalise</strong> embeddings to unit length; then dot product equals cosine and is cheapest to compute.</li>
+  <li><strong>Use the same embedding model</strong> for documents and queries; vectors from different models are not comparable.</li>
+  <li><strong>Chunk size matters:</strong> a vector for a whole book blurs many topics, one for a single sentence may lack context (Q35).</li>
+  <li>For millions of vectors, exact comparison is too slow; approximate search (IVF, HNSW, Q34) is used.</li>
+</ul>
+<p class="source-note">Fig: Small angle (Doc A) → high cosine similarity → semantically close to query. Doc B points elsewhere → irrelevant.</p>
+          </div>
+
+          <h3>Worked Example</h3>
+          <p>Let \(\mathbf{q}=(1,2)\), \(\mathbf{d_1}=(2,4)\), \(\mathbf{d_2}=(3,-1)\).</p>
+          <div class="formula">
+            \[ \cos(\mathbf{q},\mathbf{d_1}) = \frac{1\cdot2+2\cdot4}{\sqrt5\cdot\sqrt{20}} = \frac{10}{10} = 1 \qquad
+               \cos(\mathbf{q},\mathbf{d_2}) = \frac{1\cdot3+2\cdot(-1)}{\sqrt5\cdot\sqrt{10}} = \frac{1}{7.07} \approx 0.14 \]
+          </div>
+          <p>\(\mathbf{d_1}\) points in exactly the same direction as the query → retrieved first. \(\mathbf{d_2}\) is nearly unrelated → ranked lower.</p>
+
+          <h3>Efficient Retrieval at Scale</h3>
+          <p>Exact search over millions of vectors is slow, so vector DBs use <strong>Approximate Nearest Neighbour (ANN)</strong> indexes — <strong>HNSW</strong> (graph-based), <strong>IVF</strong> (clustering), <strong>PQ</strong> (compression) — trading a tiny accuracy loss for huge speed gains.</p>
+
+          <p><strong>Conclusion:</strong> Embeddings convert meaning into geometry; cosine similarity converts "is this relevant?" into "is the angle small?". This is the retrieval engine of every RAG system.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q34 -->
+  <div class="tab-content" id="tab-3">
+    <div class="question-block" data-qid="u4-q34">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q34', 3)" aria-label="Mark as done"></button>
+        <h2 class="q-title">34. Discuss the role of vector databases and indexing mechanisms in RAG systems. Explain at least two indexing algorithms (such as HNSW or IVF) used for efficient similarity search.</h2>
+      </div>
+      <div class="answer-body">
+<p>A <strong>vector database</strong> stores high-dimensional embedding vectors together with their original text and metadata, and returns the vectors most similar to a query vector. In RAG it holds the chunk embeddings and makes retrieval fast enough for millions of chunks.</p>
+<h3>Role in RAG</h3>
+<ul>
+  <li><strong>Fast similarity search</strong> and <strong>scalability</strong> to millions or billions of vectors.</li>
+  <li><strong>Indexing</strong> structures that avoid comparing the query with every vector.</li>
+  <li><strong>Metadata filtering</strong> (source, date, category, access rights) and <strong>persistent storage</strong>.</li>
+  <li>Examples: FAISS, Pinecone, Milvus, Weaviate, Qdrant, Chroma, pgvector.</li>
+</ul>
+<h3>Why indexing is needed &mdash; ANN search</h3>
+<p>Exact (brute-force) search compares the query with all \(N\) vectors of dimension \(d\): cost \(O(Nd)\). Approximate Nearest Neighbour (ANN) search examines only a promising subset and returns <em>near</em>-optimal neighbours much faster, trading a little recall for large speed-ups.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 640 206" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a83" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><text x="150" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">IVF: search only the nearest cells</text><circle cx="70" cy="80" r="40" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="93.71378213824096" cy="101.49571937884878" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="46.940671121794054" cy="60.07385576762824" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="87.44594166273137" cy="91.32655947528912" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="78.82598087489148" cy="70.79054996427892" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="75.50909661528004" cy="85.12648321476021" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="74.22260888982416" cy="63.60237777223067" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="66.39482129514597" cy="74.88952736985783" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="81.59662822434822" cy="103.75133902158765" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><circle cx="93.36856460084866" cy="82.1204982766074" r="2.6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/><text x="70" y="83" text-anchor="middle" fill="var(--accent)" font-size="11">✕</text><circle cx="170" cy="60" r="40" fill="none" stroke="var(--text-dim)" stroke-width="2"/><circle cx="167.13241781374438" cy="48.87555559916775" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="145.8680651284286" cy="37.317353140359316" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="168.17448082906023" cy="51.28632613697651" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="163.760775938837" cy="78.8058939757578" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="171.33914399559347" cy="62.90449732927195" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="156.27841716998324" cy="37.14518779875755" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="160.90743229558032" cy="42.5614748633504" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="170.53163998353446" cy="83.9368112732425" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="179.07294426198524" cy="44.728487847510934" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><text x="170" y="63" text-anchor="middle" fill="var(--text-dim)" font-size="11">✕</text><circle cx="150" cy="140" r="40" fill="none" stroke="var(--text-dim)" stroke-width="2"/><circle cx="170.4657199023154" cy="154.24447622823868" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="162.18888797848683" cy="159.51649519508294" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="163.6700451593197" cy="153.90788659816462" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="142.3969228477634" cy="163.08687550746208" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="174.01884877070773" cy="123.7368633585929" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="163.20821172589734" cy="150.32724311539778" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="147.99314828258284" cy="141.45707437392537" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="149.48072393620996" cy="160.3919394605394" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><circle cx="150.04373525679406" cy="155.913175510007" r="2.6" fill="var(--text-dim)" stroke="var(--text-dim)" stroke-width="1"/><text x="150" y="143" text-anchor="middle" fill="var(--text-dim)" font-size="11">✕</text><circle cx="70" cy="100" r="5" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><text x="70" y="138" text-anchor="middle" fill="var(--important)" font-size="10.5">query</text><text x="150" y="196" text-anchor="middle" fill="var(--text-muted)" font-size="10">✕ = centroid; only the nearest cell(s) are scanned</text><text x="480" y="14" text-anchor="middle" fill="var(--text-muted)" font-size="11.5">HNSW: greedy descent through layers</text><rect x="330" y="34" width="300" height="34" rx="4" fill="none" stroke="var(--border)"/><text x="334" y="31" text-anchor="start" fill="var(--text-muted)" font-size="9.5">layer 2</text><line x1="370" y1="51" x2="560" y2="51" stroke="var(--text-dim)" stroke-width="1"/><circle cx="370" cy="51" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="560" cy="51" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><rect x="330" y="92" width="300" height="34" rx="4" fill="none" stroke="var(--border)"/><text x="334" y="89" text-anchor="start" fill="var(--text-muted)" font-size="9.5">layer 1</text><line x1="370" y1="109" x2="440" y2="109" stroke="var(--text-dim)" stroke-width="1"/><line x1="440" y1="109" x2="500" y2="109" stroke="var(--text-dim)" stroke-width="1"/><line x1="500" y1="109" x2="570" y2="109" stroke="var(--text-dim)" stroke-width="1"/><circle cx="370" cy="109" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="440" cy="109" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="500" cy="109" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="570" cy="109" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><rect x="330" y="150" width="300" height="34" rx="4" fill="none" stroke="var(--border)"/><text x="334" y="147" text-anchor="start" fill="var(--text-muted)" font-size="9.5">layer 0</text><line x1="350" y1="167" x2="400" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="400" y1="167" x2="440" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="440" y1="167" x2="480" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="480" y1="167" x2="520" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="520" y1="167" x2="560" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="560" y1="167" x2="600" y2="167" stroke="var(--text-dim)" stroke-width="1"/><line x1="600" y1="167" x2="620" y2="167" stroke="var(--text-dim)" stroke-width="1"/><circle cx="350" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="400" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="440" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="480" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="520" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="560" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="600" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><circle cx="620" cy="167" r="4.5" fill="var(--surface)" stroke="var(--text-muted)" stroke-width="1"/><path d="M370,51 L560,51" fill="none" stroke="var(--accent)" stroke-width="0"/><line x1="370" y1="51" x2="560" y2="51" stroke="var(--accent)" stroke-width="2" marker-end="url(#a83)"/><line x1="560" y1="56" x2="570" y2="86" stroke="var(--accent)" stroke-width="2" marker-end="url(#a83)"/><line x1="570" y1="103" x2="560" y2="128" stroke="var(--accent)" stroke-width="2" marker-end="url(#a83)"/><line x1="560" y1="145" x2="600" y2="145" stroke="var(--accent)" stroke-width="2" marker-end="url(#a83)"/><circle cx="600" cy="150" r="5" fill="var(--important)" stroke="var(--important)" stroke-width="1"/><text x="480" y="196" text-anchor="middle" fill="var(--text-muted)" font-size="10">entry at the top; zoom in; finish at layer 0</text></svg>
+</div>
+<h3>1. IVF (Inverted File index)</h3>
+<ol>
+  <li><strong>Build:</strong> run k-means to partition the vectors into \(n_{list}\) clusters (cells); store each vector in the list of its nearest centroid.</li>
+  <li><strong>Search:</strong> compare the query with the \(n_{list}\) centroids, pick the \(n_{probe}\) closest cells, and scan only the vectors in those cells.</li>
+</ol>
+<p>Example: \(N=10^6,\ n_{list}=1000,\ n_{probe}=10\): about \(1000+10\times1000=11\,000\) distance computations instead of \(10^6\), i.e. roughly 90&times; fewer. A larger \(n_{probe}\) gives higher recall but slower search; neighbours lying just across a cell boundary can be missed.</p>
+<h3>2. HNSW (Hierarchical Navigable Small World graph)</h3>
+<ol>
+  <li><strong>Build:</strong> connect each vector to its nearest neighbours in a graph; vectors are assigned to random maximum layers so the upper layers are sparse &ldquo;highways&rdquo; and layer 0 contains all vectors.</li>
+  <li><strong>Search:</strong> start at the entry point in the top layer, move greedily to the neighbour closest to the query until no neighbour is closer, then drop one layer and repeat; at layer 0 explore a candidate list of size \(ef_{search}\) and return the top-\(k\).</li>
+</ol>
+<p>Search cost is about \(O(\log N)\). Parameters: \(M\) (neighbours per node), \(ef_{construction}\) and \(ef_{search}\); larger values give higher recall but more memory and time.</p>
+<h3>Comparison of common indexes</h3>
+<table>
+  <tr><th>Index</th><th>Idea</th><th>Speed</th><th>Recall</th><th>Memory</th></tr>
+  <tr><td>Flat</td><td>Compare with all vectors</td><td>Slow for large \(N\)</td><td>Exact (100%)</td><td>Full vectors</td></tr>
+  <tr><td>IVF</td><td>Cluster, search nearest cells</td><td>Fast</td><td>High, depends on \(n_{probe}\)</td><td>Full vectors + centroids</td></tr>
+  <tr><td>HNSW</td><td>Layered neighbour graph</td><td>Very fast</td><td>Very high</td><td>Higher (graph links)</td></tr>
+  <tr><td>Product Quantisation (PQ)</td><td>Compress each vector into short codes</td><td>Fast</td><td>Lower (lossy)</td><td>Much smaller</td></tr>
+</table>
+<p>PQ splits a vector into \(m\) sub-vectors and replaces each by the id of its nearest centroid (1 byte each); a 768-dimensional float32 vector (3072 bytes) with \(m=96\) becomes 96 bytes, about 32&times; smaller. It is often combined with IVF (&ldquo;IVF-PQ&rdquo;).</p>
+<p><strong>Choice depends on:</strong> dataset size, latency requirement, memory budget and required accuracy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q35 -->
+  <div class="tab-content" id="tab-4">
+    <div class="question-block" data-qid="u4-q35">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q35', 4)" aria-label="Mark as done"></button>
+        <h2 class="q-title">35. Explain various document chunking strategies used in RAG pipelines. Discuss how the choice of chunking strategy affects retrieval quality and downstream generation accuracy.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Why Chunking?</h3>
+          <p><strong>Chunking</strong> splits large documents into smaller pieces before embedding. It is needed because (1) embedding models have token limits, (2) one vector for a whole document blurs many topics together, and (3) the LLM context window can only hold a few passages. Each chunk becomes one retrievable unit.</p>
+
+          <h3>Chunking Strategies</h3>
+          <p><strong>1. Fixed-Size Chunking</strong></p>
+          <p>Split every N tokens/characters (e.g., 500 tokens). Simple and fast but may cut sentences or ideas in half.</p>
+          <p><strong>2. Fixed-Size with Overlap (Sliding Window)</strong></p>
+          <p>Consecutive chunks share some tokens (e.g., 500 size, 50–100 overlap) so context at the boundaries is not lost.</p>
+          <div class="formula">\[ \text{Number of chunks} \approx \left\lceil \frac{L - O}{C - O} \right\rceil \]</div>
+          <p style="font-size:0.85rem;color:var(--text-muted);">\(L\) = document length, \(C\) = chunk size, \(O\) = overlap.</p>
+          <p><strong>3. Sentence / Paragraph-Based Chunking</strong></p>
+          <p>Split on natural boundaries (sentences, paragraphs, line breaks) so each chunk is a complete thought.</p>
+          <p><strong>4. Recursive Character Splitting</strong></p>
+          <p>Tries separators in order (<code>"\n\n"</code> → <code>"\n"</code> → <code>". "</code> → <code>" "</code>) until chunks fit the size limit — default in LangChain; preserves structure as far as possible.</p>
+          <p><strong>5. Structure / Document-Aware Chunking</strong></p>
+          <p>Uses headings, sections, tables, code blocks, Markdown/HTML tags. Ideal for manuals, legal contracts, and technical docs.</p>
+          <p><strong>6. Semantic Chunking</strong></p>
+          <p>Embeds sentences and starts a new chunk when similarity between adjacent sentences drops below a threshold — chunks are topically coherent.</p>
+          <p><strong>7. Hierarchical / Parent-Child Chunking</strong></p>
+          <p>Small child chunks are used for precise retrieval; when matched, the larger parent chunk is passed to the LLM for full context.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg">
+              <text class="lbl-s" x="60" y="20">Fixed</text>
+              <rect class="box" x="110" y="8" width="150" height="20" rx="3"/><rect class="box" x="265" y="8" width="150" height="20" rx="3"/><rect class="box" x="420" y="8" width="150" height="20" rx="3"/>
+              <text class="lbl-s" x="60" y="70">Overlap</text>
+              <rect class="box2" x="110" y="58" width="150" height="20" rx="3"/><rect class="box2" x="230" y="58" width="150" height="20" rx="3" style="opacity:.8"/><rect class="box2" x="350" y="58" width="150" height="20" rx="3" style="opacity:.6"/>
+              <text class="lbl-s" x="540" y="73">← shared region keeps context</text>
+              <text class="lbl-s" x="60" y="120">Semantic</text>
+              <rect class="box3" x="110" y="108" width="90" height="20" rx="3"/><rect class="box3" x="205" y="108" width="210" height="20" rx="3"/><rect class="box3" x="420" y="108" width="120" height="20" rx="3"/>
+              <text class="lbl-s" x="620" y="123">← variable size by topic</text>
+              <text class="lbl-s" x="350" y="158">Same text, three ways to cut it</text>
+            </svg>
+            <p class="source-note">Fig: Fixed vs overlapping vs semantic chunk boundaries</p>
+          </div>
+
+          <h3>Comparison</h3>
+          <table>
+            <tr><th>Strategy</th><th>Pros</th><th>Cons</th><th>Best for</th></tr>
+            <tr><td>Fixed-size</td><td>Simple, fast, predictable</td><td>Breaks sentences/ideas</td><td>Uniform text, quick prototypes</td></tr>
+            <tr><td>Overlap</td><td>Preserves boundary context</td><td>More storage, duplicate hits</td><td>General-purpose RAG</td></tr>
+            <tr><td>Sentence/paragraph</td><td>Complete thoughts</td><td>Uneven sizes</td><td>Articles, FAQs</td></tr>
+            <tr><td>Recursive</td><td>Respects structure within size limit</td><td>Heuristic</td><td>Default choice</td></tr>
+            <tr><td>Structure-aware</td><td>Keeps sections/tables intact</td><td>Needs parsing per format</td><td>Manuals, legal, code</td></tr>
+            <tr><td>Semantic</td><td>Topically coherent</td><td>Slower; extra embedding cost</td><td>Long, varied documents</td></tr>
+            <tr><td>Parent-child</td><td>Precise retrieval + rich context</td><td>More complex pipeline</td><td>Enterprise knowledge bases</td></tr>
+          </table>
+
+          <h3>Effect on Retrieval and Generation Quality</h3>
+          <table>
+            <tr><th>Chunk size</th><th>Retrieval effect</th><th>Generation effect</th></tr>
+            <tr><td><strong>Too small</strong></td><td>High precision but lost context; answer may be split across chunks (poor recall)</td><td>LLM sees fragments → incomplete or misleading answers</td></tr>
+            <tr><td><strong>Too large</strong></td><td>Vector averages many topics → diluted, noisy matches</td><td>Irrelevant text fills the context window, raises cost, and distracts the LLM ("lost in the middle")</td></tr>
+            <tr><td><strong>Well-chosen</strong></td><td>Each chunk = one coherent idea → accurate matching</td><td>Focused context → faithful, complete, citable answers</td></tr>
+          </table>
+          <p><strong>Practical tuning:</strong> typical sizes are 200–1000 tokens with 10–20% overlap; evaluate using retrieval metrics (Recall@k, MRR) and answer-faithfulness on a test question set, then iterate.</p>
+
+          <p><strong>Conclusion:</strong> Chunking is the silent foundation of RAG — "garbage chunks in, garbage answers out." The right strategy balances context completeness against retrieval precision for the specific document type.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q36 -->
+  <div class="tab-content" id="tab-5">
+    <div class="question-block" data-qid="u4-q36">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q36', 5)" aria-label="Mark as done"></button>
+        <h2 class="q-title">36. Explain the context retrieval and augmentation process in a RAG pipeline. Describe how retrieved documents are integrated into the prompt sent to the LLM.</h2>
+      </div>
+      <div class="answer-body">
+<p>After the knowledge base has been prepared, every user query goes through <strong>retrieval</strong> (find relevant chunks) and <strong>augmentation</strong> (put them into the prompt) before the LLM generates the answer.</p>
+<h3>Context retrieval</h3>
+<ol>
+  <li><strong>Embed the query</strong> with the same model that embedded the chunks.</li>
+  <li><strong>Similarity search</strong> in the vector database for the top-\(k\) chunks (Q33, Q34).</li>
+  <li><strong>Filter</strong> with metadata (source, date, user access rights) and a similarity threshold \(s\ge\tau\) so weak matches are dropped.</li>
+  <li><strong>Refine</strong> (optional): remove near-duplicates and re-rank (Q38).</li>
+</ol>
+<h3>Context augmentation</h3>
+<p>The selected chunks are combined with the question and instructions into one prompt: <strong>Augmented prompt = Instructions + Retrieved context + User query</strong>.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 600 194" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a84" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="16" width="250" height="42" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="135" y="34" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="600">Instructions</text><text x="135" y="49" text-anchor="middle" fill="var(--text-muted)" font-size="10">answer only from the context; cite sources</text><rect x="10" y="68" width="250" height="42" rx="6" fill="var(--surface2)" stroke="var(--warning)"/><text x="135" y="86" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="600">Retrieved context</text><text x="135" y="101" text-anchor="middle" fill="var(--text-muted)" font-size="10">chunk 1, chunk 2, … chunk k</text><rect x="10" y="120" width="250" height="42" rx="6" fill="var(--surface2)" stroke="var(--success)"/><text x="135" y="138" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="600">User query</text><text x="135" y="153" text-anchor="middle" fill="var(--text-muted)" font-size="10">the original question</text><line x1="262" y1="86" x2="330" y2="86" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a84)"/><rect x="330" y="60" width="80" height="52" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="370.0" y="85.0" text-anchor="middle" fill="var(--text)" font-size="11.5">LLM</text><text x="370.0" y="99.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">generate</text><line x1="412" y1="86" x2="470" y2="86" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a84)"/><rect x="470" y="60" width="110" height="52" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="525.0" y="85.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Response</text><text x="525.0" y="99.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">grounded + cited</text><text x="300" y="182" text-anchor="middle" fill="var(--accent-hover)" font-size="10.5">Augmented prompt = Instructions + Retrieved context + Query</text></svg>
+</div>
+<pre><code>You are a helpful assistant. Answer ONLY using the context below.
+If the answer is not in the context, say "I don't know". Cite the source id.
+
+Context:
+[1] (handbook.pdf, p.12) "Students must have at least 75% attendance ..."
+[2] (handbook.pdf, p.13) "Condonation up to 65% is allowed with medical proof ..."
+
+Question: What is the minimum attendance to appear for the semester exam?</code></pre>
+<h3>Fitting the context window</h3>
+<p>The chunks must fit the model's window \(N\) together with everything else (Q26): choose the largest \(k\) such that</p>
+<div class="formula">\[n_{\text{instr}}+\sum_{i=1}^{k}n(c_i)+n_{\text{query}}+n_{\text{answer}}\ \le\ N\]</div>
+<h3>Strategies when there is more context than fits</h3>
+<table>
+  <tr><th>Strategy</th><th>How</th></tr>
+  <tr><td>Stuffing</td><td>Put all top-\(k\) chunks into one prompt (simplest, used when they fit)</td></tr>
+  <tr><td>Map-reduce</td><td>Answer or summarise each chunk separately, then combine the partial results</td></tr>
+  <tr><td>Refine</td><td>Process chunks one by one, improving the answer each time</td></tr>
+</table>
+<h3>Practical points</h3>
+<ul>
+  <li><strong>Order:</strong> put the most relevant chunks first (or at the ends), since models under-use the middle of long contexts.</li>
+  <li><strong>Grounding instruction:</strong> tell the model to rely only on the context and to say when the answer is missing; ask for citations.</li>
+  <li><strong>Risks:</strong> irrelevant or contradictory chunks, and untrusted documents that contain hidden instructions (prompt injection), so retrieved text should be treated as data, not as commands.</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q37 -->
+  <div class="tab-content" id="tab-6">
+    <div class="question-block" data-qid="u4-q37">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q37', 6)" aria-label="Mark as done"></button>
+        <h2 class="q-title">37. Discuss hybrid retrieval techniques that combine dense (embedding-based) and sparse (keyword-based) retrieval methods. Explain the advantages of hybrid retrieval over using either method alone.</h2>
+      </div>
+      <div class="answer-body">
+<p><strong>Hybrid retrieval</strong> combines <strong>sparse</strong> (keyword) and <strong>dense</strong> (embedding) retrieval and merges their results, so that the system gets both exact matches and semantic matches.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a85" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="10" y="60" width="90" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="55.0" y="84.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Query</text><line x1="102" y1="72" x2="150" y2="40" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a85)"/><line x1="102" y1="88" x2="150" y2="120" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a85)"/><rect x="150" y="18" width="150" height="46" rx="6" fill="var(--surface2)" stroke="var(--warning)"/><text x="225.0" y="40.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Sparse: BM25</text><text x="225.0" y="54.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">exact keywords</text><rect x="150" y="100" width="150" height="46" rx="6" fill="var(--surface2)" stroke="var(--success)"/><text x="225.0" y="122.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Dense: embeddings</text><text x="225.0" y="136.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">meaning, paraphrase</text><line x1="302" y1="41" x2="360" y2="70" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a85)"/><line x1="302" y1="123" x2="360" y2="90" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a85)"/><rect x="360" y="60" width="130" height="40" rx="6" fill="var(--surface2)" stroke="var(--accent)"/><text x="425.0" y="79.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Fusion</text><text x="425.0" y="93.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">weighted sum / RRF</text><line x1="492" y1="80" x2="540" y2="80" stroke="var(--text-muted)" stroke-width="1" marker-end="url(#a85)"/><rect x="540" y="60" width="90" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="585.0" y="79.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Top-k</text><text x="585.0" y="93.0" text-anchor="middle" fill="var(--text-muted)" font-size="10.0">to the LLM</text></svg>
+</div>
+<h3>Sparse retrieval &mdash; BM25</h3>
+<p>Scores documents by the query words they contain, weighting rare words more (IDF) and normalising for term frequency and document length:</p>
+<div class="formula">\[\mathrm{BM25}(q,d)=\sum_{t\in q}\mathrm{IDF}(t)\cdot\frac{f(t,d)\,(k_1+1)}{f(t,d)+k_1\left(1-b+b\,\frac{|d|}{\mathrm{avgdl}}\right)}\]</div>
+<p>Good at exact terms: names, error codes, IDs, rare technical words. Fails when the query uses different words from the document.</p>
+<h3>Dense retrieval</h3>
+<p>Ranks by embedding similarity, \(\cos(e_q,e_d)\) (Q33). It captures meaning and paraphrases (&ldquo;page not found&rdquo; matches &ldquo;404 error&rdquo;) but can miss exact identifiers and rare terms.</p>
+<h3>Combining the two</h3>
+<ul>
+  <li><strong>Weighted score fusion:</strong> normalise both scores to [0,1] and compute
+    <div class="formula">\[s(d)=\alpha\,\hat s_{dense}(d)+(1-\alpha)\,\hat s_{sparse}(d)\]</div></li>
+  <li><strong>Reciprocal Rank Fusion (RRF):</strong> uses only ranks, so no score normalisation is needed (typically \(k=60\)):
+    <div class="formula">\[\mathrm{RRF}(d)=\sum_{r\in\text{rankers}}\frac{1}{k+\mathrm{rank}_r(d)}\]</div></li>
+</ul>
+<h3>Worked example (RRF, \(k=60\))</h3>
+<table>
+  <tr><th>Document</th><th>Dense rank</th><th>BM25 rank</th><th>RRF score</th></tr>
+  <tr><td>A</td><td>1</td><td>3</td><td>\(\frac1{61}+\frac1{63}=0.03227\)</td></tr>
+  <tr><td>B</td><td>2</td><td>1</td><td>\(\frac1{62}+\frac1{61}=0.03252\)</td></tr>
+  <tr><td>C</td><td>3</td><td>2</td><td>\(\frac1{63}+\frac1{62}=0.03200\)</td></tr>
+</table>
+<p>Final order: <strong>B, A, C</strong>. B wins because it is ranked high by <em>both</em> retrievers, even though A is first for dense retrieval alone.</p>
+<h3>Advantages of hybrid over either alone</h3>
+<table>
+  <tr><th></th><th>Sparse only</th><th>Dense only</th><th>Hybrid</th></tr>
+  <tr><td>Exact terms, IDs, codes</td><td>Strong</td><td>Weak</td><td>Strong</td></tr>
+  <tr><td>Paraphrase and meaning</td><td>Weak</td><td>Strong</td><td>Strong</td></tr>
+  <tr><td>Rare or out-of-vocabulary words</td><td>Strong</td><td>Can miss</td><td>Strong</td></tr>
+  <tr><td>Robustness across query types</td><td>Low</td><td>Medium</td><td>High</td></tr>
+  <tr><td>Cost</td><td>Cheap, no model</td><td>Needs embeddings + vector index</td><td>Both (modest extra cost)</td></tr>
+</table>
+<p>Hybrid retrieval is usually followed by a re-ranker (Q38) and is the default in many production RAG systems.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q38 -->
+  <div class="tab-content" id="tab-7">
+    <div class="question-block" data-qid="u4-q38">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q38', 7)" aria-label="Mark as done"></button>
+        <h2 class="q-title">38. Explain query expansion and re-ranking techniques used to improve the accuracy of retrieval in RAG systems. Illustrate with an example how re-ranking modifies the final set of retrieved documents.</h2>
+      </div>
+      <div class="answer-body">
+<h3>The Retrieval Problem</h3>
+          <p>User queries are often short, vague or worded differently from the documents ("vocabulary mismatch"), and first-pass vector search is fast but approximate. Two techniques improve accuracy: <strong>expand the query before retrieval</strong> and <strong>re-rank results after retrieval</strong>.</p>
+
+          <p><strong>User Query</strong> → <strong>Query Expansion</strong> → <strong>Retrieve Top-N (fast)</strong> → <strong>Re-rank (accurate)</strong> → <strong>Top-k to LLM</strong></p>
+
+          <h3>Query Expansion Techniques</h3>
+          <table>
+            <tr><th>Technique</th><th>How it works</th></tr>
+            <tr><td><strong>Synonym / thesaurus expansion</strong></td><td>Add synonyms and related terms ("car" → "automobile, vehicle")</td></tr>
+            <tr><td><strong>LLM-based rewriting</strong></td><td>LLM rewrites the query to be clearer and more complete; also resolves chat context ("What about its price?" → "What is the price of Product X?")</td></tr>
+            <tr><td><strong>Multi-query generation</strong></td><td>LLM produces several paraphrases; retrieve for each and merge results — improves recall</td></tr>
+            <tr><td><strong>HyDE (Hypothetical Document Embeddings)</strong></td><td>LLM writes a hypothetical answer; its embedding (closer to real documents than the short query) is used for search</td></tr>
+            <tr><td><strong>Pseudo-relevance feedback</strong></td><td>Take top initial results, extract key terms, add them to the query and search again</td></tr>
+            <tr><td><strong>Step-back / decomposition</strong></td><td>Break a complex question into sub-questions, or ask a more general version first</td></tr>
+          </table>
+          <p><strong>Effect:</strong> increases <em>recall</em> — more of the truly relevant documents are present in the candidate set.</p>
+
+          <h3>Re-ranking Techniques</h3>
+          <p>First-stage retrieval uses a <strong>bi-encoder</strong>: query and document are embedded <em>independently</em>, so similarity is a cheap dot product but loses fine-grained interaction. A <strong>re-ranker</strong> then rescores only the top-N candidates (e.g., 50) more carefully.</p>
+          <table>
+            <tr><th>Re-ranker</th><th>Description</th></tr>
+            <tr><td><strong>Cross-encoder</strong></td><td>Feeds query and document <em>together</em> through a transformer (BERT/MiniLM) which outputs a relevance score — much more accurate but slower</td></tr>
+            <tr><td><strong>LLM-based re-ranking</strong></td><td>Ask an LLM to score or order passages by relevance</td></tr>
+            <tr><td><strong>Cohere Rerank / BGE-reranker</strong></td><td>Hosted/open-source ready-made rerankers</td></tr>
+            <tr><td><strong>Reciprocal Rank Fusion (RRF)</strong></td><td>Merges rankings from multiple retrievers (keyword + vector)</td></tr>
+            <tr><td><strong>MMR</strong></td><td>Maximal Marginal Relevance — balances relevance and diversity to avoid near-duplicates</td></tr>
+          </table>
+          <div class="formula">
+            \[ \text{RRF}(d) = \sum_{r \in R} \frac{1}{k + \text{rank}_r(d)} \qquad\qquad
+               \text{MMR} = \arg\max_{d_i \in C\setminus S}\Big[\lambda\,\text{sim}(d_i,q) - (1-\lambda)\max_{d_j\in S}\text{sim}(d_i,d_j)\Big] \]
+          </div>
+
+          <h3>Example: How Re-ranking Changes the Result</h3>
+          <p><strong>Query:</strong> <em>"How can I reset my password if I no longer have access to my registered email?"</em></p>
+          <table>
+            <tr><th>Doc</th><th>Content (summary)</th><th>Stage-1 rank (cosine)</th><th>Re-ranker score</th><th>Final rank</th></tr>
+            <tr><td>D1</td><td>"How to reset your password using your registered email"</td><td>1 (0.89)</td><td>0.45</td><td class="danger">3</td></tr>
+            <tr><td>D2</td><td>"Password policy: length and character requirements"</td><td>2 (0.84)</td><td>0.12</td><td class="danger">5</td></tr>
+            <tr><td>D3</td><td>"Account recovery without email: identity verification via support"</td><td>4 (0.78)</td><td>0.96</td><td class="success">1</td></tr>
+            <tr><td>D4</td><td>"Recover account using registered phone number OTP"</td><td>3 (0.80)</td><td>0.81</td><td class="success">2</td></tr>
+            <tr><td>D5</td><td>"Change email address in profile settings"</td><td>5 (0.74)</td><td>0.30</td><td>4</td></tr>
+          </table>
+          <p><strong>What changed:</strong> The bi-encoder ranked D1 first because it shares many words with the query ("reset password registered email"). The cross-encoder, reading query and document together, understood the key constraint — <em>no access to email</em> — and promoted D3 and D4 (the truly useful answers) to the top, demoting D1 and D2. Final context sent to the LLM: <strong>D3, D4, D1</strong> (top-3).</p>
+
+          <p><strong>Conclusion:</strong> Query expansion widens the net (recall); re-ranking sharpens the catch (precision). Together they ensure the LLM receives the most relevant context, directly improving answer accuracy.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q39 -->
+  <div class="tab-content" id="tab-8">
+    <div class="question-block" data-qid="u4-q39">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q39', 8)" aria-label="Mark as done"></button>
+        <h2 class="q-title">39. Discuss the evaluation of RAG systems. Explain key evaluation metrics such as faithfulness, answer relevance, and context precision/recall, and describe how they are measured.</h2>
+      </div>
+      <div class="answer-body">
+<p>A RAG system has two parts that can fail independently, so it is evaluated in two layers: <strong>retrieval quality</strong> (did we fetch the right evidence?) and <strong>generation quality</strong> (did the LLM use it correctly?). The three relationships between query, context and answer are often called the <em>RAG triad</em>.</p>
+<div class="svg-wrap">
+<svg viewBox="0 0 610 212" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a86" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"/></marker></defs><rect x="255" y="10" width="110" height="34" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="310.0" y="31.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Query</text><rect x="40" y="150" width="130" height="34" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="105.0" y="171.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Retrieved context</text><rect x="440" y="150" width="130" height="34" rx="6" fill="var(--surface2)" stroke="var(--border)"/><text x="505.0" y="171.0" text-anchor="middle" fill="var(--text)" font-size="11.5">Generated answer</text><line x1="290" y1="46" x2="150" y2="150" stroke="var(--accent)" stroke-width="1.6"/><line x1="330" y1="46" x2="470" y2="150" stroke="var(--accent)" stroke-width="1.6"/><line x1="172" y1="167" x2="438" y2="167" stroke="var(--accent)" stroke-width="1.6"/><text x="130" y="92" text-anchor="middle" fill="var(--accent-hover)" font-size="10.5">context relevance</text><text x="135" y="106" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">(precision / recall)</text><text x="480" y="92" text-anchor="middle" fill="var(--accent-hover)" font-size="10.5">answer relevance</text><text x="305" y="200" text-anchor="middle" fill="var(--accent-hover)" font-size="10.5">faithfulness (groundedness)</text></svg>
+</div>
+<h3>Retrieval metrics</h3>
+<table>
+  <tr><th>Metric</th><th>Definition</th></tr>
+  <tr><td>Precision@k</td><td>\(\dfrac{\#\text{relevant chunks in top-}k}{k}\)</td></tr>
+  <tr><td>Recall@k</td><td>\(\dfrac{\#\text{relevant chunks in top-}k}{\#\text{relevant chunks that exist}}\)</td></tr>
+  <tr><td>MRR</td><td>\(\dfrac1{|Q|}\sum_{q}\dfrac1{\mathrm{rank}_q}\), where rank is the position of the first relevant chunk</td></tr>
+  <tr><td><strong>Context precision</strong></td><td>Are the relevant chunks ranked at the top? Mean of precision@\(i\) over the positions \(i\) of relevant chunks (rank-aware).</td></tr>
+  <tr><td><strong>Context recall</strong></td><td>\(\dfrac{\#\text{statements of the reference answer supported by the context}}{\#\text{statements in the reference answer}}\): was all needed evidence retrieved?</td></tr>
+</table>
+<h3>Generation metrics</h3>
+<table>
+  <tr><th>Metric</th><th>Definition and how it is measured</th></tr>
+  <tr><td><strong>Faithfulness</strong> (groundedness)</td><td>\(\dfrac{\#\text{claims in the answer supported by the retrieved context}}{\#\text{claims in the answer}}\). An LLM judge splits the answer into claims and checks each against the context. Low faithfulness = hallucination.</td></tr>
+  <tr><td><strong>Answer relevance</strong></td><td>Does the answer address the question? Often measured by generating questions back from the answer and averaging their embedding similarity with the original question.</td></tr>
+  <tr><td>Answer correctness</td><td>Agreement with a reference answer (exact match, F1, or LLM judge).</td></tr>
+</table>
+<h3>Worked example</h3>
+<p>For one query the retriever returns 5 chunks and chunks 1 and 3 are relevant; the corpus has 4 relevant chunks in total.</p>
+<div class="formula">\[P@5=\frac25=0.4,\qquad R@5=\frac24=0.5,\qquad \text{context precision}=\frac{1/1+2/3}{2}=0.83\]</div>
+<p>The generated answer makes 5 claims and 4 are supported by the context, so faithfulness \(=4/5=0.8\).</p>
+<h3>How evaluation is done</h3>
+<ul>
+  <li>Build a <strong>test set</strong> of questions with reference answers and, where possible, the supporting passages.</li>
+  <li>Use an <strong>LLM-as-a-judge</strong> for faithfulness and relevance, complemented by human review of samples.</li>
+  <li>Tools such as RAGAS, TruLens and DeepEval compute these metrics automatically.</li>
+  <li>Also track <strong>latency, cost per query</strong> and user feedback in production (Q47).</li>
+</ul>
+<p>Diagnosis: low context recall &rarr; fix chunking, embeddings or retrieval; low faithfulness &rarr; fix the prompt or the model; low answer relevance &rarr; fix query handling and the prompt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q40 -->
+  <div class="tab-content" id="tab-9">
+    <div class="question-block" data-qid="u4-q40">
+      <div class="q-header">
+        <button class="q-check" onclick="toggleDone('u4-q40', 9)" aria-label="Mark as done"></button>
+        <h2 class="q-title">40. Design a RAG-based solution for an enterprise use case such as knowledge management, a research assistant, or a customer support system. Justify the design choices for embedding model, vector database, and retrieval strategy.</h2>
+      </div>
+      <div class="answer-body">
+<h3>Chosen Use Case: Enterprise Customer-Support Assistant</h3>
+          <p><strong>Goal:</strong> A chatbot that answers customer and agent questions using the company's product manuals, FAQs, past tickets and policy documents — accurately, with citations, and with access control.</p>
+
+          <h3>System Architecture</h3>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 330" xmlns="http://www.w3.org/2000/svg">
+              <text class="lbl-s" x="215" y="16">INGESTION PIPELINE (offline / scheduled)</text>
+              <rect class="box" x="10" y="26" width="110" height="52" rx="8"/><text class="lbl" x="65" y="49">Sources</text><text class="lbl-s" x="65" y="65">PDF, Wiki, Tickets</text>
+              <rect class="box" x="150" y="26" width="110" height="52" rx="8"/><text class="lbl" x="205" y="49">Parse + Clean</text><text class="lbl-s" x="205" y="65">+ metadata/ACL</text>
+              <rect class="box" x="290" y="26" width="110" height="52" rx="8"/><text class="lbl" x="345" y="49">Chunking</text><text class="lbl-s" x="345" y="65">recursive + overlap</text>
+              <rect class="box" x="430" y="26" width="110" height="52" rx="8"/><text class="lbl" x="485" y="49">Embedding</text><text class="lbl-s" x="485" y="65">model</text>
+              <rect class="box2" x="570" y="26" width="140" height="52" rx="8"/><text class="lbl" x="640" y="49">Vector DB + BM25</text><text class="lbl-s" x="640" y="65">hybrid index</text>
+              <path class="arr" d="M120,52 L150,52"/><path class="arr" d="M260,52 L290,52"/><path class="arr" d="M400,52 L430,52"/><path class="arr" d="M540,52 L570,52"/>
+
+              <text class="lbl-s" x="215" y="130">QUERY PIPELINE (online)</text>
+              <rect class="box" x="10" y="145" width="90" height="52" rx="8"/><text class="lbl" x="55" y="176">User Query</text>
+              <rect class="box" x="125" y="145" width="100" height="52" rx="8"/><text class="lbl" x="175" y="168">Rewrite /</text><text class="lbl" x="175" y="184">Expand</text>
+              <rect class="box3" x="250" y="145" width="110" height="52" rx="8"/><text class="lbl" x="305" y="168">Hybrid Search</text><text class="lbl-s" x="305" y="184">+ ACL filter, Top-20</text>
+              <rect class="box3" x="385" y="145" width="100" height="52" rx="8"/><text class="lbl" x="435" y="168">Re-ranker</text><text class="lbl-s" x="435" y="184">Top-5</text>
+              <rect class="box" x="510" y="145" width="110" height="52" rx="8"/><text class="lbl" x="565" y="168">Prompt Builder</text><text class="lbl-s" x="565" y="184">context + rules</text>
+              <rect class="box2" x="645" y="145" width="110" height="52" rx="8"/><text class="lbl" x="700" y="168">LLM</text><text class="lbl-s" x="700" y="184">+ guardrails</text>
+              <path class="arr" d="M100,171 L125,171"/><path class="arr" d="M225,171 L250,171"/><path class="arr" d="M360,171 L385,171"/><path class="arr" d="M485,171 L510,171"/><path class="arr" d="M620,171 L645,171"/>
+              <path class="dash" d="M640,78 L330,145"/>
+
+              <rect class="box" x="250" y="250" width="280" height="50" rx="8"/><text class="lbl" x="390" y="272">Answer + Source Citations + Feedback Loop</text><text class="lbl-s" x="390" y="288">Logging, monitoring, evaluation (RAGAS)</text>
+              <path class="arr" d="M700,197 L700,225 L530,270"/>
+            </svg>
+            <h3>Sizing the system (worked estimate)</h3>
+<p>Suppose 50,000 documents of about 20 chunks each, i.e. \(10^6\) chunks, embedded with a 1,024-dimension model in float32:</p>
+<div class="formula">\[10^6\times1024\times4\ \text{bytes}\approx4.1\ \text{GB of raw vectors}\]</div>
+<p>With HNSW graph overhead this is roughly 6 GB, comfortably in RAM on a single server; product quantisation could shrink it ~30&times; if the corpus grows to hundreds of millions of chunks (Q34).</p>
+<h3>Latency budget for one answer</h3>
+<table>
+  <tr><th>Step</th><th>Target</th></tr>
+  <tr><td>Query embedding</td><td>~20 ms</td></tr>
+  <tr><td>Vector + keyword search with filters</td><td>~50 ms</td></tr>
+  <tr><td>Reranking top-50 to top-5</td><td>~150 ms</td></tr>
+  <tr><td>LLM generation (streamed)</td><td>first token in ~1 s</td></tr>
+</table>
+<p>Streaming the answer keeps the interface responsive even when the full generation takes a few seconds.</p>
+<h3>Safety, evaluation and operations</h3>
+<ul>
+  <li><strong>Access control:</strong> filter retrieval by the user's role so the model never sees documents the user may not read.</li>
+  <li><strong>Fallback:</strong> if the best retrieval score is below a threshold, answer &ldquo;I could not find this&rdquo; or hand over to a human instead of guessing.</li>
+  <li><strong>Evaluation:</strong> a fixed test set of real questions, tracking Recall@k, faithfulness and answer relevance (Q39), re-run after every change.</li>
+  <li><strong>Monitoring and feedback:</strong> thumbs up/down, deflection rate, unanswered queries and stale documents feed the next improvement cycle (Q47).</li>
+</ul>
+<p class="source-note">Fig: Enterprise RAG architecture — ingestion and query pipelines</p>
+          </div>
+
+          <h3>Design Choices and Justification</h3>
+
+          <p><strong>1. Embedding Model</strong></p>
+          <table>
+            <tr><th>Option</th><th>Pros</th><th>Cons</th></tr>
+            <tr><td>OpenAI <code>text-embedding-3-large</code></td><td>Top quality, easy API, multilingual</td><td>Data leaves the organisation; per-token cost</td></tr>
+            <tr><td>Open-source BGE / E5 / Sentence-BERT</td><td>Self-hosted → privacy, no per-call fee, fine-tunable on domain data</td><td>Needs GPU/ops effort</td></tr>
+          </table>
+          <p><strong>Choice:</strong> a self-hosted open model such as <strong>BGE-large / E5</strong> — support tickets contain customer data (privacy), cost is predictable at high volume, and it can be fine-tuned on domain vocabulary (product names, error codes). Selected via benchmarking (MTEB) and Recall@k on in-house test queries.</p>
+
+          <p><strong>2. Vector Database</strong></p>
+          <table>
+            <tr><th>Option</th><th>Notes</th></tr>
+            <tr><td>FAISS / Chroma</td><td>Great for prototypes; limited filtering and scaling</td></tr>
+            <tr><td>Pinecone</td><td>Fully managed, easy scale; cloud-only</td></tr>
+            <tr><td>Weaviate / Qdrant / Milvus / pgvector</td><td>Open-source, metadata filtering, hybrid search, self-hostable</td></tr>
+          </table>
+          <p><strong>Choice:</strong> <strong>Qdrant / Weaviate</strong> (or pgvector if already on PostgreSQL) — supports <em>metadata filtering</em> (product, version, language, access role), <em>hybrid search</em>, HNSW indexing for low latency, horizontal scaling, and on-premise deployment for compliance.</p>
+
+          <p><strong>3. Retrieval Strategy</strong></p>
+          <ul>
+            <li><strong>Hybrid search</strong> = dense vectors + BM25 keyword, fused by RRF — vectors capture meaning, BM25 catches exact error codes and product IDs.</li>
+            <li><strong>Query rewriting</strong> using chat history to resolve follow-up questions.</li>
+            <li><strong>Metadata / ACL filters</strong> so users only retrieve documents they are authorised to see.</li>
+            <li><strong>Two-stage retrieval:</strong> fetch Top-20 quickly, <strong>cross-encoder re-rank</strong> to Top-5.</li>
+            <li><strong>Parent-child chunks:</strong> match on small chunks, send larger parent section to the LLM.</li>
+            <li><strong>Grounded prompt:</strong> "Answer only from the context; cite sources; say 'I don't know' otherwise."</li>
+          </ul>
+
+          <h3>Evaluation and Governance</h3>
+          <table>
+            <tr><th>Aspect</th><th>Approach</th></tr>
+            <tr><td>Retrieval quality</td><td>Recall@k, MRR, nDCG on labelled queries</td></tr>
+            <tr><td>Generation quality</td><td>Faithfulness, answer relevance, context precision (RAGAS); human review</td></tr>
+            <tr><td>Freshness</td><td>Incremental re-indexing when documents change</td></tr>
+            <tr><td>Safety</td><td>PII redaction, guardrails, audit logs, human hand-off for low-confidence answers</td></tr>
+          </table>
+
+          <p><strong>Conclusion:</strong> A self-hosted embedding model, a filter-capable vector DB, and a hybrid + re-ranked retrieval pipeline give accurate, secure, citable answers — reducing support load while keeping enterprise data under control.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab-content').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === i);
+  });
+}
+function toggleDone(qid, tabIdx) {
+  const block = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const isDone = block.classList.toggle('q-done');
+  const btn = document.querySelectorAll('.tab-btn')[tabIdx];
+  btn.classList.toggle('done', isDone);
+  try { localStorage.setItem('done-' + qid, isDone ? '1' : ''); } catch (e) {}
+}
+document.querySelectorAll('.question-block').forEach((block, idx) => {
+  let saved = false;
+  try { saved = !!localStorage.getItem('done-' + block.dataset.qid); } catch (e) {}
+  if (saved) {
+    block.classList.add('q-done');
+    const btn = document.querySelectorAll('.tab-btn')[idx];
+    if (btn) btn.classList.add('done');
+  }
+});
+showTab(0);
+</script>
+</body>
+</html>
