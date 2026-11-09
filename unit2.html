@@ -35,10 +35,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q11 -->
   <div class="tab-content" id="tab-0">
-    <div class="question-block" data-qid="u2-q11">
+    <div class="question-block" data-qid="gai-u2-q11">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q11', 0)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q11', 0)" aria-label="Mark as done"></button>
         <h2 class="q-title">11. Explain the concept of generative modeling and probabilistic generative models. Differentiate between discriminative and generative approaches to machine learning with examples.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q11', 0)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A <strong>generative model</strong> learns the probability distribution that produced the training data, \(P(X)\) or the joint \(P(X,Y)\), so that it can <strong>sample new data</strong> \(x\sim P_\theta(X)\) that looks like the training data but is not in it. A discriminative model learns only how to separate classes.</p>
@@ -71,10 +72,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q12 -->
   <div class="tab-content" id="tab-1">
-    <div class="question-block" data-qid="u2-q12">
+    <div class="question-block" data-qid="gai-u2-q12">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q12', 1)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q12', 1)" aria-label="Mark as done"></button>
         <h2 class="q-title">12. Describe the architecture of Autoencoders and Variational Autoencoders (VAEs). Explain the role of the latent space and derive the Evidence Lower Bound (ELBO) loss function used in VAE training.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q12', 1)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Autoencoders — Basic Idea</h3>
@@ -141,10 +143,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q13 -->
   <div class="tab-content" id="tab-2">
-    <div class="question-block" data-qid="u2-q13">
+    <div class="question-block" data-qid="gai-u2-q13">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q13', 2)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q13', 2)" aria-label="Mark as done"></button>
         <h2 class="q-title">13. Explain the working principle of Generative Adversarial Networks (GANs). Describe the roles of the generator and discriminator, the minimax objective function, and the adversarial training process. Write the algorithm/pseudocode for the GAN training loop, showing the alternating update steps for the discriminator and generator.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q13', 2)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Core Idea</h3>
@@ -233,10 +236,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q14 -->
   <div class="tab-content" id="tab-3">
-    <div class="question-block" data-qid="u2-q14">
+    <div class="question-block" data-qid="gai-u2-q14">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q14', 3)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q14', 3)" aria-label="Mark as done"></button>
         <h2 class="q-title">14. Discuss the common challenges encountered while training GANs, such as mode collapse and training instability. Explain at least two techniques used to mitigate these issues.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q14', 3)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>GAN training is a two-player game in which both networks keep changing, so it is much harder to train than a normal supervised network.</p>
@@ -273,10 +277,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q15 -->
   <div class="tab-content" id="tab-4">
-    <div class="question-block" data-qid="u2-q15">
+    <div class="question-block" data-qid="gai-u2-q15">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q15', 4)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q15', 4)" aria-label="Mark as done"></button>
         <h2 class="q-title">15. Explain the architecture and working of Conditional GANs (CGANs). Describe how conditioning information is incorporated into both the generator and discriminator, with suitable application examples.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q15', 4)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A plain GAN gives no control over <em>what</em> it generates: it cannot be told to make &ldquo;a cat&rdquo;. A <strong>Conditional GAN (CGAN)</strong> feeds extra information \(y\) (a class label, a text embedding or another image) to <strong>both</strong> the generator and the discriminator, so the output can be controlled.</p>
@@ -313,10 +318,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q16 -->
   <div class="tab-content" id="tab-5">
-    <div class="question-block" data-qid="u2-q16">
+    <div class="question-block" data-qid="gai-u2-q16">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q16', 5)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q16', 5)" aria-label="Mark as done"></button>
         <h2 class="q-title">16. Explain the working principles of Diffusion Models. Describe the forward (noise addition) and reverse (denoising) processes, and discuss how diffusion models generate high-quality samples.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q16', 5)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Core Idea</h3>
@@ -385,10 +391,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q17 -->
   <div class="tab-content" id="tab-6">
-    <div class="question-block" data-qid="u2-q17">
+    <div class="question-block" data-qid="gai-u2-q17">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q17', 6)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q17', 6)" aria-label="Mark as done"></button>
         <h2 class="q-title">17. Discuss techniques for synthetic data generation for images, text, tabular data, and time-series data. Identify suitable generative models for each data type with justification.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q17', 6)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Synthetic data generation</strong> creates artificial samples that follow the statistical properties of real data. It is used when real data is scarce, imbalanced, expensive or private. The right generative model is chosen by the <em>structure</em> of the data: spatial, sequential, mixed-type or temporal.</p>
@@ -420,10 +427,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q18 -->
   <div class="tab-content" id="tab-7">
-    <div class="question-block" data-qid="u2-q18">
+    <div class="question-block" data-qid="gai-u2-q18">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q18', 7)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q18', 7)" aria-label="Mark as done"></button>
         <h2 class="q-title">18. Explain data augmentation techniques using generative models. Discuss how these techniques improve the performance and robustness of downstream machine learning models.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q18', 7)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>What is Generative Data Augmentation?</h3>
@@ -471,10 +479,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q19 -->
   <div class="tab-content" id="tab-8">
-    <div class="question-block" data-qid="u2-q19">
+    <div class="question-block" data-qid="gai-u2-q19">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q19', 8)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q19', 8)" aria-label="Mark as done"></button>
         <h2 class="q-title">19. Discuss the concept of privacy-preserving synthetic data generation. Explain how generative models can be designed to protect sensitive information while preserving statistical utility of the data.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q19', 8)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Why Privacy-Preserving Synthetic Data?</h3>
@@ -513,10 +522,11 @@ until convergence or fixed number of iterations</code></pre>
 
   <!-- Q20 -->
   <div class="tab-content" id="tab-9">
-    <div class="question-block" data-qid="u2-q20">
+    <div class="question-block" data-qid="gai-u2-q20">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u2-q20', 9)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u2-q20', 9)" aria-label="Mark as done"></button>
         <h2 class="q-title">20. Compare VAEs, GANs, and Diffusion Models in terms of architecture, training stability, sample quality, and computational cost. Evaluate their applicability in domains such as healthcare, finance, cybersecurity, and smart manufacturing.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u2-q20', 9)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>VAEs, GANs and diffusion models all learn to sample from the data distribution but with very different mechanisms and trade-offs.</p>
@@ -574,6 +584,31 @@ document.querySelectorAll('.question-block').forEach((block, idx) => {
     if (btn) btn.classList.add('done');
   }
 });
+function toggleSkip(qid, tabIdx) {
+  const blocks = document.querySelectorAll('.question-block');
+  const btns = document.querySelectorAll('.tab-btn');
+  const target = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const wasSkipped = target.classList.contains('q-skipped');
+  blocks.forEach((b, i) => { b.classList.remove('q-skipped'); if (btns[i]) btns[i].classList.remove('skipped'); });
+  try { localStorage.removeItem('skip:' + location.pathname); } catch (e) {}
+  if (!wasSkipped) {
+    target.classList.add('q-skipped');
+    btns[tabIdx].classList.add('skipped');
+    try { localStorage.setItem('skip:' + location.pathname, qid); } catch (e) {}
+  }
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem('skip:' + location.pathname); } catch (e) {}
+  if (!saved) return;
+  document.querySelectorAll('.question-block').forEach((b, i) => {
+    if (b.dataset.qid === saved) {
+      b.classList.add('q-skipped');
+      const btn = document.querySelectorAll('.tab-btn')[i];
+      if (btn) btn.classList.add('skipped');
+    }
+  });
+})();
 showTab(0);
 </script>
 </body>

@@ -208,3 +208,17 @@ th { background: var(--surface2); color: var(--accent-hover); }
 .lbl-s { fill: var(--text-muted); font-size: 10px; font-family: system-ui, sans-serif; text-anchor: middle; }
 .arr { stroke: var(--text-muted); stroke-width: 1.5; fill: none; marker-end: url(#ah); }
 .dash { stroke: var(--text-dim); stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
+
+/* ── Skip marker (one per unit page) ── */
+.q-skip {
+  margin-left: auto; flex-shrink: 0; align-self: flex-start; margin-top: 2px;
+  font: inherit; font-size: 0.78rem; line-height: 1; padding: 6px 12px; border-radius: 999px;
+  border: 1.5px solid var(--border); background: transparent; color: var(--text-muted);
+  cursor: pointer; transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.q-skip:hover { border-color: var(--accent); color: var(--accent-hover); }
+.question-block.q-skipped .q-skip { background: var(--surface2); border-color: var(--text-dim); color: var(--text); }
+.question-block.q-skipped .q-title { color: var(--text-dim); font-style: italic; }
+.question-block.q-skipped .answer-body { opacity: 0.55; }
+.tab-btn.skipped { opacity: 0.55; text-decoration: line-through; }
+.tab-btn.skipped::after { content: ' ⏭'; font-size: 0.72em; text-decoration: none; display: inline-block; }

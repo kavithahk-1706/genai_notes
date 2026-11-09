@@ -35,10 +35,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q21 -->
   <div class="tab-content" id="tab-0">
-    <div class="question-block" data-qid="u3-q21">
+    <div class="question-block" data-qid="gai-u3-q21">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q21', 0)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q21', 0)" aria-label="Mark as done"></button>
         <h2 class="q-title">21. Explain the fundamentals of prompt engineering. Discuss the key components of an effective prompt with suitable examples for each component.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q21', 0)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Prompt engineering</strong> is the practice of designing and refining the input (prompt) to an LLM so that it reliably produces accurate, relevant and well-formatted output, <em>without changing the model's weights</em>. Because model behaviour is very sensitive to how a task is phrased, a good prompt is a cheap alternative to fine-tuning.</p>
@@ -78,10 +79,11 @@ Review:      "The food was cold and the service was slow."</code></pre>
 
   <!-- Q22 -->
   <div class="tab-content" id="tab-1">
-    <div class="question-block" data-qid="u3-q22">
+    <div class="question-block" data-qid="gai-u3-q22">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q22', 1)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q22', 1)" aria-label="Mark as done"></button>
         <h2 class="q-title">22. Differentiate between zero-shot, one-shot, and few-shot prompting techniques. Illustrate each technique with an example prompt and discuss scenarios where each is most effective.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q22', 1)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>These techniques differ only in <strong>how many demonstrations</strong> are placed in the prompt. The model is never retrained: it learns the task from the prompt itself, which is called <em>in-context learning</em>.</p>
@@ -125,10 +127,11 @@ Review: "The food was cold and the service was slow." -> ?</code></pre>
 
   <!-- Q23 -->
   <div class="tab-content" id="tab-2">
-    <div class="question-block" data-qid="u3-q23">
+    <div class="question-block" data-qid="gai-u3-q23">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q23', 2)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q23', 2)" aria-label="Mark as done"></button>
         <h2 class="q-title">23. Explain Chain-of-Thought (CoT) reasoning in Large Language Models. Demonstrate, with an example, how CoT prompting improves performance on multi-step reasoning tasks.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q23', 2)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>What is Chain-of-Thought Reasoning?</h3>
@@ -176,10 +179,11 @@ Review: "The food was cold and the service was slow." -> ?</code></pre>
 
   <!-- Q24 -->
   <div class="tab-content" id="tab-3">
-    <div class="question-block" data-qid="u3-q24">
+    <div class="question-block" data-qid="gai-u3-q24">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q24', 3)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q24', 3)" aria-label="Mark as done"></button>
         <h2 class="q-title">24. Explain the concept of self-consistency prompting. Describe how it can be combined with Chain-of-Thought reasoning to improve the reliability of LLM outputs.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q24', 3)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>The Problem with a Single CoT Path</h3>
@@ -249,10 +253,11 @@ Review: "The food was cold and the service was slow." -> ?</code></pre>
 
   <!-- Q25 -->
   <div class="tab-content" id="tab-4">
-    <div class="question-block" data-qid="u3-q25">
+    <div class="question-block" data-qid="gai-u3-q25">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q25', 4)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q25', 4)" aria-label="Mark as done"></button>
         <h2 class="q-title">25. Discuss techniques for generating structured outputs (such as JSON) from LLMs. Explain how function calling can be used to integrate LLM outputs with external tools and APIs.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q25', 4)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>Applications need output that code can parse, not free-form prose. <strong>Structured output</strong> (usually JSON) makes the LLM a reliable component of a software system. <strong>Function calling</strong> then lets it use external tools and data.</p>
@@ -296,10 +301,11 @@ Review: "The food was cold and the service was slow." -> ?</code></pre>
 
   <!-- Q26 -->
   <div class="tab-content" id="tab-5">
-    <div class="question-block" data-qid="u3-q26">
+    <div class="question-block" data-qid="gai-u3-q26">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q26', 5)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q26', 5)" aria-label="Mark as done"></button>
         <h2 class="q-title">26. Explain the principles of context engineering. Discuss strategies for effectively managing the context window of an LLM when handling large or multi-turn inputs.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q26', 5)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Context engineering</strong> is the process of designing, organising and supplying the <em>right information</em> to an LLM so that it can give accurate, task-specific answers. Prompt engineering asks &ldquo;<em>what should the model do?</em>&rdquo;; context engineering asks &ldquo;<em>what information does the model need?</em>&rdquo;</p>
@@ -341,10 +347,11 @@ Review: "The food was cold and the service was slow." -> ?</code></pre>
 
   <!-- Q27 -->
   <div class="tab-content" id="tab-6">
-    <div class="question-block" data-qid="u3-q27">
+    <div class="question-block" data-qid="gai-u3-q27">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q27', 6)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q27', 6)" aria-label="Mark as done"></button>
         <h2 class="q-title">27. Explain the concept of prompt chaining. Design a prompt chaining workflow for a multi-step task (e.g., research, summarization, and report generation), describing the role of each prompt in the chain. Write the algorithmic steps (pseudocode) for implementing this prompt chaining workflow.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q27', 6)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>What is Prompt Chaining?</h3>
@@ -414,10 +421,11 @@ END FUNCTION</code></pre>
 
   <!-- Q28 -->
   <div class="tab-content" id="tab-7">
-    <div class="question-block" data-qid="u3-q28">
+    <div class="question-block" data-qid="gai-u3-q28">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q28', 7)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q28', 7)" aria-label="Mark as done"></button>
         <h2 class="q-title">28. Discuss prompt evaluation and optimization techniques. Explain the metrics and iterative refinement strategies used to improve prompt performance for a given task.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q28', 7)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Prompt evaluation</strong> assesses how good a prompt is by analysing the responses it produces. <strong>Prompt optimisation</strong> modifies the prompt to improve accuracy, consistency and relevance. The goal is to improve accuracy, reduce ambiguity and hallucination, increase consistency and cut irrelevant output.</p>
@@ -461,10 +469,11 @@ END FUNCTION</code></pre>
 
   <!-- Q29 -->
   <div class="tab-content" id="tab-8">
-    <div class="question-block" data-qid="u3-q29">
+    <div class="question-block" data-qid="gai-u3-q29">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q29', 8)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q29', 8)" aria-label="Mark as done"></button>
         <h2 class="q-title">29. Explain the role of LLM APIs and integration frameworks (such as LangChain) in building intelligent applications. Describe, with a diagram, the architecture of a typical LLM-powered application.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q29', 8)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Role of LLM APIs</h3>
@@ -562,10 +571,11 @@ def answer(question):
 
   <!-- Q30 -->
   <div class="tab-content" id="tab-9">
-    <div class="question-block" data-qid="u3-q30">
+    <div class="question-block" data-qid="gai-u3-q30">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u3-q30', 9)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u3-q30', 9)" aria-label="Mark as done"></button>
         <h2 class="q-title">30. Design the architecture for a conversational AI system using an LLM API. Discuss how the same underlying techniques can be extended to build intelligent content generation and information extraction applications.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u3-q30', 9)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A <strong>conversational AI system</strong> uses an LLM to talk with users in natural language across several turns. Its reliability comes from the software around the model, not from the model alone.</p>
@@ -637,6 +647,31 @@ document.querySelectorAll('.question-block').forEach((block, idx) => {
     if (btn) btn.classList.add('done');
   }
 });
+function toggleSkip(qid, tabIdx) {
+  const blocks = document.querySelectorAll('.question-block');
+  const btns = document.querySelectorAll('.tab-btn');
+  const target = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const wasSkipped = target.classList.contains('q-skipped');
+  blocks.forEach((b, i) => { b.classList.remove('q-skipped'); if (btns[i]) btns[i].classList.remove('skipped'); });
+  try { localStorage.removeItem('skip:' + location.pathname); } catch (e) {}
+  if (!wasSkipped) {
+    target.classList.add('q-skipped');
+    btns[tabIdx].classList.add('skipped');
+    try { localStorage.setItem('skip:' + location.pathname, qid); } catch (e) {}
+  }
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem('skip:' + location.pathname); } catch (e) {}
+  if (!saved) return;
+  document.querySelectorAll('.question-block').forEach((b, i) => {
+    if (b.dataset.qid === saved) {
+      b.classList.add('q-skipped');
+      const btn = document.querySelectorAll('.tab-btn')[i];
+      if (btn) btn.classList.add('skipped');
+    }
+  });
+})();
 showTab(0);
 </script>
 </body>

@@ -34,10 +34,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q41 -->
   <div class="tab-content" id="tab-0">
-    <div class="question-block" data-qid="u5-q41">
+    <div class="question-block" data-qid="gai-u5-q41">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q41', 0)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q41', 0)" aria-label="Mark as done"></button>
         <h2 class="q-title">41. Explain the fundamentals of fine-tuning Large Language Models. Discuss the scenarios in which fine-tuning is preferred over prompt engineering or RAG-based approaches.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q41', 0)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>What is Fine-Tuning?</h3>
@@ -97,10 +98,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q42 -->
   <div class="tab-content" id="tab-1">
-    <div class="question-block" data-qid="u5-q42">
+    <div class="question-block" data-qid="gai-u5-q42">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q42', 1)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q42', 1)" aria-label="Mark as done"></button>
         <h2 class="q-title">42. Explain Parameter-Efficient Fine-Tuning (PEFT) and describe the working principle of Low-Rank Adaptation (LoRA), including its mathematical formulation and advantages over full fine-tuning. Write the algorithmic steps (pseudocode) for fine-tuning a pre-trained LLM using LoRA.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q42', 1)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Parameter-Efficient Fine-Tuning (PEFT)</h3>
@@ -197,10 +199,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q43 -->
   <div class="tab-content" id="tab-2">
-    <div class="question-block" data-qid="u5-q43">
+    <div class="question-block" data-qid="gai-u5-q43">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q43', 2)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q43', 2)" aria-label="Mark as done"></button>
         <h2 class="q-title">43. Explain the QLoRA technique for fine-tuning Large Language Models. Discuss how it differs from LoRA and the benefits it provides in resource-constrained environments.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q43', 2)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>QLoRA</strong> (Quantised LoRA) combines <strong>LoRA</strong> with <strong>quantisation of the frozen base model</strong>. The base weights are stored in 4-bit precision, the small LoRA adapters stay in higher precision and are the only trainable parameters. The result: models that normally need several expensive GPUs can be fine-tuned on a single GPU.</p>
@@ -242,10 +245,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q44 -->
   <div class="tab-content" id="tab-3">
-    <div class="question-block" data-qid="u5-q44">
+    <div class="question-block" data-qid="gai-u5-q44">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q44', 3)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q44', 3)" aria-label="Mark as done"></button>
         <h2 class="q-title">44. Explain the concept of Multimodal AI and Vision-Language Models. Describe, with an example such as CLIP or GPT-4V, how text and image modalities are jointly represented and processed.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q44', 3)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Multimodal AI</h3>
@@ -308,10 +312,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q45 -->
   <div class="tab-content" id="tab-4">
-    <div class="question-block" data-qid="u5-q45">
+    <div class="question-block" data-qid="gai-u5-q45">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q45', 4)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q45', 4)" aria-label="Mark as done"></button>
         <h2 class="q-title">45. Discuss text-to-image and image-to-text generation techniques. Explain the underlying architectures and provide examples of models used for each task.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q45', 4)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>Both tasks translate between the <em>language</em> and <em>vision</em> modalities, in opposite directions: text-to-image generates an image from a description; image-to-text generates language from an image.</p>
@@ -352,10 +357,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q46 -->
   <div class="tab-content" id="tab-5">
-    <div class="question-block" data-qid="u5-q46">
+    <div class="question-block" data-qid="gai-u5-q46">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q46', 5)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q46', 5)" aria-label="Mark as done"></button>
         <h2 class="q-title">46. Discuss the evaluation metrics and benchmarking methods used for Large Language Models, including perplexity, BLEU, ROUGE, and standard benchmark suites. Explain the significance of each metric.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q46', 5)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>Evaluating an LLM is hard because the output is open-ended text; no single number captures quality. Evaluation therefore uses several dimensions &mdash; <strong>task accuracy, language quality, factuality, reliability and safety/fairness</strong> &mdash; and several methods: metrics, benchmarks, LLM judges and human raters.</p>
@@ -397,10 +403,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q47 -->
   <div class="tab-content" id="tab-6">
-    <div class="question-block" data-qid="u5-q47">
+    <div class="question-block" data-qid="gai-u5-q47">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q47', 6)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q47', 6)" aria-label="Mark as done"></button>
         <h2 class="q-title">47. Explain the fundamentals of LLMOps. Describe the key stages of an LLMOps pipeline, including model deployment, monitoring, and continuous evaluation in production environments.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q47', 6)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>LLMOps</strong> is the set of practices, tools and processes to develop, deploy, monitor, maintain and continuously improve LLM-based applications. Building a demo is only the start; production needs reliable deployment, versioning, monitoring, security and cost control. It extends MLOps with LLM-specific concerns: prompts as code, token-based cost, non-deterministic outputs and hallucination.</p>
@@ -450,10 +457,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q48 -->
   <div class="tab-content" id="tab-7">
-    <div class="question-block" data-qid="u5-q48">
+    <div class="question-block" data-qid="gai-u5-q48">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q48', 7)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q48', 7)" aria-label="Mark as done"></button>
         <h2 class="q-title">48. Discuss AI safety and alignment techniques used in Generative AI systems. Explain the role of Reinforcement Learning from Human Feedback (RLHF) and red-teaming in ensuring safe model behaviour.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q48', 7)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>AI safety and alignment</strong> aim to make a model behave in ways that are <em>helpful, harmless and honest</em> and in line with human values, and to prevent misuse. A pre-trained model only predicts likely text, so it can produce toxic, biased, false or dangerous content unless it is deliberately aligned and tested.</p>
@@ -496,10 +504,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q49 -->
   <div class="tab-content" id="tab-8">
-    <div class="question-block" data-qid="u5-q49">
+    <div class="question-block" data-qid="gai-u5-q49">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q49', 8)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q49', 8)" aria-label="Mark as done"></button>
         <h2 class="q-title">49. Discuss the issues of bias, fairness, and explainability in Generative AI systems. Explain at least two techniques that can be used to detect and mitigate bias in LLM outputs.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q49', 8)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Bias in Generative AI</h3>
@@ -564,10 +573,11 @@ OUTPUT: fine-tuned LoRA adapters (and optionally merged model)
 
   <!-- Q50 -->
   <div class="tab-content" id="tab-9">
-    <div class="question-block" data-qid="u5-q50">
+    <div class="question-block" data-qid="gai-u5-q50">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u5-q50', 9)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u5-q50', 9)" aria-label="Mark as done"></button>
         <h2 class="q-title">50. Discuss security, privacy, and governance considerations for deploying Generative AI systems in real-world applications. Analyze the future trends in Generative AI and their potential impact on industry and society.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u5-q50', 9)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>1. Security Considerations</h3>
@@ -663,6 +673,31 @@ document.querySelectorAll('.question-block').forEach((block, idx) => {
     if (btn) btn.classList.add('done');
   }
 });
+function toggleSkip(qid, tabIdx) {
+  const blocks = document.querySelectorAll('.question-block');
+  const btns = document.querySelectorAll('.tab-btn');
+  const target = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const wasSkipped = target.classList.contains('q-skipped');
+  blocks.forEach((b, i) => { b.classList.remove('q-skipped'); if (btns[i]) btns[i].classList.remove('skipped'); });
+  try { localStorage.removeItem('skip:' + location.pathname); } catch (e) {}
+  if (!wasSkipped) {
+    target.classList.add('q-skipped');
+    btns[tabIdx].classList.add('skipped');
+    try { localStorage.setItem('skip:' + location.pathname, qid); } catch (e) {}
+  }
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem('skip:' + location.pathname); } catch (e) {}
+  if (!saved) return;
+  document.querySelectorAll('.question-block').forEach((b, i) => {
+    if (b.dataset.qid === saved) {
+      b.classList.add('q-skipped');
+      const btn = document.querySelectorAll('.tab-btn')[i];
+      if (btn) btn.classList.add('skipped');
+    }
+  });
+})();
 showTab(0);
 </script>
 </body>

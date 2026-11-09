@@ -34,10 +34,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q1 -->
   <div class="tab-content" id="tab-0">
-    <div class="question-block" data-qid="u1-q1">
+    <div class="question-block" data-qid="gai-u1-q1">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q1', 0)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q1', 0)" aria-label="Mark as done"></button>
         <h2 class="q-title">1. Explain the evolution of Generative AI from early statistical language models to modern foundation models. Discuss the key differences between traditional AI systems and Generative AI.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q1', 0)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>Generative AI is the result of about seven decades of progress in <em>modelling the probability of language</em>. Every stage below fixed one weakness of the previous stage.</p>
@@ -70,10 +71,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q2 -->
   <div class="tab-content" id="tab-1">
-    <div class="question-block" data-qid="u1-q2">
+    <div class="question-block" data-qid="gai-u1-q2">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q2', 1)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q2', 1)" aria-label="Mark as done"></button>
         <h2 class="q-title">2. Describe the concept of Foundation Models. Explain how they differ from traditional task-specific machine learning models, and discuss their role in enabling Large Language Models.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q2', 1)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A <strong>foundation model</strong> is a very large model, usually a Transformer, <strong>pre-trained on broad, internet-scale data with a self-supervised objective</strong>, so that one model can serve as the base for many downstream tasks. &ldquo;Foundation&rdquo; because many applications are built on top of it, like rooms on a building's foundation.</p>
@@ -109,10 +111,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q3 -->
   <div class="tab-content" id="tab-2">
-    <div class="question-block" data-qid="u1-q3">
+    <div class="question-block" data-qid="gai-u1-q3">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q3', 2)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q3', 2)" aria-label="Mark as done"></button>
         <h2 class="q-title">3. Explain the Transformer architecture in detail with a neat diagram. Describe the roles of the encoder and decoder stacks, and explain how they interact in encoder-decoder based models.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q3', 2)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Why Transformers?</h3>
@@ -236,10 +239,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q4 -->
   <div class="tab-content" id="tab-3">
-    <div class="question-block" data-qid="u1-q4">
+    <div class="question-block" data-qid="gai-u1-q4">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q4', 3)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q4', 3)" aria-label="Mark as done"></button>
         <h2 class="q-title">4. Describe the self-attention and multi-head attention mechanisms used in Transformers. Derive the scaled dot-product attention formula and explain the significance of each term.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q4', 3)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Self-attention</strong> lets every token build a new, context-aware representation of itself by looking at every other token in the same sequence. Distance does not matter, so long-range dependencies &mdash; the weakness of RNNs &mdash; are handled directly.</p>
@@ -279,10 +283,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q5 -->
   <div class="tab-content" id="tab-4">
-    <div class="question-block" data-qid="u1-q5">
+    <div class="question-block" data-qid="gai-u1-q5">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q5', 4)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q5', 4)" aria-label="Mark as done"></button>
         <h2 class="q-title">5. Explain various tokenization techniques used in Large Language Models such as Byte-Pair Encoding (BPE), WordPiece, and SentencePiece. Illustrate the tokenization process with a suitable example. Write the algorithmic steps (pseudocode) for the Byte-Pair Encoding (BPE) tokenization algorithm.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q5', 4)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Why Tokenization Matters</h3>
@@ -353,10 +358,11 @@ Encoding a new word:
 
   <!-- Q6 -->
   <div class="tab-content" id="tab-5">
-    <div class="question-block" data-qid="u1-q6">
+    <div class="question-block" data-qid="gai-u1-q6">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q6', 5)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q6', 5)" aria-label="Mark as done"></button>
         <h2 class="q-title">6. Explain the concept of embeddings and vector representations in NLP. Differentiate between static word embeddings and contextual embeddings, and discuss their role in semantic similarity tasks.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q6', 5)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>What are Embeddings?</h3>
@@ -408,10 +414,11 @@ Encoding a new word:
 
   <!-- Q7 -->
   <div class="tab-content" id="tab-6">
-    <div class="question-block" data-qid="u1-q7">
+    <div class="question-block" data-qid="gai-u1-q7">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q7', 6)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q7', 6)" aria-label="Mark as done"></button>
         <h2 class="q-title">7. Differentiate between pre-training, fine-tuning, and alignment in the development lifecycle of a Large Language Model. Explain how each stage contributes to the final model's capabilities.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q7', 6)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A modern LLM is built in three sequential stages. Pre-training gives <em>knowledge</em>, fine-tuning gives <em>skills</em>, alignment gives <em>behaviour</em>. Analogy: general schooling, then job training, then on-the-job mentoring.</p>
@@ -446,10 +453,11 @@ Encoding a new word:
 
   <!-- Q8 -->
   <div class="tab-content" id="tab-7">
-    <div class="question-block" data-qid="u1-q8">
+    <div class="question-block" data-qid="gai-u1-q8">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q8', 7)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q8', 7)" aria-label="Mark as done"></button>
         <h2 class="q-title">8. Compare the architectures, capabilities, and intended use cases of popular LLMs such as GPT, Gemini, Claude, Llama, and Mistral. Discuss the significance of open-source LLMs in the Generative AI ecosystem.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q8', 7)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>All the popular LLMs share the same recipe &mdash; a <strong>decoder-only Transformer</strong> (Q3, Q4) pre-trained at scale and then fine-tuned and aligned (SFT + RLHF/DPO). They differ in scale, training data, safety approach, modalities and, above all, <strong>licensing</strong>: open weights or closed.</p>
@@ -490,10 +498,11 @@ Encoding a new word:
 
   <!-- Q9 -->
   <div class="tab-content" id="tab-8">
-    <div class="question-block" data-qid="u1-q9">
+    <div class="question-block" data-qid="gai-u1-q9">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q9', 8)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q9', 8)" aria-label="Mark as done"></button>
         <h2 class="q-title">9. Discuss the applications of Large Language Models in text generation, summarization, translation, question answering, and conversational AI, with suitable examples for each.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q9', 8)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>1. Text Generation</h3>
@@ -547,10 +556,11 @@ Encoding a new word:
 
   <!-- Q10 -->
   <div class="tab-content" id="tab-9">
-    <div class="question-block" data-qid="u1-q10">
+    <div class="question-block" data-qid="gai-u1-q10">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u1-q10', 9)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u1-q10', 9)" aria-label="Mark as done"></button>
         <h2 class="q-title">10. Analyze the current industry use cases and emerging trends in Generative AI and LLMs across domains such as healthcare, education, software development, and customer service. Justify their impact with examples.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u1-q10', 9)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>1. Healthcare</h3>
@@ -647,6 +657,31 @@ document.querySelectorAll('.question-block').forEach((block, idx) => {
     if (btn) btn.classList.add('done');
   }
 });
+function toggleSkip(qid, tabIdx) {
+  const blocks = document.querySelectorAll('.question-block');
+  const btns = document.querySelectorAll('.tab-btn');
+  const target = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const wasSkipped = target.classList.contains('q-skipped');
+  blocks.forEach((b, i) => { b.classList.remove('q-skipped'); if (btns[i]) btns[i].classList.remove('skipped'); });
+  try { localStorage.removeItem('skip:' + location.pathname); } catch (e) {}
+  if (!wasSkipped) {
+    target.classList.add('q-skipped');
+    btns[tabIdx].classList.add('skipped');
+    try { localStorage.setItem('skip:' + location.pathname, qid); } catch (e) {}
+  }
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem('skip:' + location.pathname); } catch (e) {}
+  if (!saved) return;
+  document.querySelectorAll('.question-block').forEach((b, i) => {
+    if (b.dataset.qid === saved) {
+      b.classList.add('q-skipped');
+      const btn = document.querySelectorAll('.tab-btn')[i];
+      if (btn) btn.classList.add('skipped');
+    }
+  });
+})();
 showTab(0);
 </script>
 </body>

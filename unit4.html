@@ -35,10 +35,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q31 -->
   <div class="tab-content" id="tab-0">
-    <div class="question-block" data-qid="u4-q31">
+    <div class="question-block" data-qid="gai-u4-q31">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q31', 0)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q31', 0)" aria-label="Mark as done"></button>
         <h2 class="q-title">31. Discuss the major limitations of standalone Large Language Models, including hallucination and knowledge cutoff issues. Explain how Retrieval-Augmented Generation (RAG) addresses these limitations.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q31', 0)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Limitations of Standalone LLMs</h3>
@@ -124,10 +125,11 @@ MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } }
 
   <!-- Q32 -->
   <div class="tab-content" id="tab-1">
-    <div class="question-block" data-qid="u4-q32">
+    <div class="question-block" data-qid="gai-u4-q32">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q32', 1)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q32', 1)" aria-label="Mark as done"></button>
         <h2 class="q-title">32. Explain the architecture and workflow of a Retrieval-Augmented Generation (RAG) system with a neat diagram, describing the role of each component from query to response generation. Write the algorithm/pseudocode for the end-to-end RAG pipeline, from query embedding to final response generation.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q32', 1)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Retrieval-Augmented Generation (RAG)</strong> improves an LLM by retrieving relevant information from an external knowledge source <em>before</em> generating the answer: <strong>Query &rarr; Retrieve &rarr; Augment &rarr; Generate</strong>. The LLM does not have to memorise everything; it looks up what it needs.</p>
@@ -178,10 +180,11 @@ function answer(query, k = 4):
 
   <!-- Q33 -->
   <div class="tab-content" id="tab-2">
-    <div class="question-block" data-qid="u4-q33">
+    <div class="question-block" data-qid="gai-u4-q33">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q33', 2)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q33', 2)" aria-label="Mark as done"></button>
         <h2 class="q-title">33. Explain the concept of embedding models and semantic search. Describe how vector similarity measures (e.g., cosine similarity) are used to retrieve semantically relevant documents.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q33', 2)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Embedding Models</h3>
@@ -264,10 +267,11 @@ function answer(query, k = 4):
 
   <!-- Q34 -->
   <div class="tab-content" id="tab-3">
-    <div class="question-block" data-qid="u4-q34">
+    <div class="question-block" data-qid="gai-u4-q34">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q34', 3)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q34', 3)" aria-label="Mark as done"></button>
         <h2 class="q-title">34. Discuss the role of vector databases and indexing mechanisms in RAG systems. Explain at least two indexing algorithms (such as HNSW or IVF) used for efficient similarity search.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q34', 3)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A <strong>vector database</strong> stores high-dimensional embedding vectors together with their original text and metadata, and returns the vectors most similar to a query vector. In RAG it holds the chunk embeddings and makes retrieval fast enough for millions of chunks.</p>
@@ -311,10 +315,11 @@ function answer(query, k = 4):
 
   <!-- Q35 -->
   <div class="tab-content" id="tab-4">
-    <div class="question-block" data-qid="u4-q35">
+    <div class="question-block" data-qid="gai-u4-q35">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q35', 4)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q35', 4)" aria-label="Mark as done"></button>
         <h2 class="q-title">35. Explain various document chunking strategies used in RAG pipelines. Discuss how the choice of chunking strategy affects retrieval quality and downstream generation accuracy.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q35', 4)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Why Chunking?</h3>
@@ -381,10 +386,11 @@ function answer(query, k = 4):
 
   <!-- Q36 -->
   <div class="tab-content" id="tab-5">
-    <div class="question-block" data-qid="u4-q36">
+    <div class="question-block" data-qid="gai-u4-q36">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q36', 5)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q36', 5)" aria-label="Mark as done"></button>
         <h2 class="q-title">36. Explain the context retrieval and augmentation process in a RAG pipeline. Describe how retrieved documents are integrated into the prompt sent to the LLM.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q36', 5)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>After the knowledge base has been prepared, every user query goes through <strong>retrieval</strong> (find relevant chunks) and <strong>augmentation</strong> (put them into the prompt) before the LLM generates the answer.</p>
@@ -430,10 +436,11 @@ Question: What is the minimum attendance to appear for the semester exam?</code>
 
   <!-- Q37 -->
   <div class="tab-content" id="tab-6">
-    <div class="question-block" data-qid="u4-q37">
+    <div class="question-block" data-qid="gai-u4-q37">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q37', 6)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q37', 6)" aria-label="Mark as done"></button>
         <h2 class="q-title">37. Discuss hybrid retrieval techniques that combine dense (embedding-based) and sparse (keyword-based) retrieval methods. Explain the advantages of hybrid retrieval over using either method alone.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q37', 6)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p><strong>Hybrid retrieval</strong> combines <strong>sparse</strong> (keyword) and <strong>dense</strong> (embedding) retrieval and merges their results, so that the system gets both exact matches and semantic matches.</p>
@@ -477,10 +484,11 @@ Question: What is the minimum attendance to appear for the semester exam?</code>
 
   <!-- Q38 -->
   <div class="tab-content" id="tab-7">
-    <div class="question-block" data-qid="u4-q38">
+    <div class="question-block" data-qid="gai-u4-q38">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q38', 7)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q38', 7)" aria-label="Mark as done"></button>
         <h2 class="q-title">38. Explain query expansion and re-ranking techniques used to improve the accuracy of retrieval in RAG systems. Illustrate with an example how re-ranking modifies the final set of retrieved documents.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q38', 7)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>The Retrieval Problem</h3>
@@ -534,10 +542,11 @@ Question: What is the minimum attendance to appear for the semester exam?</code>
 
   <!-- Q39 -->
   <div class="tab-content" id="tab-8">
-    <div class="question-block" data-qid="u4-q39">
+    <div class="question-block" data-qid="gai-u4-q39">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q39', 8)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q39', 8)" aria-label="Mark as done"></button>
         <h2 class="q-title">39. Discuss the evaluation of RAG systems. Explain key evaluation metrics such as faithfulness, answer relevance, and context precision/recall, and describe how they are measured.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q39', 8)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <p>A RAG system has two parts that can fail independently, so it is evaluated in two layers: <strong>retrieval quality</strong> (did we fetch the right evidence?) and <strong>generation quality</strong> (did the LLM use it correctly?). The three relationships between query, context and answer are often called the <em>RAG triad</em>.</p>
@@ -578,10 +587,11 @@ Question: What is the minimum attendance to appear for the semester exam?</code>
 
   <!-- Q40 -->
   <div class="tab-content" id="tab-9">
-    <div class="question-block" data-qid="u4-q40">
+    <div class="question-block" data-qid="gai-u4-q40">
       <div class="q-header">
-        <button class="q-check" onclick="toggleDone('u4-q40', 9)" aria-label="Mark as done"></button>
+        <button class="q-check" onclick="toggleDone('gai-u4-q40', 9)" aria-label="Mark as done"></button>
         <h2 class="q-title">40. Design a RAG-based solution for an enterprise use case such as knowledge management, a research assistant, or a customer support system. Justify the design choices for embedding model, vector database, and retrieval strategy.</h2>
+        <button class="q-skip" onclick="toggleSkip('gai-u4-q40', 9)" aria-label="Mark as the question I will skip" title="Mark as the question I will skip (only one per unit)">Skip</button>
       </div>
       <div class="answer-body">
 <h3>Chosen Use Case: Enterprise Customer-Support Assistant</h3>
@@ -704,6 +714,31 @@ document.querySelectorAll('.question-block').forEach((block, idx) => {
     if (btn) btn.classList.add('done');
   }
 });
+function toggleSkip(qid, tabIdx) {
+  const blocks = document.querySelectorAll('.question-block');
+  const btns = document.querySelectorAll('.tab-btn');
+  const target = document.querySelector('.question-block[data-qid="' + qid + '"]');
+  const wasSkipped = target.classList.contains('q-skipped');
+  blocks.forEach((b, i) => { b.classList.remove('q-skipped'); if (btns[i]) btns[i].classList.remove('skipped'); });
+  try { localStorage.removeItem('skip:' + location.pathname); } catch (e) {}
+  if (!wasSkipped) {
+    target.classList.add('q-skipped');
+    btns[tabIdx].classList.add('skipped');
+    try { localStorage.setItem('skip:' + location.pathname, qid); } catch (e) {}
+  }
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem('skip:' + location.pathname); } catch (e) {}
+  if (!saved) return;
+  document.querySelectorAll('.question-block').forEach((b, i) => {
+    if (b.dataset.qid === saved) {
+      b.classList.add('q-skipped');
+      const btn = document.querySelectorAll('.tab-btn')[i];
+      if (btn) btn.classList.add('skipped');
+    }
+  });
+})();
 showTab(0);
 </script>
 </body>
